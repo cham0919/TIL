@@ -1,0 +1,286 @@
+### 개요
+
+자바 소스 파일(.java)을 JVM으로 실행하는 과정 이해하기.
+
+
+### 학습할 것
+
+- JVM이란 무엇인가
+- 컴파일 및 실행하는 방법
+- 바이트코드란 무엇인가
+- JIT 컴파일러란 무엇이며 어떻게 동작하는지
+- JVM 구성 요소
+- JDK와 JRE의 차이
+
+
+<br/><br/>
+
+# 1. JVM이란 무엇인가
+
+
+>JAVA Virtial Machine의 약자로 Java Byte Code를 OS에 맞게 해석해주는 역할을 하는 가상머신
+
+ JVM(java virtual machine)은 Java Byte Code를 OS에 맞게 해석 해주는 역할을 한다. 
+ 
+ Java Compiler는 java 파일을 class 라는 java byte code로 변환 시켜 준다. byte code는 기계어가 아니기 때문에 바로 os에서 바로 실행되지 안ㄹ지만 여기서JVM이 bytecode를 이해할 수 있도록 해석해준다. 
+ JVM의 해석을 거치기 때문에 c언어와 같은 네이티브 언어에 비해 속도가 느렸지만 JIT(Just In Time) 컴파일러를 구현해 이점을 극복했다. 
+ 
+  Byte Code 는 JVM 위에서 os상관없이 실행된다. 이런점이 java의 가장 큰 장점이라고 할 수 있다. os에 종속적이지 않고 Java 파일 하나만 만들면 어느 디바이스든 JVM 위에서 실행 할 수 있다. 
+  
+  
+  
+
+<br/><br/>
+
+# 2. Java Compiler
+
+
+<br/>
+
+자바에서는 두가지 컴파일러 방식이 있다. 
+
+
+- **interpreter**
+  - 자바 바이트 코드를 한줄 씩 실행, 여러번 실행하는 환경에서는 다소 느리다.
+
+- **jit compiler**
+  - 전체 바이트 코드를 컴파일, 캐시 사용으로 한번 컴파일하면 다음에는 빠르게 수행한다
+
+ <br/><br/>
+ 
+ 
+### Compile하는 방법
+
+javac fileName.java 수행하면 fileName.class이 만들어진다.
+
+```javac fileName.java```
+
+주요 javac 옵션은 아래와 같다.
+
+|옵션|설명|예제|
+|------|---|---|
+|-classpath, -cp|클래스패스, 즉 실행할 클래스의 위치를 지정한다.|javac -cp "/Users/home/A.java"|
+|-d|어디에 클래스파일을 생성할지 지정한다.|	javac -d "/User/home/path"|
+|-encoding|	소스 파일에 사용된 인코딩을 지정한다.|javac -encoding "uft-8" A.java|
+|-g|모든 디버깅 정보를 출력	|javac -g ~~~|
+|-verbose|컴파일러가 진행하는 작업을 모두 출력한다.|javac -verbose ~~~|
+|-sourcepath|소스파일 위치 지정|javac -sourcepath "/User/home/path"|
+|-source|소스파일 자바 버전 지정|	javac -source 1.8 ~~~|
+|-target|타겟파일 자바 버전 지정|javac -target 1.8 ~~~|
+
+
+ <br/><br/>
+ 
+ 
+### 실행하는 방법
+
+<br/>
+
+```java fileName.class```
+
+위 명령어로 실행할 때 JVM의 구성요소인 클래스로더가 fileName.class 파일을 메모리상의 JVM으로 가져온다.
+
+내부적으로는 classLoader -> Byte Code Verifier (바이트코드 변조 확인) -> Execution Engine에서 실행된다.
+
+Execution Engine에서 클래스파일(바이트코드로 구성)을 기계어로 변경해서 명령어 단위로 실행한다.
+다만 명령어 단위 실행은 2가지 방식으로 동작한다.
+
+  -  Interpreter 방식: 명령어를 하나씩 수행 하는 방식
+
+  -  JIT(Just In Time compiler) 방식: 전체 바이트코드를 네이티브 코드로 변환하고 그 이후에는  네이티브 코드로 실행하는 방식 
+
+
+ <br/><br/>
+ 
+ # 3. 바이트코드
+ 
+ 
+ 바이트코드(Bytecode, portable code, p-code)는 특정 하드웨어가 아닌 가상 컴퓨터에서 돌아가는 실행 프로그램을 위한 이진 표현법이다.
+ 하드웨어가 아닌 소프트웨어에 의해 처리되기 때문에 보통 기계어 보다 더 추상적이다.
+
+JVM이 사용자가 작성한 .java 소스 코드 파일을 운영체제에 실행 가능한 명령어 집합 파일로 컴파일 하는 과정 중에서 필요한 코드
+
+JVM이 이해할 수 있는 언어로 변환된 자바 소스코드를 의미
+  - 자바 컴파일러에 의해 변환되는 코드의 명령어의 크기가 1byte라서 자바 바이트 코드라고 불림
+  - 자바 바이트 코드는 자바 가상 머신만 설치되어 있다면 어느 운영체제에서도 실행 가능
+ 
+ ![](https://images.velog.io/images/cham/post/1bbe12d5-527d-43eb-a44e-a42620b0931a/image.png)
+
+
+ <br/><br/>
+ 
+ # 4. JIT 컴파일러란 무엇이며 어떻게 동작하는지
+ 
+ 
+ <br/>
+
+ 기존 클래스파일(바이트코드)를 실행하는 방법은 Interpreter 방식이 기본이다.
+ Interpreter 방식은  명령어를 하나씩 해석해서 처리하는 개념이기 때문에 명령어 하나하나 실행하는 속도는 빠를지 모르나 전체 코드 관점에서 보면 실행 속도가 느린 단점이 있다. 
+ 
+ 해당 문제를 해결하기 위해서 나온 방법이 JIT 컴파일러다.
+ JIT 컴파일 (just-in-time-compilation) 또는 동적 번역(dynamic translation)은 프로그램을 실제 실행하는 시점에 기계어로 번역하는 컴파일 기법이다.
+
+
+![](https://images.velog.io/images/cham/post/396a6a75-9535-40b1-8069-af72aa00ca83/image.png)
+
+
+즉, JIT 컴파일러는 같은 코드를 매번 해석하지 않고 실행할 때 컴파일을 하면서 해당 코드를 캐싱해버린다. 이후엔, 바뀐 부분만 컴파일 하고 나머지는 캐싱된 코드를 사용한다. 인터프리터의 속도를 개선 가능하다.
+
+<br/><br/>
+
+ # 5. JVM 구성 요소
+
+
+<br/>
+
+
+  JVM은 크게 ```Class Loader```, ```Runtime Data Areas```, ```Excution Engine```, ```Garbage Collector``` 4가지로 구성되어 있다.
+  
+  ![](https://images.velog.io/images/cham/post/db00eb44-963a-457a-92fc-aa765078d504/image.png)
+  				
+                
+                
+- **Class Loader**
+  - Runtime 시점에 .class에서 바이트코드를 읽고 메모리에 저장
+  - 내부적으로는 로딩, 링크, 초기화의 단계가 존재
+    - 로딩: 클래스를 읽어오는 과정
+    - 링크: 레퍼런스를 연결하는 과정
+    - 초기화: static 값들을 초기화 및 변수에 할당
+
+- **Runtime Data Areas**
+  - Heap 과 Method는 모든 쓰레드가 공유 나머지는 쓰레드 마다 생성
+  - JVM이 프로그램을 수행하기 위해 OS로 부터 별도로 할당받은 메모리 공간 
+    - Navtive Method Stack: Java 이외의 언어로 작성된 native 코드를 위한 Stack(JNI)
+    - JVM Stack: Thread가 시작될 때 생성되며 Method와 Method 정보 저장
+    - PC Register: CPU가 Instruction을 수행하는 동한 필요한 정보를 저장
+    - Heap: 런타임시 동적으로 할당하여 사용하는 영역 class를 통해 instance를 생성하면 Heap에 저장됨
+      - Heap의 경우 명시적으로 만든 class와 암묵적인 static 클래스(.class 파일의 class)가 담긴다.
+      - 또한 암묵적인 static 클래스의 경우 클래스 로딩 시 class 타입의 인스턴스를 만들어 힙에 저장한다. 이는 Reflection에 등장한다.
+    - Method Area: 모든 쓰레드가 공유하는 메모리 영역(클래스, 인터페이스, 메소드, 필드, Static 변수등의 바이트 코드 등을 보관)
+   
+
+- **Execution Engine**
+  - Load된 Class의 ByteCode를 실행하는 Runtime Module
+  - Class Loader를 통해 JVM 내의 Runtime Data Areas에 배치된 바이트 코드는 Execution Engine에 의해 실행(바이트 코드를 명령어 단위로 읽어서 실행)
+  
+
+- **Garbage Collector**
+  - Garbage Collector(GC)는 Heap 메모리 영역에 생성된 객체들 중에 참조되지 않은 객체들을 제거하는 역할을 한다. 
+  - GC의 동작시간은 일정하게 정해져 있지 않기 때문에 언제 객체를 정리할지는 알 수 없다. 
+  
+<br/><br/>
+
+
+
+
+### Class Loader
+
+![](https://images.velog.io/images/cham/post/6c84a1bc-7188-4c79-baa0-6e232899f1f0/image.png)
+
+<br/>
+
+
+로딩, 링크, 초기화 순으로 진행
+ 
+<br/>
+
+- **로딩**
+  - 클래스 로더가 .class 파일을 읽고 그 내용에 따라 적절한 바이너리 데이터를 만들고 “메소드” 영역에 저장
+  - 이때 메소드 영역에 저장하는 데이터
+    - FQCN(Fully Qualified Class Name) - 패키지명을 모두 포함한 클래스명
+    - 클래스인지 인터페이스인지 이넘인지 여부
+    - 메서드와 변수
+  - 로딩이 끝나면 해당 클래스 타입의 Class 객체를 생성하여 “힙” 영역에 저장
+
+- **링크**
+  - 검증(Verify), 준비(Prepare), 분석(Resolve(Optional)) 세 단계로 나눠져 있다.
+    - **검증(Verify)** : .class 파일 형식이 유효한지 체크한다.
+    - **준비(Prepare)** : 메모리를 준비하는 과정으로 static 변수와 기본 값에 필요한 메모리를 준비
+    - **분석(Resolve)** : 심볼릭 메모리 레퍼런스를 메서드 영역에 있는 실제 레퍼런스로 교체한다.
+       - 심볼릭 메모리 레퍼런스는 클래스가 로드가 되면 실제 힙영역의 레퍼런스 영역을 가르키는 것이 아니라 논리적인 주소만 가르키고 있는 것을 뜻한다. 이를 Resolve 단계에서 실제 힙 영역의 레퍼런스를 가리키게 한다. 
+       
+ - **초기화**
+   - Static 변수의 값을 할당한다.(static 블럭이 있다면 이때 실행된다.)
+   
+ <br/><br/>
+ 
+ 
+### Class Loader 종류 
+
+
+<br/>
+
+   
+클래스 로더는 계층 구조로 이뤄져 있으며 기본적으로 세가지 클래스 로더가 제공된다.
+   - **부트 스트랩**
+      - JAVA_HOME/lib에 있는 코어 자바 API를 제공한다. 최상위 우선순위를 가진 클래스 로더. 
+      - jre/lib/rt.jar을 로딩한다.
+        - 네이티브 코드로 구현되어 있다.
+   - **플랫폼** 
+     - JAVA_HOME/lib/ext 폴더 또는 java.ext.dirs 시스템 변수에 해당하는 위치에 있는 클래스를 읽는다.
+   - **애플리케이션** 
+     - 앱 ClassPath(앱을 실행 할 때 주는 -classpath 옵션 또는 java.class.path 환경변수의 값에 해당하는 위치)에서 클래스를 읽는다.
+
+
+ <br/><br/>
+ 
+ 
+### Class Loader 원칙
+
+
+<br/>
+
+- **Delegation**
+  - 클래스로딩 작업을 상위 클래스로더에 위임한다.
+
+- **Visibility**
+  - 하위 클래스로더는 상위 클래스로더의 내용을 볼 수 있지만 반대로는 볼 수 없다.
+
+- **Uniquesness**
+  - 하위 클래스로더는 상위 클래스로더가 로딩한 클래스를 다시 로딩하지 않게 해서 로딩된 클래스의 유일성을 보장한다.
+
+
+
+<br/><br/>
+
+ # 6. JDK와 JRE의 차이
+ 
+ 
+ <br/>
+ 
+
+- JRE(Java Runtime Environment)
+
+  - jvm 만 가지고는 자바 소스코드를 실행시킬 수 없다. jvm은 실제 돌아가는 프로그램이 아니라 자바 소스를 실행하기 위한 인터페이스(명세)에 가깝기 때문이다. 
+  - 실제로 작동하는 것은 JRE(java runtime environment)이다. 즉, jre 는 jvm의 구현체이다. 위에서 말한 클래스로더, gc등의 실제 코드들과, java 시스템 라이브러르 코드등이 합쳐져 있다.
+   - 실제 바이트코드를 실행하는 데는 jre만 있으면 된다.
+
+-  JDK(Java Development Kit)
+
+   - 자바 애플리케이션의 개발 환경이다. 실행 환경뿐만 아니라 소스 파일의 컴파일러 및 디버거 등 자바 애플리케이션을 개발하기 위한 도구가 포함되어 있다.
+   - JDK는 JRE + 개발을 위한 도구들 이라고 보면 된다
+
+<br/>
+
+애플리케이션을 JRE가 있으면 작동시킬 수 있다. 단, 운영할때 디버깅 및 분석 등을 하고자 하는 경우에는 JDK에 들어있는 도구가 필요하다. 따라서 서버 등의 운영 환경에 설치하는 경우에도 JRE보다는 JDK를 선택하는 것이 좋은 경우도 있다.
+
+ <br/><br/><br/> <br/><br/><br/>
+ 
+
+
+참조
+
+---
+
+
+ - [ClassLoader에 대해](https://nesoy.github.io/articles/2020-11/ClassLoader)
+ - [Java 클래스로더 훑어보기](https://homoefficio.github.io/2018/10/13/Java-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A1%9C%EB%8D%94-%ED%9B%91%EC%96%B4%EB%B3%B4%EA%B8%B0/)
+ - [Fundamental of JVM and Class Loader in java - Java JVM과 Class Loader의 동작 과정 이해](https://dailyworker.github.io/fundamental-JVM-classloader/)
+ - [1주차 과제: JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가](https://github.com/sangw0804/whiteship-live-study/issues/1)
+ - [백기선님과 함께하는 라이브 스터디](https://github.com/league3236/startJava/blob/master/live_study/week1.md)
+ - [[Java-Live-Study] 1주차 - 자바 소스 파일(.java)을 JVM으로 실행하는 과정 이해](https://gblee1987.tistory.com/173)
+
+ 
+                
+  
+  
