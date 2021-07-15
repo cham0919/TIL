@@ -13,15 +13,15 @@ public class TreeFileReader {
         BufferedReader inFile = new BufferedReader(new InputStreamReader(new FileInputStream("./tree.txt"),"EUC-KR"));
         boolean flag = false;
         String sLine = null;
+        StringBuilder sb = new StringBuilder();
         while( (sLine = inFile.readLine()) != null ) {
             if (Character.isDigit(sLine.charAt(2))) flag = true;
-            if (sLine.charAt(2) == 'o') return;
+            if (sLine.charAt(2) == 'o') break;
 
             if (flag) {
-                System.out.println(sLine); //읽어들인 문자열을 출력 합니다. }
+                sb.append(sLine + "\n");
             }
-
         }
-
+        System.out.println(sb.toString());
     }
 }
