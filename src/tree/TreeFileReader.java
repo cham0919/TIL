@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URLEncoder;
 
 public class TreeFileReader {
 
@@ -20,7 +18,7 @@ public class TreeFileReader {
     private final static String line = "│";
 
 
-    public void fileToString() throws IOException {
+    public String  fileToString() throws IOException {
         BufferedReader inFile = new BufferedReader(new InputStreamReader(new FileInputStream("./tree.txt"),"EUC-KR"));
         boolean flag = false;
         String sLine = null;
@@ -61,7 +59,7 @@ public class TreeFileReader {
             }
         }
 
-        System.out.println(sb.toString());
+        return sb.toString();
     }
 
 
