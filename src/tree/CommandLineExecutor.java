@@ -10,7 +10,7 @@ public class CommandLineExecutor {
 
     public static void main(String[] args) {
         // 실행
-        CommandLineExecutor.execute("tree /f");
+        CommandLineExecutor.execute("tree /f > tree.txt");
     }
 
     /**
