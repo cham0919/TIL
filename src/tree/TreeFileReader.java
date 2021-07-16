@@ -18,7 +18,7 @@ public class TreeFileReader {
     private final static String line = "│";
 
 
-    public String  fileToString() throws IOException {
+    public String fileToString() throws IOException {
         BufferedReader inFile = new BufferedReader(new InputStreamReader(new FileInputStream("./tree.txt"),"EUC-KR"));
         boolean flag = false;
         String sLine = null;

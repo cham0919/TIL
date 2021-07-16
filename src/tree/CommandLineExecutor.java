@@ -11,6 +11,11 @@ public class CommandLineExecutor {
     public static void main(String[] args) {
         // 실행
         CommandLineExecutor.execute("tree /f > tree.txt");
+        ReadMeUpdate readMeUpdate = new ReadMeUpdate();
+        readMeUpdate.readMeUpdate();
+        CommandLineExecutor.execute("git add README.md");
+        CommandLineExecutor.execute("git commit -m \"doc. README Update\"");
+        CommandLineExecutor.execute("git push origin main");
     }
 
     /**
@@ -76,7 +81,7 @@ public class CommandLineExecutor {
             if (errorOutput.toString() != null && errorOutput.toString().length() > 0) {
                 // shell 실행이 비정상 종료되었을 경우
                 System.out.println("오류");
-                System.out.println(successOutput.toString());
+                System.out.println(errorOutput.toString());
             }
 
         } catch (IOException e) {
