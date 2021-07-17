@@ -85,3 +85,14 @@
 │      [SOLID란.md](./4.%20SOLID/SOLID란.md)<br/>
 │      [SRP.md](./4.%20SOLID/SRP.md)<br/>
 │<br/>
+├─[5. JPA](./5.%20JPA)<br/>
+│      [3가지 상속 관계 Mapping 전략.md](./5.%20JPA/3가지%20상속%20관계%20Mapping%20전략.md)<br/>
+│      [Entity Mapping Annotation.md](./5.%20JPA/Entity%20Mapping%20Annotation.md)<br/>
+│      [ORM, Hibernate 그리고 JPA.md](./5.%20JPA/ORM,%20Hibernate%20그리고%20JPA.md)<br/>
+│      [객체지향 쿼리 언어.md](./5.%20JPA/객체지향%20쿼리%20언어.md)<br/>
+│      [복합 키 매핑.md](./5.%20JPA/복합%20키%20매핑.md)<br/>
+│      [연관관계 Mapping.md](./5.%20JPA/연관관계%20Mapping.md)<br/>
+│      [영속성 컨텍스트(Persistence Context).md](./5.%20JPA/영속성%20컨텍스트(Persistence%20Context).md)<br/>
+│      [임베디드와 컬렉션 값 타입.md](./5.%20JPA/임베디드와%20컬렉션%20값%20타입.md)<br/>
+│      [프록시와 즉시로딩 그리고 지연로딩.md](./5.%20JPA/프록시와%20즉시로딩%20그리고%20지연로딩.md)<br/>
+│<br/>
