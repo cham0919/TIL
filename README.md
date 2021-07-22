@@ -88,7 +88,9 @@
 ├─[5. JPA](./5.%20JPA)<br/>
 │      [3가지 상속 관계 Mapping 전략.md](./5.%20JPA/3가지%20상속%20관계%20Mapping%20전략.md)<br/>
 │      [Entity Mapping Annotation.md](./5.%20JPA/Entity%20Mapping%20Annotation.md)<br/>
+│      [JPQL.md](./5.%20JPA/JPQL.md)<br/>
 │      [ORM, Hibernate 그리고 JPA.md](./5.%20JPA/ORM,%20Hibernate%20그리고%20JPA.md)<br/>
+│      [QueryDSL.md](./5.%20JPA/QueryDSL.md)<br/>
 │      [객체지향 쿼리 언어.md](./5.%20JPA/객체지향%20쿼리%20언어.md)<br/>
 │      [복합 키 매핑.md](./5.%20JPA/복합%20키%20매핑.md)<br/>
 │      [연관관계 Mapping.md](./5.%20JPA/연관관계%20Mapping.md)<br/>
