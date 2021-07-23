@@ -14,6 +14,7 @@
 │      [리스트.md](./0.%20Data%20Structure/리스트.md)<br/>
 │      [문자열 검색.md](./0.%20Data%20Structure/문자열%20검색.md)<br/>
 │      [신장트리.md](./0.%20Data%20Structure/신장트리.md)<br/>
+│      [크루스칼_알고리즘.md](./0.%20Data%20Structure/크루스칼_알고리즘.md)<br/>
 │<br/>
 ├─[1. Java](./1.%20Java)<br/>
 │  └─[Java_Live_Study](./1.%20Java/Java_Live_Study)<br/>
