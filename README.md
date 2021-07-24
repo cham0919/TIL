@@ -24,6 +24,7 @@
 │          [4주차-제어문.md](./1.%20Java/Java_Live_Study/4주차-제어문.md)<br/>
 │          [5주차-클래스.md](./1.%20Java/Java_Live_Study/5주차-클래스.md)<br/>
 │          [6주차-상속.md](./1.%20Java/Java_Live_Study/6주차-상속.md)<br/>
+│          [7주차-패키지.md](./1.%20Java/Java_Live_Study/7주차-패키지.md)<br/>
 │<br/>
 ├─[2. Python](./2.%20Python)<br/>
 │       [클래스와 캡슐화.md](./2.%20Python/클래스와%20캡슐화.md)<br/>
