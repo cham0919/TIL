@@ -93,6 +93,7 @@ Isolation Level에 대한 조정은, 동시성과 데이터 무결성에 연관�
   ---
   
   - [트랜잭션 격리 수준(Transaction Isolation Level)](https://github.com/gyoogle/tech-interview-for-developer/blob/master/Computer%20Science/Database/Transaction%20Isolation%20Level.md)
+  - [[Spring] @Transactional - 2 isolation (격리수준)](https://n1tjrgns.tistory.com/267)
  
   
   
