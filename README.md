@@ -27,7 +27,7 @@
 
 ---
 - #### Java_Live_Study
-  - [01. JVM](.\1.%20Java\Java_Live_Study\01.%20JVM.md)
+  - [01. JVM](./1.%20Java/Java_Live_Study/01.%20JVM.md)
   - [02. 자바 데이터 타입, 변수 그리고 배열](.\1.%20Java\Java_Live_Study\02.%20자바%20데이터%20타입,%20변수%20그리고%20배열.md)
   - [03. 연산자](.\1.%20Java\Java_Live_Study\03.%20연산자.md)
   - [04. 제어문](.\1.%20Java\Java_Live_Study\04.%20제어문.md)
