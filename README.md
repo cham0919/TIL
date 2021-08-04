@@ -8,7 +8,6 @@
 
 ## 📌  0. Data Structure
 
----
 - [Hash](./0.%20Data%20Structure/Hash.md)
 - [Queue](./0.%20Data%20Structure/Queue.md)
 - [Sort](./0.%20Data%20Structure/Sort.md)
@@ -25,7 +24,6 @@
 
 ## 📌  1. Java
 
----
 - ### Java_Live_Study
   - [01. JVM](./1.%20Java/Java_Live_Study/01.%20JVM.md)
   - [02. 자바 데이터 타입, 변수 그리고 배열](./1.%20Java/Java_Live_Study/02.%20자바%20데이터%20타입,%20변수%20그리고%20배열.md)
@@ -47,7 +45,6 @@
 
 ## 📌  2. Python
 
----
 - [ 클래스와 캡슐화](./2.%20Python/%20클래스와%20캡슐화.md)
 - [Class](./2.%20Python/Class.md)
 - [Collections](./2.%20Python/Collections.md)
@@ -78,7 +75,6 @@
 
 ## 📌  3. Design Pattern
 
----
 - [데코레이터 패턴(Decorator pattern)](./3.%20Design%20Pattern/데코레이터%20패턴(Decorator%20pattern).md)
 - [디자인 패턴(Design pattern)](./3.%20Design%20Pattern/디자인%20패턴(Design%20pattern).md)
 - [메멘토 패턴 (Memento Pattern)](./3.%20Design%20Pattern/메멘토%20패턴%20(Memento%20Pattern).md)
@@ -108,7 +104,6 @@
 
 ## 📌  4. SOLID
 
----
 - [0. SOLID란](./4.%20SOLID/0.%20SOLID란.md)
 - [1. SRP](./4.%20SOLID/1.%20SRP.md)
 - [2. OCP](./4.%20SOLID/2.%20OCP.md)
@@ -120,7 +115,6 @@
 
 ## 📌  5. JPA
 
----
 - [3가지 상속 관계 Mapping 전략](./5.%20JPA/3가지%20상속%20관계%20Mapping%20전략.md)
 - [Entity Mapping Annotation](./5.%20JPA/Entity%20Mapping%20Annotation.md)
 - [JPQL](./5.%20JPA/JPQL.md)
@@ -137,14 +131,12 @@
 
 ## 📌  6. Web
 
----
 - [REST API](./6.%20Web/REST%20API.md)
 
 <br/>
 
 ## 📌  7. Spring
 
----
 - [AOP](./7.%20Spring/AOP.md)
 - [IOC와 DI](./7.%20Spring/IOC와%20DI.md)
 - [Spring MVC Framework](./7.%20Spring/Spring%20MVC%20Framework.md)
@@ -154,7 +146,6 @@
 
 ## 📌  8. DataBase
 
----
 - [DB 트랜잭션(Transaction)](./8.%20DataBase/DB%20트랜잭션(Transaction).md)
 - [Index(인덱스)](./8.%20DataBase/Index(인덱스).md)
 - [트랜잭션 격리 수준(Transaction Isolation Level) ](./8.%20DataBase/트랜잭션%20격리%20수준(Transaction%20Isolation%20Level)%20.md)
@@ -163,7 +154,6 @@
 
 ## 📌  9. CS
 
----
 - [OSI 7 계층](./9.%20CS/OSI%207%20계층.md)
 - [[TCP] 3 way handshake & 4 way handshake](./9.%20CS/[TCP]%203%20way%20handshake%20&%204%20way%20handshake.md)
 
@@ -171,6 +161,5 @@
 
 ## 📌  10. Cloud
 
----
 - [Docker](./10.%20Cloud/Docker.md)
 - [IaaS, PaaS, SaaS](./10.%20Cloud/IaaS,%20PaaS,%20SaaS.md)
