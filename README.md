@@ -6,7 +6,7 @@
 
 <br/>
 
-### 📌  0. Data Structure
+## 📌  0. Data Structure
 
 ---
 - [Hash](./0.%20Data%20Structure/Hash.md)
@@ -23,7 +23,7 @@
 
 <br/>
 
-### 📌  1. Java
+## 📌  1. Java
 
 ---
 - ### Java_Live_Study
@@ -45,7 +45,7 @@
 
 <br/>
 
-### 📌  2. Python
+## 📌  2. Python
 
 ---
 - [ 클래스와 캡슐화](./2.%20Python/%20클래스와%20캡슐화.md)
@@ -76,7 +76,7 @@
 
 <br/>
 
-### 📌  3. Design Pattern
+## 📌  3. Design Pattern
 
 ---
 - [데코레이터 패턴(Decorator pattern)](./3.%20Design%20Pattern/데코레이터%20패턴(Decorator%20pattern).md)
@@ -106,7 +106,7 @@
 
 <br/>
 
-### 📌  4. SOLID
+## 📌  4. SOLID
 
 ---
 - [0. SOLID란](./4.%20SOLID/0.%20SOLID란.md)
@@ -118,7 +118,7 @@
 
 <br/>
 
-### 📌  5. JPA
+## 📌  5. JPA
 
 ---
 - [3가지 상속 관계 Mapping 전략](./5.%20JPA/3가지%20상속%20관계%20Mapping%20전략.md)
@@ -135,14 +135,14 @@
 
 <br/>
 
-### 📌  6. Web
+## 📌  6. Web
 
 ---
 - [REST API](./6.%20Web/REST%20API.md)
 
 <br/>
 
-### 📌  7. Spring
+## 📌  7. Spring
 
 ---
 - [AOP](./7.%20Spring/AOP.md)
@@ -152,7 +152,7 @@
 
 <br/>
 
-### 📌  8. DataBase
+## 📌  8. DataBase
 
 ---
 - [DB 트랜잭션(Transaction)](./8.%20DataBase/DB%20트랜잭션(Transaction).md)
@@ -161,7 +161,7 @@
 
 <br/>
 
-### 📌  9. CS
+## 📌  9. CS
 
 ---
 - [OSI 7 계층](./9.%20CS/OSI%207%20계층.md)
@@ -169,7 +169,7 @@
 
 <br/>
 
-### 📌  10. Cloud
+## 📌  10. Cloud
 
 ---
 - [Docker](./10.%20Cloud/Docker.md)
