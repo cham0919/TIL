@@ -1,5 +1,7 @@
 package readme;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +12,6 @@ public class CommandLineExecutor {
 
     public static void main(String[] args) {
         // 실행
-        CommandLineExecutor.execute("tree /f > tree.txt");
         ReadMeUpdate readMeUpdate = new ReadMeUpdate();
 //        readMeUpdate.readMeUpdate();
         CommandLineExecutor.execute("git add README.md");
@@ -24,6 +25,7 @@ public class CommandLineExecutor {
      * @param cmd
      */
     public static void execute(String cmd) {
+        System.out.println(cmd);
         Process process = null;
         Runtime runtime = Runtime.getRuntime();
         StringBuffer successOutput = new StringBuffer(); // 성공 스트링 버퍼
@@ -71,11 +73,9 @@ public class CommandLineExecutor {
 
             // shell 실행이 정상 종료되었을 경우
             if (process.exitValue() == 0) {
-                System.out.println("성공");
                 System.out.println(successOutput.toString());
             } else {
                 // shell 실행이 비정상 종료되었을 경우
-                System.out.println("비정상 종료");
                 System.out.println(successOutput.toString());
             }
 
@@ -83,7 +83,6 @@ public class CommandLineExecutor {
             // shell 실행시 에러가 발생
             if (errorOutput.toString() != null && errorOutput.toString().length() > 0) {
                 // shell 실행이 비정상 종료되었을 경우
-                System.out.println("오류");
                 System.out.println(errorOutput.toString());
             }
 
