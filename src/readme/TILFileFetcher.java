@@ -1,6 +1,7 @@
 package readme;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -12,7 +13,17 @@ public class TILFileFetcher {
 
     public File[] getFiles(){
         File TILDir =  new File("./");
-        return getDirArray(TILDir);
+        File[] files = getDirArray(TILDir);
+        return Arrays.stream(files).sorted((o1, o2) -> compateToFilePrefixNumber(o1, o2))
+        .toArray(File[]::new);
+    }
+
+    private int compateToFilePrefixNumber(File o1, File o2){
+        String o1Name = o1.getName();
+        String o2Name = o2.getName();
+        return Integer.valueOf(o1Name.substring(0, o1Name.indexOf("."))).compareTo(
+                Integer.valueOf(o2Name.substring(0, o2Name.indexOf(".")))
+        );
     }
 
     private File[] getDirArray(File file) {

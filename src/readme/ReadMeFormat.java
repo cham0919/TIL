@@ -22,13 +22,13 @@ public enum ReadMeFormat {
             String fileName = FileUtils.getFileName(file);
             String filePath = FileUtils.getFilePath(file);
             return line.replace("{fileName}", fileName)
-                    .replace("{filePath}", filePath);
+                    .replace("{filePath}", filePath.replace("\\", "/"));
         }
     },
 
     DIR("\n<br/>\n" +
             "\n" +
-            "### \uD83D\uDCCC  {fileName}\n" +
+            "## \uD83D\uDCCC  {fileName}\n" +
             "\n" +
             "---\n"){
         @Override
@@ -37,7 +37,7 @@ public enum ReadMeFormat {
         }
     },
 
-    SUB_DIR("- #### {fileName}\n"){
+    SUB_DIR("- ### {fileName}\n"){
         @Override
         public String getLine(File file) {
             return line.replace("{fileName}", file.getName());
