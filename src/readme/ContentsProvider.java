@@ -18,7 +18,7 @@ public class ContentsProvider {
     }
 
     public String getContents(File[] files){
-        StringBuilder sb = new StringBuilder(ReadMeFormat.HEADER.getLine());
+        StringBuilder sb = new StringBuilder(ReadMeFormat.HEADER.getLine(null));
         for (File file : files) {
             sb.append(dirToContent(file));
             dfsFiles(sb, file.listFiles(), "");
