@@ -29,8 +29,7 @@ public enum ReadMeFormat {
     DIR("\n<br/>\n" +
             "\n" +
             "## \uD83D\uDCCC  {fileName}\n" +
-            "\n" +
-            "---\n"){
+            "\n"){
         @Override
         public String getLine(File file) {
             return line.replace("{fileName}", file.getName());
