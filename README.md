@@ -45,13 +45,6 @@
 
 <br/>
 
-### 📌  10. Cloud
-
----
-- [Docker](./10.%20Cloud/Docker.md)
-
-<br/>
-
 ### 📌  2. Python
 
 ---
@@ -173,3 +166,10 @@
 ---
 - [OSI 7 계층](./9.%20CS/OSI%207%20계층.md)
 - [[TCP] 3 way handshake & 4 way handshake](./9.%20CS/[TCP]%203%20way%20handshake%20&%204%20way%20handshake.md)
+
+<br/>
+
+### 📌  10. Cloud
+
+---
+- [Docker](./10.%20Cloud/Docker.md)
