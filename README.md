@@ -45,6 +45,12 @@
 
 <br/>
 
+### 📌  10. Cloud
+
+---
+
+<br/>
+
 ### 📌  2. Python
 
 ---
@@ -76,33 +82,33 @@
 
 <br/>
 
-### 📌  3. 디자인 패턴
+### 📌  3. Design Pattern
 
 ---
-- [데코레이터 패턴(Decorator pattern)](.\3.%20디자인%20패턴\데코레이터%20패턴(Decorator%20pattern).md)
-- [디자인 패턴(Design pattern)](.\3.%20디자인%20패턴\디자인%20패턴(Design%20pattern).md)
-- [메멘토 패턴 (Memento Pattern)](.\3.%20디자인%20패턴\메멘토%20패턴%20(Memento%20Pattern).md)
-- [방문자 패턴 (Visitor pattern)](.\3.%20디자인%20패턴\방문자%20패턴%20(Visitor%20pattern).md)
-- [브릿지 패턴(Bridge Pattern)](.\3.%20디자인%20패턴\브릿지%20패턴(Bridge%20Pattern).md)
-- [빌더 패턴(Builder pattern)](.\3.%20디자인%20패턴\빌더%20패턴(Builder%20pattern).md)
-- [스테이트 패턴(State Pattern)](.\3.%20디자인%20패턴\스테이트%20패턴(State%20Pattern).md)
-- [스트래티지 패턴(Strategy Pattern)](.\3.%20디자인%20패턴\스트래티지%20패턴(Strategy%20Pattern).md)
-- [싱글톤 패턴(Singleton Pattern)](.\3.%20디자인%20패턴\싱글톤%20패턴(Singleton%20Pattern).md)
-- [어댑터 패턴(adapter pattern)](.\3.%20디자인%20패턴\어댑터%20패턴(adapter%20pattern).md)
-- [옵저버 패턴(Observer Pattern)](.\3.%20디자인%20패턴\옵저버%20패턴(Observer%20Pattern).md)
-- [이터레이터 패턴 (iterator pattern)](.\3.%20디자인%20패턴\이터레이터%20패턴%20(iterator%20pattern).md)
-- [인터프리터 패턴(Interpreter Pattern)](.\3.%20디자인%20패턴\인터프리터%20패턴(Interpreter%20Pattern).md)
-- [중재자 패턴(Mediator Pattern)](.\3.%20디자인%20패턴\중재자%20패턴(Mediator%20Pattern).md)
-- [책임 연쇄 패턴(chain-of-responsibility pattern)](.\3.%20디자인%20패턴\책임%20연쇄%20패턴(chain-of-responsibility%20pattern).md)
-- [추상 팩토리 패턴(Abstract Factory Pattern)](.\3.%20디자인%20패턴\추상%20팩토리%20패턴(Abstract%20Factory%20Pattern).md)
-- [커맨드 패턴 (Command Pattern)](.\3.%20디자인%20패턴\커맨드%20패턴%20(Command%20Pattern).md)
-- [컴포지트 패턴(Composite Pattern)](.\3.%20디자인%20패턴\컴포지트%20패턴(Composite%20Pattern).md)
-- [템플릿 메서드 패턴(Template Method Pattern)](.\3.%20디자인%20패턴\템플릿%20메서드%20패턴(Template%20Method%20Pattern).md)
-- [팩토리 메서드 패턴(Factory method pattern)](.\3.%20디자인%20패턴\팩토리%20메서드%20패턴(Factory%20method%20pattern).md)
-- [퍼사드 패턴(Facade Pattern)](.\3.%20디자인%20패턴\퍼사드%20패턴(Facade%20Pattern).md)
-- [프로토타입 패턴(Prototype Pattern)](.\3.%20디자인%20패턴\프로토타입%20패턴(Prototype%20Pattern).md)
-- [프록시 패턴(Proxy Pattern)](.\3.%20디자인%20패턴\프록시%20패턴(Proxy%20Pattern).md)
-- [플라이웨이트 패턴(Flyweight Pattern)](.\3.%20디자인%20패턴\플라이웨이트%20패턴(Flyweight%20Pattern).md)
+- [데코레이터 패턴(Decorator pattern)](.\3.%20Design%20Pattern\데코레이터%20패턴(Decorator%20pattern).md)
+- [디자인 패턴(Design pattern)](.\3.%20Design%20Pattern\디자인%20패턴(Design%20pattern).md)
+- [메멘토 패턴 (Memento Pattern)](.\3.%20Design%20Pattern\메멘토%20패턴%20(Memento%20Pattern).md)
+- [방문자 패턴 (Visitor pattern)](.\3.%20Design%20Pattern\방문자%20패턴%20(Visitor%20pattern).md)
+- [브릿지 패턴(Bridge Pattern)](.\3.%20Design%20Pattern\브릿지%20패턴(Bridge%20Pattern).md)
+- [빌더 패턴(Builder pattern)](.\3.%20Design%20Pattern\빌더%20패턴(Builder%20pattern).md)
+- [스테이트 패턴(State Pattern)](.\3.%20Design%20Pattern\스테이트%20패턴(State%20Pattern).md)
+- [스트래티지 패턴(Strategy Pattern)](.\3.%20Design%20Pattern\스트래티지%20패턴(Strategy%20Pattern).md)
+- [싱글톤 패턴(Singleton Pattern)](.\3.%20Design%20Pattern\싱글톤%20패턴(Singleton%20Pattern).md)
+- [어댑터 패턴(adapter pattern)](.\3.%20Design%20Pattern\어댑터%20패턴(adapter%20pattern).md)
+- [옵저버 패턴(Observer Pattern)](.\3.%20Design%20Pattern\옵저버%20패턴(Observer%20Pattern).md)
+- [이터레이터 패턴 (iterator pattern)](.\3.%20Design%20Pattern\이터레이터%20패턴%20(iterator%20pattern).md)
+- [인터프리터 패턴(Interpreter Pattern)](.\3.%20Design%20Pattern\인터프리터%20패턴(Interpreter%20Pattern).md)
+- [중재자 패턴(Mediator Pattern)](.\3.%20Design%20Pattern\중재자%20패턴(Mediator%20Pattern).md)
+- [책임 연쇄 패턴(chain-of-responsibility pattern)](.\3.%20Design%20Pattern\책임%20연쇄%20패턴(chain-of-responsibility%20pattern).md)
+- [추상 팩토리 패턴(Abstract Factory Pattern)](.\3.%20Design%20Pattern\추상%20팩토리%20패턴(Abstract%20Factory%20Pattern).md)
+- [커맨드 패턴 (Command Pattern)](.\3.%20Design%20Pattern\커맨드%20패턴%20(Command%20Pattern).md)
+- [컴포지트 패턴(Composite Pattern)](.\3.%20Design%20Pattern\컴포지트%20패턴(Composite%20Pattern).md)
+- [템플릿 메서드 패턴(Template Method Pattern)](.\3.%20Design%20Pattern\템플릿%20메서드%20패턴(Template%20Method%20Pattern).md)
+- [팩토리 메서드 패턴(Factory method pattern)](.\3.%20Design%20Pattern\팩토리%20메서드%20패턴(Factory%20method%20pattern).md)
+- [퍼사드 패턴(Facade Pattern)](.\3.%20Design%20Pattern\퍼사드%20패턴(Facade%20Pattern).md)
+- [프로토타입 패턴(Prototype Pattern)](.\3.%20Design%20Pattern\프로토타입%20패턴(Prototype%20Pattern).md)
+- [프록시 패턴(Proxy Pattern)](.\3.%20Design%20Pattern\프록시%20패턴(Proxy%20Pattern).md)
+- [플라이웨이트 패턴(Flyweight Pattern)](.\3.%20Design%20Pattern\플라이웨이트%20패턴(Flyweight%20Pattern).md)
 
 <br/>
 
