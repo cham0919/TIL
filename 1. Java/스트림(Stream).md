@@ -152,22 +152,26 @@ Stream.of(1,2,3,4,5,6,7,8,9)
 takeWhile를 이용하면 무한 스트림을 포함한 모든 스트림에 Predicate를 적용하여 스트림을 슬라이스 할 수 있다.
 
 
+<br/>
+
 ##### DROPWHILE
 
 dropWhile은 정반대의 작업을 수행한다. Predicate가 처음으로 거짓이 되는 지점까지의 발견된 요소를 버린다.
+
+<br/>
 
 #### 스트림 축소
 
 limit() 사용하여 주어진 값 이하 크리를 갖는 새로은 스트림을 가질 수 있다.
 
-
+<br/>
 
 #### 요소 건너뛰기
 
 skip() 사용하여 처음 n개 요소를 제외한 스트림을 얻을 수 있다.
 
 
-<br/>
+<br/><br/>
 
 ### 매핑
 
@@ -182,6 +186,8 @@ List<String> names = menu.stream()
 ```
 
 위와 같이 Dish라는 객체의 스트림에서 Name을 추출하여 String 컬렉션으로 변환하는 용도로 사용 가능하다.
+
+<br/>
 
 #### 스트림 평면화
 
@@ -211,11 +217,13 @@ flatMap을 사용하여 스트림에 대해 평면화를 사용할 수 있다.
 
 로 평면화 사용이 가능하다.
 
-<br/>
+<br/><br/>
 
 ### 검색과 매칭
 
 특정 속성이 데이터 집합에 있는지 여부를 검색하기 위해 스트림 api는 allMatch, anyMatch, noneMatch, findFirst, findAny 등을 지원한다.
+
+<br/>
 
 #### anyMatch
 
@@ -223,11 +231,16 @@ Predicate가 주어진 스트림에서 적어도 한 요소가 일치하는지 �
 
 return값은 boolean으로 반환하고 최종 연산이 속한다.
 
+<br/>
+
 #### allMatch
 
 스트림의 모든 요소가 주어진 Predicate와 일치하는지 검사한다.
 
 return값은 boolean으로 반환하고 최종 연산이 속한다.
+
+
+<br/>
 
 #### noneMatch
 
@@ -239,9 +252,13 @@ return값은 boolean으로 반환하고 최종 연산이 속한다.
 
 * 쇼트서킷 : 표현식에서 하나라도 거짓이라는 결과가 나오면 나머지 표현식의 결과와 상과없이 전체 결과도 거짓이 되는 것
 
+<br/>
+
 #### findAny
 
 현재 스트림에서 임의의 요소를 반환한다. 
+
+<br/>
 
 #### findFirst
 
@@ -249,7 +266,7 @@ return값은 boolean으로 반환하고 최종 연산이 속한다.
 
 논리적인 데이터 순서가 정해져있는 스트림에서 처음 요소를 찾을 때 사용한다.
 
-<br/>
+<br/><br/>
 
 ### 리듀싱
 
@@ -262,11 +279,17 @@ reduce는 두 개의 인수를 갖는다.
 - 초깃값 0
 - 두 요소를 조합해서 새로운 값을 만드는 BinaryOperator<T>
 
+
+<br/>
+
 #### 요소의 합
 
 ```java
 int sum = numbers.stream().reduce(0, (a, b) -> a + b);
 ```
+
+
+<br/>
 
 #### 초깃값 없음
 
@@ -276,6 +299,7 @@ int sum = numbers.stream().reduce(0, (a, b) -> a + b);
 Optional<Integer> sum = numbers.stream().reduce((a, b) -> a + b);
 ```
 
+<br/><br/>
 
 ### 연산 정리
 
@@ -301,13 +325,16 @@ Optional<Integer> sum = numbers.stream().reduce((a, b) -> a + b);
  |count|최종 연산|long|| 
 
 
-<br/>
+<br/><br/>
 
 ## 기본형 특화 스트림
 
 자바8에서는 박싱 비용을 줄이기 위한 기본형 특화 스트림을 제공한다.
 
 특화 스트림은 오직 박싱 과정에서 일어나는 효율성과 관련있으며 스트림에 추가 기능을 제공하지 않는다.
+
+
+<br/>
 
 ### 숫자 스트림으로 매핑
 
@@ -321,6 +348,8 @@ int calories = menu.stream()
                    .sum();
 ```
 
+<br/>
+
 ### 객체 스트림으로 복원
 
 IntStream의 amp 연산은 int를 인수로 받아 int를 반환하는 람다를 인수로 받는다.
@@ -331,6 +360,8 @@ IntStream의 amp 연산은 int를 인수로 받아 int를 반환하는 람다를
 IntStream intStream = menu.stream().mapToInt(Dish::getCalories);
 Stream<Integer> stream = intStream.boxed();
 ```
+
+<br/>
 
 ### 기본값 Optional
 
@@ -347,6 +378,8 @@ OptionalInt maxCalories = menu.stream()
 int max = maxCalories.orElse(1); // 값이 없을 때 기본 값을 설정
 ```
 
+<br/>
+
 ### 숫자 범위
 
 자바 8의 ```IntStream```, ```LongStream```에서는 ```range```, ```rangeClosed``` 두가지 메서드를 제공한다.
@@ -362,7 +395,7 @@ long evenNumCnt = IntStream.rangeClosed(1, 100)
                 .count();
 ```
 
-<br/>
+<br/><br/>
 
 ## 스트림 생성
 
@@ -373,6 +406,8 @@ long evenNumCnt = IntStream.rangeClosed(1, 100)
 ```java
 Stream<String> stream = Stream.of("TEST1", "TEST2", "TEST3");
 ```
+
+<br/>
 
 ### null이 될 수 있는 객체로 스트림 생성
 
@@ -388,6 +423,7 @@ homeValue == null ? Stream.empty() : Stream.of(homeValue);
 Stream<String> homeValueStream =
 Stream.ofNullable(System.getProperty("home"));
 ```
+ <br/>
  
 ### 배열로 스트림 생성
 
@@ -397,6 +433,8 @@ Stream.ofNullable(System.getProperty("home"));
 int[] numbers = {2, 3, 5 ,7};
 int sum = Arrays.stream(numbers).sum();
 ```
+
+<br/>
 
 ### 파일로 스트림 만들기
 
@@ -421,11 +459,15 @@ long uniqueWords = 0;
 
 Stream 인터페이스는 AutoCloseable 인터페이스를 구현하고 있기 때문에 try 블록 내의 자원은 자동으로 관리된다.
 
+<br/>
+
 ### 함수로 무한 스트림 생성
 
 스트림 api는 함수에서 스트림을 만들 수 있는 정적 메서드 ```Stream.iterate```, ```Stream.generate```를 제공한다.
 
 이를 이용해 무한 스트림, 즉 고정된 컬렉션에서 고정된 크기의 스트림이 아닌 고정되지 않은 스트림을 만들 수 있다.
+
+<br/>
 
 #### iterate
 
@@ -450,6 +492,8 @@ Stream.iterate(0, n -> n < 100, n -> n + 4)
 
 작업의 수행을 쉽게 제한할 수 있다.
 
+<br/>
+
 #### generate
 
 generate는 생성된 각 값을 연속적으로 계산하지 않는다.
@@ -461,7 +505,7 @@ Stream.generate(Math::random)
                 .forEach(System.out::println);
 ```
 
-<br/>
+<br/><br/>
 
 ## Collector
 
@@ -473,7 +517,12 @@ Collectors에서 제공하는 메서드의 기능은 크게 세 가지로 구분
 - 요소 그룹화
 - 요소 분할
 
+<br/>
+
+
 ### reducing과 요약
+
+
 
 #### 최댓값과 최솟값 검색
 
@@ -488,6 +537,8 @@ Optional<Dish> dish = menu.stream()
                 .collect(maxBy(dishCompator));
 ```
 
+<br/>
+
 #### 요약 연산
 
 Collectors에서는 ```Collectors.summingInt``` 메서드를 제공한다.
@@ -500,6 +551,8 @@ int totalCalories = menu.stream().collect(summingInt(Dish::getCalories));
 ```
 
 이 외에도 ```Collectors.averagingInt```, ```Collectors.averagingLong```, ```Collectors.averagingDouble``` 등을 제공한다.
+
+<br/>
 
 ##### 다중 연산
 
@@ -514,6 +567,7 @@ System.out.println(menuStatistics);
 
 이 역시 long, double을 지원하는 메서드도 존재한다.
 
+<br/>
 
 #### 문자열 연결
 
@@ -528,7 +582,7 @@ System.out.println(shortMenu);
 
 ```toString```을 내부적으로 구현하고 있다면 map은 생략가능하다.
 
-<br/>
+<br/><br/>
 
 ### 그룹화
 
@@ -540,6 +594,8 @@ Map<Dish.Type, List<Dish>> typeListMap = menu.stream().collect(groupingBy(Dish::
 ```
 
 함수를 기준으로 스트림이 그룹화되므로 이를 분류 함수라 한다.
+
+<br/>
 
 #### 그룹화된 요소 조작
 
@@ -576,6 +632,7 @@ Map<Dish.Type, Set<String>> typeListMap = menu.stream()
                         flatMapping(dish -> dishTags.get(dish.getName()).stream(), toSet())));
 ```
 
+<br/>
 
 #### 다수준 그룹화
 
@@ -597,6 +654,8 @@ Map<Dish.Type, Map<CaloricLevel, List<Dish>>> typeListMap = menu.stream()
                 ));
 ```
 
+<br/>
+
 #### 서브그룹으로 데이터 수집
 
 groupingBy로 넘겨주는 컬렉터의 형식은 제한이 없다.
@@ -609,6 +668,8 @@ groupingBy로 넘겨주는 컬렉터의 형식은 제한이 없다.
 Map<Dish.Type, Long> typesCount = menu.stream().collect(
                 groupingBy(Dish::getType, counting();
 ```  
+
+<br/>
 
 #### 결과를 다른 형식에 적용하기
 
@@ -626,7 +687,7 @@ Map<Dish.Type, Dish> mostCaloricByType =
 ```
 
 
-<br/>
+<br/><br/>
 
 ## 분할
 
@@ -646,7 +707,71 @@ Map<Boolean, Map<Dish.Type, List<Dish>>> vegetarianDishesByType =
                         groupingBy(Dish::getType))); // 두번째 컬렉터
 ```
 
+<br/><br/>
+
+## 병렬 처리
+
+컬렉션은 데이터 처리 속도를 높이려고 따로 고민할 필요가 없다. 컴퓨터의 멀티코어를 활용해서 파이프라인 연산을 실행할 수 있다는 점이 특징이다.
+
+### 병렬 스트림
+
+컬렉션에 ```parallelStream```을 호출하면 병렬 스트림이 생성된다.
+
+순차 스트림에서 병렬 스트림으로 변환하려면 ```parallel()```을 추가하기만 하면 된다. 
+
+```java
+// 병렬 처리 합산 구하기
+Stream.iterate(1L, n -> n + 1)
+                .limit(n)
+                .parallel()
+                .reduce(0L, Long::sum);
+```
+
+반대로 ```sequential()```을 호출하면 병렬 스트림이 순차 스트림으로 변한다.
+
+```parallel()```과 ```sequential()``` 중 최종적으로 호출된 메서드가 전체 파이프라인에 영향을 미친다. 
+
+### 주의사항
+
+데이터 양의 기준으로 병렬 스트림 사용을 결정하는건 적절하지 않다.
+
+병렬 스트림을 오용하게 되면 오히려 성능이 저하될 수 있는데 이 부분을 조심해야한다.
+
+다음은 병렬 스트림을 효과적으로 사용하기 위한 주의사항이다.
+
+- 확신이 없을 때는 직접 측정하라
+  - 잘 모르겠다면 적절한 벤치마크로 직접 성능을 측정하는 것이 바람직하다
+
+- 박싱을 주의하라
+  - 자동 박싱과 언박싱은 성능 저하의 요소이다. 기본형 특화 스트림을 사용하여 이를 주의하자
+
+- 순차 스트림보다 벙렬 스트림에서 성능이 떨어지는 연산이 있다
+  - limit나 findFirst처럼 **요소의 순서에 의존하는 연산**은 병렬에서 비싼 비용이 든다.
+
+- 스트림에서 수행하는 전체 파이프라인 연산 비용을 고려하라
+  - 처리해야할 요소가 N개, 하나의 요소를 처리하는데 드는 비용이 Q라면 전체 처리 비용은 N*Q다
+  - Q가 높아진다는 것은 병렬 스트림으로 성능을 개선할 수 있는 여지가 있다는 것을 의미한다.
+
+- 소량의 데이터는 병렬 스트림이 도움되지 않는다.
+  - 소량의 데이터를 처리하는 상황에서는 병렬화 과정에서 생기는 부가 비용을 상쇄할 수 있을 만큼의 이득을 얻지 못한다.
+
+- 스트림을 구성하는 자료구조를 확인하라
+  - 예를 들어 ArrayList는 LinkedList보다 효율적으로 분할할 수 있다.(LinkedList는 모든 요소를 탐색해야 분할이 가능하기 때문)
+  - 또한 range로 만든 기본형 스트림도 쉽게 분해가능하다.
+
+- 스트림의 특성과 파이프라인의 중간 연산이 스트림의 특정을 어떻게 바꾸는지에 따라 분해 과정의 성능이 달라질 수 있다.
+  - 예를들어 sized 스트림은 정확히 같은 크기의 두 스트림으로 분할 가능하므로 병렬 처리에 효과적이다.
+  - 반면 필터 연산은 길이를 예측할 수 없으므로 병렬 처리에 효과적인지 알 수 없다
+
+- 최종 연산의 병합과정 비용을 확인하라
+  - 병합 과정의 비용이 비싸다면 연산 과정에서 얻은 이익이 상쇄될 수 있다. 
+
+
+
+
+
 <br/><br/><br/><br/>
+
 
 ---
 참조:
