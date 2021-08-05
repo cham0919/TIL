@@ -460,3 +460,198 @@ Supplier\<T>를 인수로 받아 새로운 값을 생성한다.
 Stream.generate(Math::random)
                 .forEach(System.out::println);
 ```
+
+<br/>
+
+## Collector
+
+Collector 인터페이스 구현은 스트림의 요소를 어떤 식으로 도출할지 지정한다.
+
+Collectors에서 제공하는 메서드의 기능은 크게 세 가지로 구분할 수 있다.
+
+- 스트림 요소를 하나의 값으로 redue하고 요약
+- 요소 그룹화
+- 요소 분할
+
+### reducing과 요약
+
+#### 최댓값과 최솟값 검색
+
+```Collectors.maxBy```, ```Collectors.minBy``` 를 사용해 계산할 수 있다.
+
+```java
+// 메뉴에서 칼로리가 가장 높은 음식 찾기
+Comparator<Dish> dishCompator = 
+                Comparator.comparingInt(Dish::getCalories);
+        
+Optional<Dish> dish = menu.stream()
+                .collect(maxBy(dishCompator));
+```
+
+#### 요약 연산
+
+Collectors에서는 ```Collectors.summingInt``` 메서드를 제공한다.
+
+이는 객체를 int로 매핑하는 함수를 인수로 받는다. 
+ 
+```java
+// 메뉴의; 칼로리 총합 계산
+int totalCalories = menu.stream().collect(summingInt(Dish::getCalories));
+```
+
+이 외에도 ```Collectors.averagingInt```, ```Collectors.averagingLong```, ```Collectors.averagingDouble``` 등을 제공한다.
+
+##### 다중 연산
+
+합계나 평군 등 두 개 이상의 연한을 한 번에 수행할 때에는 ```summarizingInt```를 사용할 수 있다.
+
+```java
+IntSummaryStatistics menuStatistics = menu.stream().collect(summarizingInt(Dish::getCalories));
+System.out.println(menuStatistics);
+
+>>>IntSummaryStatistics{count=5, sum=762, min=2, average=152.400000, max=600}
+```
+
+이 역시 long, double을 지원하는 메서드도 존재한다.
+
+
+#### 문자열 연결
+
+```joining``` 메서드를 이용하면 스트림의 각 객체에 ```toString```을 호출하여 연결 가능하다.
+
+```java
+String shortMenu = menu.stream().map(Dish::getName).collect(joining(", ")); // 안의 param은 구분자로 들어가게 된다.  
+System.out.println(shortMenu);
+```
+
+내부적으로 StringBuilder를 이용하여 문자열을 연결한다.
+
+```toString```을 내부적으로 구현하고 있다면 map은 생략가능하다.
+
+<br/>
+
+### 그룹화
+
+```Collectors.groupingBy```를 통해 쉽게 그룹화가 가능하다.
+
+```java
+// 타입에 맞춰 그룹화
+Map<Dish.Type, List<Dish>> typeListMap = menu.stream().collect(groupingBy(Dish::getType));
+```
+
+함수를 기준으로 스트림이 그룹화되므로 이를 분류 함수라 한다.
+
+#### 그룹화된 요소 조작
+
+```java
+Map<Dish.Type, List<Dish>> typeListMap = menu.stream()
+                .collect(groupingBy(Dish::getType,
+                        filtering(dish -> dish.getCalories() > 500, toList())));
+```
+
+만약 ```filter```를 사용하게 된다면 존재하지 않는 Type에 대해서는 결과 Map에서 해당 키 자체가 사라진다.
+
+```filtering```은 ```Collectors``` 클래스의 또 다른 정적 팩토리 메서드로 Predicate를 인수로 받는다.
+
+조건만이 아닌 ```mapping```을 사용하여 요소를 변환하는 작업도 가능하다.
+
+```java
+// 메뉴 이름으로 그룹화
+Map<Dish.Type, List<String>> typeListMap = menu.stream()
+                .collect(groupingBy(Dish::getType,
+                        mapping(Dish::getName, toList())));
+```
+
+```flatMapping```을 사용하면 간단한 태그 추출이 가능하다.
+
+```java
+// Type 기준으로 메뉴 이름을 dishTags의 값들 기준으로 Set을 만든다.
+Map<String, List<String>> dishTags = new HashMap<>();
+dishTags.put("pork", asList("greasy", "salty"));
+dishTags.put("beef", asList("salty", "roasted"));
+...
+        
+Map<Dish.Type, Set<String>> typeListMap = menu.stream()
+                .collect(groupingBy(Dish::getType,
+                        flatMapping(dish -> dishTags.get(dish.getName()).stream(), toSet())));
+```
+
+
+#### 다수준 그룹화
+
+항목을 다수준으로 그룹화가 가능하다.
+
+바깥쪽 ```groupingBy```의 메서드에 스트림의 항목을 분류할 두 번째 기준을 정의하는 내부```groupingBy```를 통해 다수준으로 그룹화를 정의할 수 있다.  
+
+```java
+Map<Dish.Type, Map<CaloricLevel, List<Dish>>> typeListMap = menu.stream()
+                .collect(groupingBy(Dish::getType, // 첫 분류 함수
+                        groupingBy(dish -> {       // 두번째 분류 함수
+                            if (dish.getCalories() <= 400)
+                                return CaloricLevel.DIET;
+                            else if (dish.getCalories() <=  700)
+                                return CaloricLevel.NORMAL;
+                            else 
+                                return CaloricLevel.FAT;
+                        })
+                ));
+```
+
+#### 서브그룹으로 데이터 수집
+
+groupingBy로 넘겨주는 컬렉터의 형식은 제한이 없다.
+
+분류 함수 한 개의 인수를 갖는 ```groupingBy(f)```는 ```groupingBy(f, toList())```의 축약형이다.
+
+다음과 같은 형식도 가능하다.
+
+```java
+Map<Dish.Type, Long> typesCount = menu.stream().collect(
+                groupingBy(Dish::getType, counting();
+```  
+
+#### 결과를 다른 형식에 적용하기
+
+```Collectors.collectingAndThen```으로 결과를 다른 형식으로 활용 가능하다.
+
+collectingAndThen는 적용할 컬렉터와 반환 함수를 인수로 받아 다른 컬렉터를 반환한다.
+
+```java
+// 서브 그룹에서 가장 칼로리가 높은 요리 찾기
+Map<Dish.Type, Dish> mostCaloricByType = 
+                menu.stream().collect(groupingBy(Dish::getType, // 분류 함수
+                collectingAndThen(
+                        maxBy(comparingInt(Dish::getCalories)), // 감싸인 컬렉터
+                        Optional::get)));
+```
+
+
+<br/>
+
+## 분할
+
+분할은 분할 함수라 불리는 Predicate를 분류 함수로 사용하는 특후나 그룹화 기능이다.
+
+맵의 키 형싣은 Boolean이다. 즉, 결과적으로 맵은 최대 두 개의 그룹(true or false)으로 분류된다.
+
+```java
+Map<Boolean, List<Dish>> partitionedMenu = menu.stream().collect(partitioningBy(Dish::isVegetarian));
+``` 
+두번째 인수를 통해 다중 그룹화도 가능하다.
+
+```java
+Map<Boolean, Map<Dish.Type, List<Dish>>> vegetarianDishesByType = 
+                menu.stream().collect(
+                partitioningBy(Dish::isVegetarian, // 분할 함수
+                        groupingBy(Dish::getType))); // 두번째 컬렉터
+```
+
+<br/><br/><br/><br/>
+
+---
+참조:
+- [Stream.takeWhile 과 Stream.filter 차이](https://vesselsdiary.tistory.com/156)
+- [[Java] Stream API의 활용 및 사용법 - 고급 (4/5)](https://mangkyu.tistory.com/115)
+- 모던 자바 인 액션
+
+
