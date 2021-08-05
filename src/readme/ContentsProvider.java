@@ -2,8 +2,16 @@ package readme;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+
 
 public class ContentsProvider {
+
+    Comparator<File> fileComparator = (o1, o2) -> {
+        if (o1.isDirectory() && !o2.isDirectory()) return -1;
+        else return o1.compareTo(o2);
+    };
 
     public static void main(String[] args) throws IOException {
         ContentsProvider provider = new ContentsProvider();
@@ -21,7 +29,8 @@ public class ContentsProvider {
         StringBuilder sb = new StringBuilder(ReadMeFormat.HEADER.getLine(null));
         for (File file : files) {
             sb.append(dirToContent(file));
-            dfsFiles(sb, file.listFiles(), "");
+            File[] sortedFiles = Arrays.stream(file.listFiles()).sorted(fileComparator).toArray(File[]::new);
+            dfsFiles(sb, sortedFiles, "");
         }
         return sb.toString();
     }
@@ -35,7 +44,8 @@ public class ContentsProvider {
     private void dfsFile(StringBuilder sb, File file, String prefix) {
         if (file.isDirectory()) {
             sb.append(subDirToContent(file));
-            dfsFiles(sb, file.listFiles(), prefix + "  ");
+            File[] files = Arrays.stream(file.listFiles()).sorted(fileComparator).toArray(File[]::new);
+            dfsFiles(sb, files, prefix + "  ");
         } else {
             sb.append(fileToContent(file, prefix));
         }
