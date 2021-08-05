@@ -133,6 +133,8 @@
 
 ## 📌  6. Web
 
+- [Http Header](./6.%20Web/Http%20Header.md)
+- [Http Status Code](./6.%20Web/Http%20Status%20Code.md)
 - [HTTP와 HTTPS](./6.%20Web/HTTP와%20HTTPS.md)
 - [REST API](./6.%20Web/REST%20API.md)
 
