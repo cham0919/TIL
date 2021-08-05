@@ -133,6 +133,7 @@
 
 ## 📌  6. Web
 
+- [HTTP와 HTTPS](./6.%20Web/HTTP와%20HTTPS.md)
 - [REST API](./6.%20Web/REST%20API.md)
 
 <br/>
