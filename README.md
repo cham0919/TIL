@@ -40,7 +40,9 @@
   - [13. 입출력](./1.%20Java/Java_Live_Study/13.%20입출력.md)
   - [14. 제네릭](./1.%20Java/Java_Live_Study/14.%20제네릭.md)
   - [15. 람다식](./1.%20Java/Java_Live_Study/15.%20람다식.md)
+- [Fork, Join](./1.%20Java/Fork,%20Join.md)
 - [Garbage Collector](./1.%20Java/Garbage%20Collector.md)
+- [Spliterator](./1.%20Java/Spliterator.md)
 - [스트림(Stream)](./1.%20Java/스트림(Stream).md)
 
 <br/>
