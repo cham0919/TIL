@@ -1,4 +1,4 @@
-# CollectionFactory
+# Collection
 
 자바 9에서는 작은 컬렉션 객체를 쉽게 만드는 방법을 제공한다.
 
