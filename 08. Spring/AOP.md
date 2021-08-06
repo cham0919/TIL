@@ -11,7 +11,7 @@ AOP는 Application 또는 program내 여러 파트들이 공통으로 필요로�
 
 # AOP와 프록시 패턴
 
-- [프록시 패턴 바로가기](../3.%20Design%20Pattern/프록시%20패턴(Proxy%20Pattern).md)
+- [프록시 패턴 바로가기](../Design%20Pattern/프록시%20패턴(Proxy%20Pattern).md)
 
 - 프록시 객체가 원래 객체를 감싸서 client의 요청을 처리하게 하는 패턴이다.
 
