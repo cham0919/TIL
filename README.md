@@ -54,6 +54,7 @@
 
 ## 📌  04. Design Pattern
 
+- [디자인 패턴(Design pattern)](./04.%20Design%20Pattern/디자인%20패턴(Design%20pattern).md)
 - ### 구조 패턴
   - [데코레이터 패턴(Decorator pattern)](./04.%20Design%20Pattern/구조%20패턴/데코레이터%20패턴(Decorator%20pattern).md)
   - [브릿지 패턴(Bridge Pattern)](./04.%20Design%20Pattern/구조%20패턴/브릿지%20패턴(Bridge%20Pattern).md)
@@ -80,12 +81,16 @@
   - [책임 연쇄 패턴(chain-of-responsibility pattern)](./04.%20Design%20Pattern/행동%20패턴/책임%20연쇄%20패턴(chain-of-responsibility%20pattern).md)
   - [커맨드 패턴 (Command Pattern)](./04.%20Design%20Pattern/행동%20패턴/커맨드%20패턴%20(Command%20Pattern).md)
   - [템플릿 메서드 패턴(Template Method Pattern)](./04.%20Design%20Pattern/행동%20패턴/템플릿%20메서드%20패턴(Template%20Method%20Pattern).md)
-- [디자인 패턴(Design pattern)](./04.%20Design%20Pattern/디자인%20패턴(Design%20pattern).md)
 
 <br/>
 
 ## 📌  05. Java
 
+- [Fork, Join](./05.%20Java/Fork,%20Join.md)
+- [Garbage Collector](./05.%20Java/Garbage%20Collector.md)
+- [JCF After Java 8](./05.%20Java/JCF%20After%20Java%208.md)
+- [Spliterator](./05.%20Java/Spliterator.md)
+- [스트림(Stream)](./05.%20Java/스트림(Stream).md)
 - ### Java_Live_Study
   - [01. JVM](./05.%20Java/Java_Live_Study/01.%20JVM.md)
   - [02. 자바 데이터 타입, 변수 그리고 배열](./05.%20Java/Java_Live_Study/02.%20자바%20데이터%20타입,%20변수%20그리고%20배열.md)
@@ -102,11 +107,6 @@
   - [13. 입출력](./05.%20Java/Java_Live_Study/13.%20입출력.md)
   - [14. 제네릭](./05.%20Java/Java_Live_Study/14.%20제네릭.md)
   - [15. 람다식](./05.%20Java/Java_Live_Study/15.%20람다식.md)
-- [Fork, Join](./05.%20Java/Fork,%20Join.md)
-- [Garbage Collector](./05.%20Java/Garbage%20Collector.md)
-- [JCF After Java 8](./05.%20Java/JCF%20After%20Java%208.md)
-- [Spliterator](./05.%20Java/Spliterator.md)
-- [스트림(Stream)](./05.%20Java/스트림(Stream).md)
 
 <br/>
 
