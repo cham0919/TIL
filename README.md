@@ -115,8 +115,11 @@
 
 - [DB 트랜잭션(Transaction)](./06.%20DataBase/DB%20트랜잭션(Transaction).md)
 - [Index(인덱스)](./06.%20DataBase/Index(인덱스).md)
+- [서브쿼리(Subquery)](./06.%20DataBase/서브쿼리(Subquery).md)
 - [옵티마이저 조인(Optimizer Join)](./06.%20DataBase/옵티마이저%20조인(Optimizer%20Join).md)
 - [옵티마이저(Optimizer)](./06.%20DataBase/옵티마이저(Optimizer).md)
+- [윈도우 함수(Window Function)](./06.%20DataBase/윈도우%20함수(Window%20Function).md)
+- [조인(Join)](./06.%20DataBase/조인(Join).md)
 - [트랜잭션 격리 수준(Transaction Isolation Level) ](./06.%20DataBase/트랜잭션%20격리%20수준(Transaction%20Isolation%20Level)%20.md)
 
 <br/>
