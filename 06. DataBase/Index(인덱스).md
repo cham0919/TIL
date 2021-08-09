@@ -3,14 +3,40 @@
 ## 목적
 
 - RDBMS에서 검색 속도를 높이기 위한 기술
+
 - 테이블의 칼럼을 색인화한다.
+
 - 데이터베이스 안의 레코드를 처음부터 풀스캔하지 않고, B+ Tree로 구성된 구조에서 Index 파일 검색으로 속도를 향상시키는 기술이다.
+
+- 인덱스의 구조는 Root Block, Branch Block, Leaf Block으로 구성되고, Root Block은 인덱스의 트리에서 가장 상위에 있는 노드를 의미하며, Branch Block은 다음 단계의 주소를 가지고 있는 포인터로 되어 있다
+
+- 오름차순(Ascending), 내림차순(Descending) 탐색이 가능하다.
 
 <br/>
 
 * 색인화 : 특정 내용이 들어 있는 정보를 쉽게 찾아볼 수 있도록 표지 따위를 넣거나 일정한 순서에 따라 배열함
 
 <br/>
+
+## 인덱스 스캔(Index Scan)
+
+- 인덱스 유일 스캔(Index Unique Scan)
+  - 인덱스의 키 값이 중복되지 않는 경우, 해당 인덱스를 사용할 때 발생한다.
+
+- 인덱스 범위 스캔(Index Range Scan)
+  - SELECT문에서 특정 범위를 조회하는 WHERE문을 사용할 경우 발생한다.
+  - Like, Between이 대표적인 예이다. 단, 데이터 양이 적은 경우에는 인덱스 자체를 실행시키지 않고 TABLE FULL SCAN이 될 수 있다.
+  - Index Range Scan은 인덱스의 Leaf Block의 특정 범위를 스캔한 것이다.
+
+- 인덱스 전체 스캔(Index Full Scan)
+  - 인덱스에서 검색되는 키가 많은 경우에, Leaf Block의 처음부터 끝까지 전체를 읽어 들인다.
+  - Table Full Scan 시에 High Watermark란?
+    - Table Full Scan은 테이블의 데이터를 모두 읽은 것을 의미한다.
+    - 테이블을 읽을 때, High Watermark 이하까지만 Table을 Full Scan한다.
+    - High Watermark는 테이블에 데이터가 저장된 블록에서 최상위 위치를 의미하고, 데이터가 삭제되면 High Watermark가 변경된다.
+
+<br/>
+
 
 ## 파일 구성
 
@@ -91,6 +117,7 @@
 
 - [DB Index 란?](https://lalwr.blogspot.com/2016/02/db-index.html)
 - [Index(인덱스)](https://github.com/gyoogle/tech-interview-for-developer/blob/master/Computer%20Science/Database/%5BDB%5D%20Index.md)
+- [[SQL 최적화의 원리]인덱스(Index)](https://velog.io/@yewon-july/Index)
 
 
 
