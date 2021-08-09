@@ -115,6 +115,8 @@
 
 - [DB 트랜잭션(Transaction)](./06.%20DataBase/DB%20트랜잭션(Transaction).md)
 - [Index(인덱스)](./06.%20DataBase/Index(인덱스).md)
+- [옵티마이저 조인(Optimizer Join)](./06.%20DataBase/옵티마이저%20조인(Optimizer%20Join).md)
+- [옵티마이저(Optimizer)](./06.%20DataBase/옵티마이저(Optimizer).md)
 - [트랜잭션 격리 수준(Transaction Isolation Level) ](./06.%20DataBase/트랜잭션%20격리%20수준(Transaction%20Isolation%20Level)%20.md)
 
 <br/>
