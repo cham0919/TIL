@@ -121,6 +121,7 @@ GROUP BY GROUPING SETS(DEPTNO, JOB);
 - 부서-직업-매니저 별, 부서-직업 별, 직업-매니저 별 집계를 GROUPING SETS 함수를 이용해서 구해라.
   - 괄호를 기준으로, 부서-직업-매니저 별, 부서-직업 별, 직업-매니저 별 집계결과를 얻을 수 있다
   
+  ![image](https://user-images.githubusercontent.com/61372486/128895557-140faead-c4f4-46c2-8dbc-ddd0e031d20e.png)
   ![image](https://user-images.githubusercontent.com/61372486/128894833-cc041119-38ff-42d7-8fb5-e843d6655904.png)
   
 <br/>  
