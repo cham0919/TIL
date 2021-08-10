@@ -86,6 +86,9 @@ WHERE DEPTNO <= ALL(20, 30);
 
 - 즉, EXISTS의 결과는 참과 거짓이 반환된다.
 
+- 보통 where절에서 사용되며, ```where (not) exists (select 'X' from ~ )``` 과 같이 쓰인다.
+  - 'X'는 null이 아닌 다른 알파벳으로 사용해도 무방하다.
+
 - 급여가 2000이상이 있으면 참이 반환되고, 없으면 거짓이 반환된다.
 
 ```sql
