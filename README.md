@@ -117,6 +117,7 @@
 - [DECODE와 CASE문](./06.%20DataBase/DECODE와%20CASE문.md)
 - [Index(인덱스)](./06.%20DataBase/Index(인덱스).md)
 - [ROWNUM과 ROWID](./06.%20DataBase/ROWNUM과%20ROWID.md)
+- [그룹 함수(Group Function)](./06.%20DataBase/그룹%20함수(Group%20Function).md)
 - [내장형 함수(BUILT-IN FUNCTION)](./06.%20DataBase/내장형%20함수(BUILT-IN%20FUNCTION).md)
 - [서브쿼리(Subquery)](./06.%20DataBase/서브쿼리(Subquery).md)
 - [옵티마이저 조인(Optimizer Join)](./06.%20DataBase/옵티마이저%20조인(Optimizer%20Join).md)
