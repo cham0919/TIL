@@ -1,4 +1,4 @@
-# group by 예시
+# GROUP BY 예시
 
 부서명과 업무명을 기준으로 사원수와 급여 합을 집계한 일반적인 GROUP BY SQL 문장을 수행한다.
 
@@ -12,9 +12,22 @@
 - ROLLUP에 의해서 생성되는 Subtotal은 Grouping Columns의 수를 N개 라고 했을 때, N+1 Level의 Subtotal이 생성된다. 
 - 잊지 말아야 할 것은, ROLLUP의 인수는 계층 구조이므로 인수 순서가 바뀌면 수행 결과도 바뀌게 되므로 인수의 순서에도 주의해야 한다.
 
+
+ex)
+
+```sql
+GROUP BY ROLLUP(DNAME,JOB)
+= GROUP BY DNAME,JOB
+UNION ALL
+GROUP BY DNAME
+UNION ALL
+모든 집합 그룹 결과
+```
+
+
 <br/>
 
-![image](https://user-images.githubusercontent.com/61372486/128894113-2125d2ea-7778-4f16-b564-96430d64206f.png)
+
 
 
 ## 예시
@@ -29,14 +42,8 @@ L1 - GROUP BY 수행시 생성되는 표준 집계 (9건)
 L2 - DNAME 별 모든 JOB의 SUBTOTAL (3건)  
 L3 - GRAND TOTAL (마지막 행, 1건)
   
+![image](https://user-images.githubusercontent.com/61372486/128894113-2125d2ea-7778-4f16-b564-96430d64206f.png)
   
-```sql
-SELECT DEPTNO, JOB, SUM(SAL)
-FROM EMP
-GROUP BY ROLLUP(DEPTNO, JOB);
-```
-
-
 
 
 <br/>
@@ -116,6 +123,15 @@ GROUP BY GROUPING SETS(DEPTNO, JOB);
 -  참고로!! GROUPING SETS(인수1, 인수2) 와 GROUPING SETS(인수2, 인수1)의 결과를 서로 같다
 - 즉, GROUPING SETS 인수들은 평등한 관계이므로 인수의 순서가 바뀌어도 결과는 같다.
 
+ex)
+
+```sql
+GROUP BY GROUPING SET(DNAME,JOB)
+= GROUP BY DNAME
+UNION ALL
+GROUP BY JOB
+```
+
 <br/>
 
 - 부서-직업-매니저 별, 부서-직업 별, 직업-매니저 별 집계를 GROUPING SETS 함수를 이용해서 구해라.
@@ -131,12 +147,18 @@ GROUP BY GROUPING SETS(DEPTNO, JOB);
 - CUBE는 CUBE 함수에 제시한 칼럼에 대해서 결합 가능한 모든 집계를 계산한다.
 - 다차원 집계를 제공하여 다양하게 데이터를 분석할 수 있게 한다.
 - 즉, 조합될 수 있는 경우의 수가 모두 조합되는 것이다.
-- 아래 예시는 직업별 합계, 부서별 합계, 직업-부서별 합계, 전체 합계가 조회된다.
+
+ex)
 
 ```sql
-SELECT DEPTNO, JOB, SUM(SAL)
-FROM EMP
-GROUP BY CUBE(DEPTNO, JOB);
+GROUP BY CUBE(DNAME,JOB)
+= GROUP BY DNAME,JOB
+UNION ALL
+GROUP BY DNAME
+UNION ALL
+GROUP BY JOB
+UNION ALL
+모든 집합 그룹 결과
 ```
 
 <br/>
