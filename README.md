@@ -113,6 +113,7 @@
 
 ## 📌  06. DataBase
 
+- [[SQLD 오답] short 정리](./06.%20DataBase/[SQLD%20오답]%20short%20정리.md)
 - [DB 트랜잭션(Transaction)](./06.%20DataBase/DB%20트랜잭션(Transaction).md)
 - [DECODE와 CASE문](./06.%20DataBase/DECODE와%20CASE문.md)
 - [Index(인덱스)](./06.%20DataBase/Index(인덱스).md)
