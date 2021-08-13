@@ -108,3 +108,41 @@ ON (S.사원번호 = P.사원번호)
 WHERE P.사원번호 IS NULL
 ```
 
+<br/>
+
+# Oracle, SQL Server CHAR형 차이
+
+- CHAR 형의 경우 고정형으로 사이즈에 비해 작은 값이 들어올 경우 나머지 사이즈를 ' '(스페이스) 로 채운다
+
+- Oracle 의 경우 length 함수는 ' ' (스페이스) 를 1로 인식하고 SQL Server 의 len 함수는 문자 뒤의 ' ' (스페이스)를 0으로 인식한다.
+
+<br/>
+
+# Oracle, SQL Server COMMIT
+
+- Oracle 의 경우 DML 후 자동 COMMIT 아니나, DDL 발생하면 D이 은 암묵적인 COMMIT 이 자동으로 발생되어 전체 트랜잭션이 COMMIT 된다.
+
+- SQL Server 의 경우 자동 COMMIT이 된다.
+
+<br/>
+
+# WHERE
+
+- WHERE 절에 조건절이 쓰이게 되면 암묵적으로 해당 컬럼에 대한 IS NOT NULL 조건이 생성된다
+
+<br/>
+
+
+# Oracle NVL, NVL2
+
+- 해당 컬럼의 값이 null 값인 경우 특정값으로 출력하고 싶으면 NVL 함수를 사용하고, null 값이 아닐경우 특정값으로 출력하고 싶으면 NVL2 함수를 사용하면 된다.
+
+- NVL 함수는 값이 null인 경우 지정값을 출력한다.
+  - 함수  :  NVL("값", "지정값")
+  
+- NVL2 함수는 null이 아닌경우 지정값1을  출력하고, null인 경우 지정값2을 출력 한다.
+  - 함수 :  NVL2("값", "지정값1", "지정값2")
+
+# 이론 
+
+- 쿼리를 수행하는데 소요되는 일량 또는 시간을 기반으로 최적화를 수행하는 옵티마이저는 **비용 기반 옵티마이져**
