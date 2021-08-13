@@ -8,6 +8,7 @@
 - Nested Loop Join은 조인 칼럼의 인덱스가 존재해야한다.
 - SELECT 뒤에 ``` ordered use_nl(TABLE NAME) ```의 힌트를 주어 사용한다.
   - ordered 힌트는 FROM 절에 나오는 테이블 순서대로 조인을 하게 하는 것이다. ordered는 혼자 사용되지 않고, use_nl, use_merge, use_hash 힌트와 함께 사용된다.
+- 프로그래밍에서 사용되는 중첩된 반복문과 유사한 방식으로 조인을 수행하는 방식이다.
 
 
 <br/>
