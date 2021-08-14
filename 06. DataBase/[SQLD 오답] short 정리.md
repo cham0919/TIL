@@ -143,6 +143,95 @@ WHERE P.사원번호 IS NULL
 - NVL2 함수는 null이 아닌경우 지정값1을  출력하고, null인 경우 지정값2을 출력 한다.
   - 함수 :  NVL2("값", "지정값1", "지정값2")
 
+<br/>
+
+# ESCAPE
+
+- LIKE 연산으로 '%'나 '_'가 들어간 문자를 검색하기 위해서는 ESCAPE를 사용해야 한다. '_'나 '%'앞에 ESCAPE로 특수 문자를 지정하면 검색할 수 있다.
+
+```sql
+SQL> SELECT   loc
+     FROM   dept
+     WHERE   loc like '%#_%' ESCAPE '#';
+
+LOC
+-------------
+NEW_YORK        
+ 
+
+-- 아래의 결과들을 한번 비교해 보시기 바랍니다.
+SQL> SELECT   loc
+     FROM   dept
+     WHERE   loc like '%N%@_%' ESCAPE '@'
+        
+LOC
+-------------
+NEW_YORK        
+ 
+ 
+SQL> SELECT loc
+     FROM dept
+     WHERE loc like '%_%';
+        
+LOC
+-----------
+NEW_YORK
+DALLAS
+CHICAGO
+BOSTON     
+```
+
+<br/>
+
+# COALESCE
+
+- 다수의 컬럼을 합칠 때, 사용한다.
+
+- 예를 들어 A테이블에 phone이라는 컬럼과 B테이블에 tel이라는 컬럼이 있을 때, ```COALESCE(phone, tel)```하면 처음으로 null이 아닌 데이터로 출력
+
+<br/>
+
+# NULLIF
+
+- 지정된 두 식이 같으면 Null 값을 반환한다.
+ 
+- 예를 들어 ```SELECT NULLIF(4,4) AS Same, NULLIF(5,7) AS Different;``` 는 두 입력 값이 동일하기 때문에 첫 번째 열(4 및 4)에 대해 NULL을 반환한다.
+ 
+ - 두 번째 열은 두 입력 값이 다르기 때문에 첫 번째 값(5)을 반환한다.
+
+<br/>
+
+# 문자열 자르기
+
+- SUBSTR(str, pos)
+  - ```SELECT SUBSTR('동해물과백두산이',5);```
+  - 결과) 백두산이
+  - 해석) 5번째 문자열부터 읽으시오.
+  
+<br/>
+
+- SUBSTR(str FROM pos)
+  - ```SELECT SUBSTRING('동해물과백두산이' FROM 5);```
+  - 결과) 백두산이
+  - 해석) 5번째 문자열부터 읽으시오.
+  
+<br/>
+
+- SUBSTR(str,pos,len)
+  - ```SELECT SUBSTRING('동해물과백두산이',3,4);```
+  - 결과) 물과백두
+  - 해석) 3번째 문자열부터 읽으시고, 4글자만 가져오시오.
+  
+<br/>
+- SUBSTR(str FROM pos FOR len)
+  - ```SELECT SUBSTRING('동해물과백두산이' FROM 3 FOR 4);```
+  - 결과) 물과백두
+  - 해석) 3번째 문자열부터 읽으시고, 4글자만 가져오시오.
+
+- pos에 음수가 들어오면 뒤에서부터 카운트
+
+<br/>
+
 # 이론 
 
 - 쿼리를 수행하는데 소요되는 일량 또는 시간을 기반으로 최적화를 수행하는 옵티마이저는 **비용 기반 옵티마이져**
