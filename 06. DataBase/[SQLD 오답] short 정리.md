@@ -232,6 +232,32 @@ BOSTON
 
 <br/>
 
+# DISTINCT
+
+- 조회할 때, 조회 ROW보다 적게 중복제거 되면 조회 데이터 수만큼은 출력된다.
+
+ex)
+
+```sql
+-- TABLE 
+1 A 
+1 A 
+1 A 
+1 B 
+
+SELECT COUNT(COL1), COUNT(COL2) 
+FROM (
+     SELECT DISTINCT COL1, COL2 
+     FROM T1 
+);
+
+>1 2
+>1 3
+```
+
+
+<br/>
+
 # 이론 
 
 - 쿼리를 수행하는데 소요되는 일량 또는 시간을 기반으로 최적화를 수행하는 옵티마이저는 **비용 기반 옵티마이져**
