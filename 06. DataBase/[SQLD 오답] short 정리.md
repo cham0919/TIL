@@ -1,3 +1,4 @@
+
 # 계층형 sql
 
 - ```CONNECT_BY_ISLEAF``` : 전개 과정에서 해당 데이터가 리프 데이터면 1,아니면 0
@@ -259,6 +260,25 @@ FROM (
 
 <br/>
 
-# 이론 
+# 옵티마이저 
 
 - 쿼리를 수행하는데 소요되는 일량 또는 시간을 기반으로 최적화를 수행하는 옵티마이저는 **비용 기반 옵티마이져**
+
+<br/>
+
+# SQL 문장 종류
+
+- DML (데이터 조작어)
+  - ```SELECT, INSERT, UPDATE, DELETE```
+  
+- DDL (데이터 정의어)
+  - ```CREATE, ALTER, DROP, RENAME```
+  
+- DCL (데이터 제어어)
+  - ```GRANT, REVOKE```
+  
+- TCL (트랜잭션 제어어)
+  - ```COMMIT, ROLLBACK```
+  
+  
+  
