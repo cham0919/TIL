@@ -281,4 +281,84 @@ FROM (
   - ```COMMIT, ROLLBACK```
   
   
-  
+ <br/>
+ 
+# Column 수정
+
+- SQL Server에서는 여러 컬럼을 동시에 수정하는 구문을 지원하지 않는다.
+- 또한 괄호를 사용하지 않는다.
+
+ex)
+ ```sql
+-- 에러 발생
+ALTER TABLE 테이블명 ALTER COLUMN (컬럼1 VARCHAR(30), 컬럼2 VARCHAR(30));
+
+-- 정상 동작
+ALTER TABLE 테이블명 ALTER COLUMN 컬럼1 VARCHAR(30);
+```
+
+<br/>
+
+# UNIQUE
+
+- UNIQUE는 테이블 내에서 중복되는 값이 없지만, ```NULL``` 입력은 가능하다.
+
+<br/>
+
+# DELETE, DROP, TRUNCATE
+
+- ```DROP, TRUNCATE```은 로그를 남기지 않지만 ```DELETE```는 로그를 남긴다
+- ```TRUNCATE```는 테이블 자체가 삭제되는 것이 아닌, 테이블에 들어있던 모든 행들이 제거되고 저장 공간을 재사용 가능하도록 해제한다.
+- ```DROP```는 테이블 구조를 완전히 삭제한다.
+- ```DELETE```는 모든 데이터를 제거한다.
+
+<br/>
+
+# ROLLBACK
+
+- ```ROLLBACK```은 커밋되지 않은 상위의 모든 트랜잭션을 되돌린다.
+
+ex)
+```sql
+BEGIN TRANSACTION 
+...
+BEGIN TRANSACTION
+...
+BEGIN TRANSACTION
+...
+ROLLBACK -- 제일 처음 트랜잭션까지 롤백
+-- SAVEPOINT를 지정하면 해당 라인까지만 롤백한다.
+```
+
+<br/>
+
+# NULL 연산
+
+- NULL 값이 포함된 4칙 연산의 결과는 모두 NULL이다.
+- NULL 값과의 비교연산은 모두 FALSE를 리턴한다.
+
+<br/>
+
+# ORACLE '' 삽입
+
+- ORACLE에서 ```INSERT```문 중 ```''```   값을 입력하면 공백문자가 아닌 NULL이 입력된다.
+
+<br/>
+
+# ORACLE 날짜 연산
+
+- ORACLE에서 날짜 연산은 숫자 연산과 같다
+- ```1/24/60```은 1분을 의미한다.
+- ```1/24/(60/10)```은 10분을 의미한다.
+
+<br/>
+
+# DUAL 테이블 
+
+- 사용자 SYS가 소유하며 모든 사용자가 액세스 가능하다.
+- 일종의 DUMMY 테이블이다.
+- DUMMY라는 문자열 유형의 칼럼에는 'X'라는 값이 들어있는 행을 1건 포함하고 있다.
+
+<br/>
+
+
