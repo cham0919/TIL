@@ -121,6 +121,8 @@
 - [WHERE 1=1](./06.%20DataBase/WHERE%201=1.md)
 - [그룹 함수(Group Function)](./06.%20DataBase/그룹%20함수(Group%20Function).md)
 - [내장형 함수(BUILT-IN FUNCTION)](./06.%20DataBase/내장형%20함수(BUILT-IN%20FUNCTION).md)
+- [분산 데이터베이스](./06.%20DataBase/분산%20데이터베이스.md)
+- [분산 처리 Sharding 기법](./06.%20DataBase/분산%20처리%20Sharding%20기법.md)
 - [서브쿼리(Subquery)](./06.%20DataBase/서브쿼리(Subquery).md)
 - [옵티마이저 조인(Optimizer Join)](./06.%20DataBase/옵티마이저%20조인(Optimizer%20Join).md)
 - [옵티마이저(Optimizer)](./06.%20DataBase/옵티마이저(Optimizer).md)
