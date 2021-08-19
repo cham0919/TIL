@@ -200,3 +200,14 @@
 - [Http Status Code](./11.%20Web/Http%20Status%20Code.md)
 - [HTTP와 HTTPS](./11.%20Web/HTTP와%20HTTPS.md)
 - [REST API](./11.%20Web/REST%20API.md)
+
+<br/>
+
+## 📌  12. Architecture
+
+- ### MSA(MicroService Architecture)
+  - [MSA(Microservice Architecture)](./12.%20Architecture/MSA(MicroService%20Architecture)/MSA(Microservice%20Architecture).md)
+  - [Outer Architecture - API Gateway](./12.%20Architecture/MSA(MicroService%20Architecture)/Outer%20Architecture%20-%20API%20Gateway.md)
+  - [Outer Architecture - Backing service](./12.%20Architecture/MSA(MicroService%20Architecture)/Outer%20Architecture%20-%20Backing%20service.md)
+  - [Outer Architecture - Service Mesh](./12.%20Architecture/MSA(MicroService%20Architecture)/Outer%20Architecture%20-%20Service%20Mesh.md)
+  - [Outer Architecture - Telemetry](./12.%20Architecture/MSA(MicroService%20Architecture)/Outer%20Architecture%20-%20Telemetry.md)
