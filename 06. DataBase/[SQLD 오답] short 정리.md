@@ -361,4 +361,68 @@ ROLLBACK -- 제일 처음 트랜잭션까지 롤백
 
 <br/>
 
+# CASE 문
+
+- CASE문은 두가지 유형으로 나뉜다.
+
+```sql
+-- SEARCHED_CASE_EXPRESSION
+CASE WHEN LOC = 'NEW YOCK' THEN 'EAST'
+
+-- SIMPLE_CASE_EXPRESSION
+CASE LOC WHEN 'NEW YOCK' THEN 'EAST'
+```
+
+<br/>
+
+# 0 연산
+
+- 분모가 0이 들어가는 경우 연산 자체가 에러를 발생한다.
+- 0/300 = 0
+- 300/0 = 에러발생
+- 300/NULL = NULL
+
+<br/>
+
+# NULL 우선순위
+
+- ORACLE에서는 NULL 값을 가장 큰 값으로 간주하여 오름차순으로 정렬했을 경우 가장 마지막에 위치한다.
+- SQL SERVER에서는 NULL값을 가장 작은 값으로 간주하며 오름차순으로 정렬했을 경우 가장 위에 위치한다.
+
+<br/>
+
+# LIKE 조인
+
+- LIKE 연산을 통한 조인이 가능하다.
+
+[EMP_TBL]
+
+|EMPNO|ENAME|
+|---|---|
+|1000|SMITH|
+|1050|ALLEN|
+|1100|SCOTT|
+
+<br/>
+
+[RULE_TBL]
+
+|RULE_NO|RULE|
+|---|---|
+|1|S%|
+|2|%T%|
+
+
+```sql
+SELECT COUNT(*) CNT
+FROM EMP_TBL A, RULE_TBL B
+WHERE A.ENAME LIKE B.RULE
+```
+
+- LIKE 조인으로 인해 총 4건의 결과가 도출된다.
+
+1. SMITH - S%
+2. SCOTT - S%
+3. SMITH - %T%
+4. ALLEN - %T%
 
