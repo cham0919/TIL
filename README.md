@@ -113,6 +113,7 @@
 
 ## 📌  06. DataBase
 
+- [3층 스키마(3-Level Schema)](./06.%20DataBase/3층%20스키마(3-Level%20Schema).md)
 - [[SQLD 오답] short 정리](./06.%20DataBase/[SQLD%20오답]%20short%20정리.md)
 - [DB 트랜잭션(Transaction)](./06.%20DataBase/DB%20트랜잭션(Transaction).md)
 - [DECODE와 CASE문](./06.%20DataBase/DECODE와%20CASE문.md)
@@ -120,11 +121,15 @@
 - [ROWNUM과 ROWID](./06.%20DataBase/ROWNUM과%20ROWID.md)
 - [SQL Injection](./06.%20DataBase/SQL%20Injection.md)
 - [WHERE 1=1](./06.%20DataBase/WHERE%201=1.md)
+- [관계(Relationship)](./06.%20DataBase/관계(Relationship).md)
 - [그룹 함수(Group Function)](./06.%20DataBase/그룹%20함수(Group%20Function).md)
 - [내장형 함수(BUILT-IN FUNCTION)](./06.%20DataBase/내장형%20함수(BUILT-IN%20FUNCTION).md)
+- [데이터 모델링(Data Modeling)](./06.%20DataBase/데이터%20모델링(Data%20Modeling).md)
 - [분산 데이터베이스](./06.%20DataBase/분산%20데이터베이스.md)
 - [분산 처리 Sharding 기법](./06.%20DataBase/분산%20처리%20Sharding%20기법.md)
 - [서브쿼리(Subquery)](./06.%20DataBase/서브쿼리(Subquery).md)
+- [속성(Attribute)](./06.%20DataBase/속성(Attribute).md)
+- [엔터티(Entity)](./06.%20DataBase/엔터티(Entity).md)
 - [옵티마이저 조인(Optimizer Join)](./06.%20DataBase/옵티마이저%20조인(Optimizer%20Join).md)
 - [옵티마이저(Optimizer)](./06.%20DataBase/옵티마이저(Optimizer).md)
 - [윈도우 함수(Window Function)](./06.%20DataBase/윈도우%20함수(Window%20Function).md)
