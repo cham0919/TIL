@@ -165,6 +165,7 @@
 - [IOC와 DI](./08.%20Spring/IOC와%20DI.md)
 - [Spring MVC Framework](./08.%20Spring/Spring%20MVC%20Framework.md)
 - [SpringBoot](./08.%20Spring/SpringBoot.md)
+- [싱글톤 레지스트리(Singleton Registry)](./08.%20Spring/싱글톤%20레지스트리(Singleton%20Registry).md)
 
 <br/>
 
