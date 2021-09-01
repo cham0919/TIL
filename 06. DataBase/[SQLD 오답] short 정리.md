@@ -732,3 +732,75 @@ EMPLOYEE_ID DEPARTMENT_ID LAST_NAME SALARY BEFORE_SALARY
 # OR, AND
 
 - SQL 에서 소괄호 없이 AND OR 을 사용하면 AND -> OR 의 순서로 처리된다
+
+
+<br/>
+
+# LPAD, RPAD
+
+- PAD 함수는 지정한 길이 만큼 왼쪽, 오른쪽부터 특정문자로 채워준다.
+
+```sql
+select RPAD('A', 10, 0)  
+from dual;
+
+-- A000000000
+
+select LPAD('A', 10, 0)  
+from dual;
+
+-- 000000000A
+
+select LPAD('A', 0, 0)  
+from dual;
+
+-- NULL
+```
+
+
+<br/>
+
+# 문자열 SUM
+
+- SUM 함수에서는 NULL 합산이 적용되지 않음
+
+```sql
+COL1 COL2
+A	100
+B	200
+C	300
+C	400
+
+
+select SUM(case COL1 when 'A' then 1 END) 
+from TAB1;
+
+-- 1
+```
+
+- 다른 B, C, C 값들은 CASE문에 의해 NULL로 치환되어 1 + NULL + NULL + NULL = NULL 이 될 것 같지만 NULL은 제외하고 합산하여 답은 1이 된다. 
+
+
+<br/>
+
+# IN, NOT IN 과 NULL
+
+- IN절과 NOT IN절 안의 NULL을 조심하자
+
+```sql
+-- NULL은 제외하고 '낚시'인 ROW만 조회
+hobby in ( null, '낚시')
+```
+
+- ```hobby in ( null, '낚시')``` => ```where hobby = null or hobby = '낚시'```로 변환
+  - null은 is null 이나 is not null로 비교되어야 하지만  hobby = null로 비교되기 때문에 비교대상에서 SKIP된다
+  
+```sql
+-- 아무 ROW도 선택되지 않는다
+hobby not in(낚시, null)
+```
+
+- ```hobby not in(낚시, null)``` => ```where hobby <> null and hobby <> '낚시'```로 변환
+  - null은 비교될 때 is null 이나 is not null로 비교되어야 하므로 hobby <> null 은 항상 false를 반환한다
+  - and 조건문 때문에 0개의 ROW가 선택된다.
+  
