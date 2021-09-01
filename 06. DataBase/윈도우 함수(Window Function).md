@@ -227,6 +227,12 @@ OVER (ORDER BY SAL DESC) AS PRE_SAL FROM EMP
 
 - 해당 행에서 2번째 이전의 값을 가지고 온다.
 
+- LAG(expr [,offset] [,default])
+  - expr : 대상 컬럼명
+  - offset : 값을 가져올 행의 위치 기본값은 1, 생략가능
+  - default : 값이 없을 경우 기본값, 생략가능
+
+
 <br/>
 
 # 비율 관련 함수
