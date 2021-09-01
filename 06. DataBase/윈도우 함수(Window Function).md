@@ -249,28 +249,123 @@ OVER (ORDER BY SAL DESC) AS PRE_SAL FROM EMP
 ### PERCENT_RANK
 
 ```sql
-SELECT DEPTNO, ENAME, SAL
-PERCENT_RANK() OVER(PARTITION BY DEPTNO ORDER BY SAL DESC) AS PERCENT_SAL
-FROM EMP;
+select sellerid, qty, percent_rank() 
+over (partition by sellerid order by qty) 
+from winsales;
+
+sellerid	qty		percent_rank
+----------------------------------------
+1		10.00		0.0
+1		10.64		0.5
+1		30.37		1.0
+3		10.04		0.0
+3		15.15		0.33
+3		20.75		0.67
+3		30.55		1.0
+2		20.09		0.0
+2		20.12		1.0
+4		10.12		0.0
+4		40.23		1.0
 ```
 
 - PERCENT_RANK 함수는 파티션에서 등수의 퍼센트를 구하는 것이다.
 
-- 부서 내의 등수를 백분율로 구한다.
+-  각 판매자의 판매 수량에 대한 백분율 순위를 계산하는 예다.
 
 <br/>
+
+### CUME_DIST
+
+```sql
+select sellerid, qty, cume_dist() 
+over (partition by sellerid order by qty) 
+from winsales;
+
+sellerid   qty	   cume_dist
+--------------------------------------------------
+1         10.00	   0.33
+1         10.64	   0.67
+1         30.37	   1
+3         10.04	   0.25
+3         15.15	   0.5
+3         20.75	   0.75
+3         30.55	   1
+2         20.09	   0.5
+2         20.12	   1
+4         10.12	   0.5
+4         40.23	   1
+```
+
+- 각 판매자의 수량 누적 분포를 계산하는 예.
+
+- 누적이라는 점이 차이.
+
+<br/>
+
 
 ### NTILE
 
 ```sql
-SELECT DEPTNO, ENAME, SAL, NTILE(4)
-OVER (ORDER BY SAL DESC) AS N_TILE
-FROM EMP;
+select eventname, caldate, pricepaid, ntile(4)
+over(order by pricepaid desc) from sales, event, date
+where sales.eventid=event.eventid and event.dateid=date.dateid and eventname='Hamlet'
+and caldate='2008-08-26'
+order by 4;
+
+eventname |  caldate   | pricepaid | ntile
+-----------+------------+-----------+-------
+Hamlet    | 2008-08-26 |   1883.00 |     1
+Hamlet    | 2008-08-26 |   1065.00 |     1
+Hamlet    | 2008-08-26 |    589.00 |     1
+Hamlet    | 2008-08-26 |    530.00 |     1
+Hamlet    | 2008-08-26 |    472.00 |     1
+Hamlet    | 2008-08-26 |    460.00 |     2
+Hamlet    | 2008-08-26 |    355.00 |     2
+Hamlet    | 2008-08-26 |    334.00 |     2
+Hamlet    | 2008-08-26 |    296.00 |     2
+Hamlet    | 2008-08-26 |    230.00 |     3
+Hamlet    | 2008-08-26 |    216.00 |     3
+Hamlet    | 2008-08-26 |    212.00 |     3
+Hamlet    | 2008-08-26 |    106.00 |     3
+Hamlet    | 2008-08-26 |    100.00 |     4
+Hamlet    | 2008-08-26 |     94.00 |     4
+Hamlet    | 2008-08-26 |     53.00 |     4
+Hamlet    | 2008-08-26 |     25.00 |     4
+(17 rows)
 ```
 
 - NTILE(4)는 4등분으로 분할하라는 의미로 급여가 높은 순으로 1~4등분으로 분할한다.
 
-- 급여가 가장 높은 등급에 속하면 1, 가장 낮은 등급에 속하면 4
+-  2008년 8월 26일 Hamlet 공연 티켓 가격을 4개 순위 그룹으로 구분하는 예
+
+
+<br/>
+
+### RATIO_TO_REPORT
+
+```sql
+select sellerid, qty, ratio_to_report(qty) 
+over (partition by sellerid) 
+from winsales;
+
+sellerid	qty		ratio_to_report
+-------------------------------------------
+2		20.12312341      0.5
+2		20.08630000      0.5
+4		10.12414400      0.2
+4		40.23000000      0.8
+1		30.37262000      0.6
+1		10.64000000      0.21
+1		10.00000000      0.2
+3		10.03500000      0.13
+3		15.14660000      0.2
+3		30.54790000      0.4
+3		20.74630000      0.27
+```
+
+- 각 판매자의 판매 수량에 대한 비율을 계산하는 예
+
+- 값의 합계와 비교해 비율을 계산한다.
 
 <br/><br/><br/><br/><br/><br/><br/>
 
