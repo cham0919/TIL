@@ -648,7 +648,7 @@ EMPLOYEE_ID DEPARTMENT_ID LAST_NAME SALARY BEFORE_SALARY
 - 관계차수
   - 1:1 1:M, M:N
 - 관계선택사양
- - 필수관계, 선택관계
+  - 필수관계, 선택관계
  
  
 <br/>
@@ -812,3 +812,27 @@ hobby not in(낚시, null)
 - 상호연관서브쿼리는 서브쿼리와 메인쿼리간 알리야스를 공유하는 쿼리를 의미한다.
 - 이 쿼리는 from절에서 사용하면 에러가 발생한다.
 - where절에서 사용가능
+
+
+<br/>
+
+# COUNT(*)와 HAVING
+
+- COUNT(*)은 대부분 결과값이 정수형이다
+- HAVING절에서 반환된 레코드가 없을 시, 공집합이 반환된다.
+
+ex)필수관계, 선택관계
+
+```sql
+SELECT COUNT(*) 
+FROM dual
+HAVING 4>4;
+
+-- 공집합 반환
+
+SELECT COUNT(*) 
+FROM dual
+WHERE 4>4;
+
+-- 0 반환
+```
