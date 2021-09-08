@@ -20,10 +20,12 @@
 
 ## 📌  01. Algorithm
 
+- [비트마스크(BitMask)](./01.%20Algorithm/비트마스크(BitMask).md)
 - ### 검색
   - [검색](./01.%20Algorithm/검색/검색.md)
   - [문자열 검색](./01.%20Algorithm/검색/문자열%20검색.md)
 - ### 그래프
+  - [DFS & BFS](./01.%20Algorithm/그래프/DFS%20&%20BFS.md)
   - [크루스칼](./01.%20Algorithm/그래프/크루스칼.md)
 - ### 정렬
   - [기수 정렬](./01.%20Algorithm/정렬/기수%20정렬.md)
@@ -208,6 +210,7 @@
 
 ## 📌  11. Web
 
+- [CSRF와 XSS](./11.%20Web/CSRF와%20XSS.md)
 - [Http Header](./11.%20Web/Http%20Header.md)
 - [Http Status Code](./11.%20Web/Http%20Status%20Code.md)
 - [HTTP와 HTTPS](./11.%20Web/HTTP와%20HTTPS.md)
