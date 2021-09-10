@@ -26,6 +26,7 @@
   - [문자열 검색](./01.%20Algorithm/검색/문자열%20검색.md)
 - ### 그래프
   - [DFS & BFS](./01.%20Algorithm/그래프/DFS%20&%20BFS.md)
+  - [다익스트라(Dijkstra) 알고리즘](./01.%20Algorithm/그래프/다익스트라(Dijkstra)%20알고리즘.md)
   - [크루스칼](./01.%20Algorithm/그래프/크루스칼.md)
 - ### 정렬
   - [기수 정렬](./01.%20Algorithm/정렬/기수%20정렬.md)
