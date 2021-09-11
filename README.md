@@ -228,3 +228,9 @@
   - [Outer Architecture - Backing service](./12.%20Architecture/MSA(MicroService%20Architecture)/Outer%20Architecture%20-%20Backing%20service.md)
   - [Outer Architecture - Service Mesh](./12.%20Architecture/MSA(MicroService%20Architecture)/Outer%20Architecture%20-%20Service%20Mesh.md)
   - [Outer Architecture - Telemetry](./12.%20Architecture/MSA(MicroService%20Architecture)/Outer%20Architecture%20-%20Telemetry.md)
+
+<br/>
+
+## 📌  12. CI & CD
+
+- [CI & CD](./12.%20CI%20&%20CD/CI%20&%20CD.md)
