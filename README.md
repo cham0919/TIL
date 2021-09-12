@@ -212,6 +212,7 @@
 
 ## 📌  11. Web
 
+- [CSR & SSR](./11.%20Web/CSR%20&%20SSR.md)
 - [CSRF와 XSS](./11.%20Web/CSRF와%20XSS.md)
 - [Http Header](./11.%20Web/Http%20Header.md)
 - [Http Status Code](./11.%20Web/Http%20Status%20Code.md)
