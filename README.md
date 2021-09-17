@@ -8,6 +8,7 @@
 
 ## 📌  00. Data Structure
 
+- [B-Tree](./00.%20Data%20Structure/B-Tree.md)
 - [Hash](./00.%20Data%20Structure/Hash.md)
 - [Queue](./00.%20Data%20Structure/Queue.md)
 - [Stack](./00.%20Data%20Structure/Stack.md)
