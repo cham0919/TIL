@@ -171,6 +171,7 @@
 - [Spring MVC Framework](./08.%20Spring/Spring%20MVC%20Framework.md)
 - [SpringBoot](./08.%20Spring/SpringBoot.md)
 - [싱글톤 레지스트리(Singleton Registry)](./08.%20Spring/싱글톤%20레지스트리(Singleton%20Registry).md)
+- [필드 주입 & 생성자 주입](./08.%20Spring/필드%20주입%20&%20생성자%20주입.md)
 
 <br/>
 
