@@ -167,7 +167,7 @@
 ## 📌  08. Spring
 
 - [AOP](./08.%20Spring/AOP.md)
-- [Entity & DTO](./08.%20Spring/Entity%20&%20DTO.md)
+- [Entity & DTO 구분](./08.%20Spring/Entity%20&%20DTO%20구분.md)
 - [IOC와 DI](./08.%20Spring/IOC와%20DI.md)
 - [Spring MVC Framework](./08.%20Spring/Spring%20MVC%20Framework.md)
 - [SpringBoot](./08.%20Spring/SpringBoot.md)
