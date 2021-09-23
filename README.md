@@ -42,6 +42,7 @@
 
 - [[TCP] 3 way handshake & 4 way handshake](./02.%20CS/[TCP]%203%20way%20handshake%20&%204%20way%20handshake.md)
 - [OSI 7 계층](./02.%20CS/OSI%207%20계층.md)
+- [프로세스 & 스레드](./02.%20CS/프로세스%20&%20스레드.md)
 
 <br/>
 
