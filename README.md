@@ -252,3 +252,5 @@
 
 ## 📌  15. JavaScript
 
+- ### 자료구조와 자료형
+  - [Object.keys, values, entries](./15.%20JavaScript/자료구조와%20자료형/Object.keys,%20values,%20entries.md)
