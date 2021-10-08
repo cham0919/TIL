@@ -253,8 +253,8 @@
 
 ## 📌  15. JavaScript
 
-- [Class](./15.%20JavaScript/Class.md)
 - ### 기본
   - [null 병합 연산자](./15.%20JavaScript/기본/null%20병합%20연산자.md)
 - ### 자료구조와 자료형
   - [Object.keys, values, entries](./15.%20JavaScript/자료구조와%20자료형/Object.keys,%20values,%20entries.md)
+  - [구조 분해 할당](./15.%20JavaScript/자료구조와%20자료형/구조%20분해%20할당.md)
