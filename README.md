@@ -271,10 +271,11 @@
 
 - [ABAP 정리](./16.%20ABAP/ABAP%20정리.md)
 - [Data Type](./16.%20ABAP/Data%20Type.md)
+- [Function](./16.%20ABAP/Function.md)
 - [NATIVE SQL](./16.%20ABAP/NATIVE%20SQL.md)
 - [SQL](./16.%20ABAP/SQL.md)
 - [Subroutine](./16.%20ABAP/Subroutine.md)
 - [값 할당](./16.%20ABAP/값%20할당.md)
-- [반복문](./16.%20ABAP/반복문.md)
 - [변수 선언](./16.%20ABAP/변수%20선언.md)
+- [순환 및 반복문](./16.%20ABAP/순환%20및%20반복문.md)
 - [연산자](./16.%20ABAP/연산자.md)
