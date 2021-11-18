@@ -272,6 +272,7 @@
 - [ABAP 정리](./16.%20ABAP/ABAP%20정리.md)
 - [Data Type](./16.%20ABAP/Data%20Type.md)
 - [Function](./16.%20ABAP/Function.md)
+- [Internal Table](./16.%20ABAP/Internal%20Table.md)
 - [NATIVE SQL](./16.%20ABAP/NATIVE%20SQL.md)
 - [SQL](./16.%20ABAP/SQL.md)
 - [Subroutine](./16.%20ABAP/Subroutine.md)
