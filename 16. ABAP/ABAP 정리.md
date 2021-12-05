@@ -609,88 +609,137 @@ ENDFORM.
 
 <br/>
 
-▪ Definition Local Type, type 만들기 ( WF2 p.394 )
-   TYPES: BEGIN OF <local types 이름, ts_name>,
-      TYPE 선언
-   END OF <local types 이름, ts_name>. 
-   
-   
-▪ Structure끼리 값 할당
-   MOVE-CORRESPONDING <structure v1> TO <structurev2>
-   structure1 값을 structure2로
-   
+### Definition Local Type, type 만들기 
+ ```TYPES: BEGIN OF <local types 이름, ts_name>,
+    END OF <local types 이름, ts_name>.
+``` 
 
-▪ Internal Table 종류 3가지 ( WF2 p.412 )
+<br/>
+
+   
+### Structure끼리 값 할당
+   - ```MOVE-CORRESPONDING <structure v1> TO <structurev2>```
+   - structure1 값을 structure2로
+   
+<br/>
+
+### Internal Table 종류 3가지 
    1. STANDARD : index로 접근가능, Component이름으로 접근가능, 중복된 data허용
    2. SORTED : index로 접근가능, Component이름으로 접근가능, 중복된 data허용/허용X 둘다
    3. HASHED : Component이름으로 접근가능, 중복된 data허용X
 
-▪ABAP itab control하는 구문과 Open SQL 구문 비교 주의!  (ABAP Workbench Fundamentals - 2)
-  ( WF2 p. 413 ) itab control 구문
-  APPEND : APPEND gs TO gt_itab (마지막에 추가)
-  INSERT : INSERT gs INTO TABLE gt_itab (원하는 위치에 추가)
-  READ : READ TABLE gt_itab INTO gs (1건의 data 읽어올 때)
-  CHANGE : MODIFY TABLE gt_itab FROM gs (특정 필드값 수정위해 read하고 수정하고 반영)
-  DELETE : DELETE gt_itab (삭제)
-  ( WF2 p. 493 ) open sql 구문
-  INSERT (data 생성)
-  UPDATE (data 수정)
-  DELETE (data 삭제)
-  MODIFY (insert+update, table에 data가 존재하면 update 없으면 insert)
+<br/>
+
+### ABAP itab control하는 구문과 Open SQL 구문 비교 주의!  (ABAP Workbench Fundamentals - 2)
+
+  - itab control 구문
+  
+    - APPEND : APPEND gs TO gt_itab (마지막에 추가)
+    - INSERT : INSERT gs INTO TABLE gt_itab (원하는 위치에 추가)
+    - READ : READ TABLE gt_itab INTO gs (1건의 data 읽어올 때)
+    - CHANGE : MODIFY TABLE gt_itab FROM gs (특정 필드값 수정위해 read하고 수정하고 반영)
+    - DELETE : DELETE gt_itab (삭제)
+    
+  <br/>
+  
+  -  open sql 구문
+  
+   - INSERT (data 생성)
+   - UPDATE (data 수정)
+   - DELETE (data 삭제)
+   - MODIFY (insert+update, table에 data가 존재하면 update 없으면 insert)
  
-▪ Internal Table에 Single Record 추가하는 2가지 방법
+ <br/>
+ 
+### Internal Table에 Single Record 추가하는 2가지 방법
+
    1. APPEND <structure v> TO <itab>
    2. INSERT <structure v> INTO TABLE <itab> 
-     INSERT gs TO TABLE itab => APPEND랑 같은 값
-     INSERT gs TO itab INDEX 1. => index 1로 들어가기 때문에 위랑 반대 값
+      - INSERT gs TO TABLE itab => APPEND랑 같은 값
+      - INSERT gs TO itab INDEX 1. => index 1로 들어가기 때문에 위랑 반대 값
 
-▪ Internal Table에서 Single Record (한 건의 data) 가져오는 방법
-   READ TABLE <itab> INTO <structure> <condition>
-   ex. READ TABLE GT_SCARR INTO GS_SCARR       WITH KEY CARRID = GS_DATA-CARRID.
-▪ 특정 필드값 수정
-   MODIFY TABLE <itab> FROM <structure v>.
+<br/>
 
-▪ LOOP 문으로 Index에 Access 하는법 2가지
-   1. Index Access
-   LOOP AT gt_flightinfo INTO gs_flightinfo FROM 1 TO 5.   (FROM 2 : 2부터 끝까지)
-   (한 건의 데이터 읽기)
-   READ TABLE gt_flightinfo INTO gs_flightinfo INDEX 3.
+### Internal Table에서 Single Record (한 건의 data) 가져오는 방법
 
-   2. Key Access
-   LOOP AT gt_flightinfo INTO gs_flightinfo WHERE carrid = ‘LH’.
-   (한 건의 데이터 읽기)
-   READ TABLE gt_flightinfo INTO gs_flightinfo WITH TABLE KEY carrid = ‘LH’
+   - ```READ TABLE <itab> INTO <structure> <condition>```
+   - ex. ```READ TABLE GT_SCARR INTO GS_SCARR       WITH KEY CARRID = GS_DATA-CARRID.```
+   
+<br/>
+   
+### 특정 필드값 수정
+
+   - ```MODIFY TABLE <itab> FROM <structure v>.```
+
+<br/>
+
+### LOOP 문으로 Index에 Access 하는법 2가지
+
+- Index Access  
+    - ```LOOP AT gt_flightinfo INTO gs_flightinfo FROM 1 TO 5.```
+    - FROM 2 : 2부터 끝까지
+    - 한 건의 데이터 읽기
+    - ```READ TABLE gt_flightinfo INTO gs_flightinfo INDEX 3.```
+
+<br/>
+
+- Key Access
+   - ```LOOP AT gt_flightinfo INTO gs_flightinfo WHERE carrid = ‘LH’.```
+   - 한 건의 데이터 읽기
+ 
+```
+  READ TABLE gt_flightinfo INTO gs_flightinfo WITH TABLE KEY carrid = ‘LH’
 							   connid = ‘0400’
 							   fldate = sy-datum.
    ( 여기서 Key component 하나라도 빠지면 Error
      WITH KEY 로 쓰면 key component 다 안와도됨. )
+```
 
-▪ Table에 있는 값 삭제
+<br/>
+
+### Table에 있는 값 삭제
+
+```
    REFRESH gt_flightinfo.
    CLEAR gt_flightinfo.
    FREE gt_flightinfo.
 
    CLEAR gt_flightinfo-carrid  => carrid 만 삭제
+```
 
-▪ Header Line이 있는 Internal Table
+<br/>
+
+### Header Line이 있는 Internal Table
+
+```
    DATA: itab TYPE STANDARD TABLE OF ts
         	   WITH NON-UNIQUE KEY carrid 
               WITH HEADER LINE.
    => itab : header line / itab[] : internal table
+```
 
-▪ Filling an internal table
+<br/>
+
+### Filling an internal table
+
+```
    SELECT * FROM spfli
              APPENDING TABLE gt_spfli
              WHERE ...
    SELECT cityfrom FROM spfli
              APPENDING COREESPONDING FIELDS OF TABLE gt_spfli
              WHERE ...
-   한 itab에 두 쿼리 내용을 전부 담고 싶을 때 사용, 이렇게 하면 테이블 안없어지고 또 담아짐.
+```
 
-Fund1 - UNIT 12 : Data Modeling and Data Retrieval
+  -  한 itab에 두 쿼리 내용을 전부 담고 싶을 때 사용, 이렇게 하면 테이블 안없어지고 또 담아짐.
 
-▪ Single data 가져오기 ( WF2 p.457 )
-   1. SELECT SINGLE <column field name or * > FROM <table> INTO <structure v>
+<br/>
+
+
+### Single data 가져오기 
+
+```   
+SELECT SINGLE <column field name or * > FROM <table> INTO <structure v>
                                                 WHERE <condition>
 
    SELECT SINGLE * FROM scarr INTO ls_scarr WHERE carid = iv_carrid.
@@ -698,103 +747,136 @@ Fund1 - UNIT 12 : Data Modeling and Data Retrieval
    SELECT SINGLE seatsmax seatsocc FROM sflight INTO CORRESPONDING FIELDS OF ls_flight
      	WHERE carrid = iv_carrid AND connid= iv_connid AND fldate = iv_fldate
    CORRESPONDING FIELDS OF : SELECT 구절의 column과 target의 column 이름 같은 곳에 할당
+```
 
-▪ ABAP에서 ENDSELECT 안오는 경우 2가지
+<br/>
+
+### ABAP에서 ENDSELECT 안오는 경우 2가지
+
    1. SELECT SINGLE
    2. SELECT INTO 로 table가져올 때
 
-▪ 여러 건의 data 가져오는 법 2가지
+<br/>
+
+### 여러 건의 data 가져오는 법 2가지
+
    1. SELECT ENDSELECT (LOOP)  -> select loop 는 performance적으로 좋지 않다.
+   
+   ```
       SELECT carrid connid fldate seatsocc seatsmax
       FROM sflight 
       INTO ls_flight  <structure v>  “INTO CORRESPONDING FILEDS OF ...
       WHERE carrid = iv_carrid.
       ENDSELECT.
+   ```
+
+<br/>
+
 
    2. ARRAY FETCH
+   
+   ```
       SELECT carrid connid fldate seatsmax seatsocc
       FROM sflight 
       INTO TABLE et_flights <itab> “ INTO CORRESPONDING FIELDS OF TABLE
       WHERE carrid = iv_carrid.
+   ```
+
+<br/>
 
 
-▪ Array fetch와 select endselect 구동방식 차이 주의
+### Array fetch와 select endselect 구동방식 차이 주의
 
+  - Array Fetch는 한꺼번에 테이블에 받고나서 loop문으로 수정을 해주는 거니깐 modify가 되는데
+  - Select Endselect는 하나하나 뽑기 때문에 modify를 쓰면 안된다. 저 때는 et_result가 empty이기 때문에
+  - 결과값이 0이 나와버린다.
 
-Array Fetch는 한꺼번에 테이블에 받고나서 loop문으로 수정을 해주는 거니깐 modify가 되는데
-Select Endselect는 하나하나 뽑기 때문에 modify를 쓰면 안된다. 저 때는 et_result가 empty이기 때문에
-결과값이 0이 나와버린다.
+<br/>
 
-▪ ABAP의 SELECT 구문은 3개다!
+### ABAP의 SELECT 구문은 3개다!
+
    1. SELECT SINGLE
    2. SELECT ENDSELECT
    3. ARRAY FETCH
+
+<br/>
    
-▪ 다른 Client의 data가 필요한 경우
+### 다른 Client의 data가 필요한 경우
+
+```
    SELECT * FROM spfli INTO ...
    CLIENT SPECIFIED
    WHERE mandt = 402
    AND carrid = ‘AA’.
+```
 
-Fund1 - UNIT 13 : Classic ABAP Reports
+<br/>
 
-▪ 출력값에 글자색넣기, 아이콘 넣기
-   ex. WRITE:/ GS_FLIGHT-CARRID COLOR COL_POSITIVE
-   ABAP에서 지원하는 7가지 색
-   col_heading(파랑), normal(하늘), total(노랑), key(진하늘), positive(초록), negative(빨강), group(주황)
+### 출력값에 글자색넣기, 아이콘 넣기
 
-   Use ICON ( SE11에서 ICON 검색하면 가능)
-   WRITE  ICON_GREEN_LIGHT AS ICON.
+   - ex. WRITE:/ GS_FLIGHT-CARRID COLOR COL_POSITIVE
 
-▪ ABAP Event 발생 순서
+   - ABAP에서 지원하는 7가지 색
+     - col_heading(파랑), normal(하늘), total(노랑), key(진하늘), positive(초록), negative(빨강), group(주황)
 
-load of program과 initialization은 프로그램 실행시켰을 때 한번만 실행된다.
-initialization은 report program에서만, 그래서 screen program에서는 load of program으로 default 설정
+   - Use ICON ( SE11에서 ICON 검색하면 가능)
+     - ```WRITE  ICON_GREEN_LIGHT AS ICON.```
 
-AT SELECTION-SCREEN OUPUT은 screen 프로그램의 PBO와 같고
-AT SELECTION-SCREEN은 screen 프로그램의 PAI와 같다.
+<br/>
 
-Fund1 - UNIT 14 : Program Anaylsis Tools
+### ABAP Event 발생 순서
 
-▪ Code Inspector : -> program -> mouse right button -> check -> code inspector
-   Inspection, Object Set, Check Variant
+ - load of program과 initialization은 프로그램 실행시켰을 때 한번만 실행된다.
+ - initialization은 report program에서만, 그래서 screen program에서는 load of program으로 default 설정
+ - AT SELECTION-SCREEN OUPUT은 screen 프로그램의 PBO와 같고
+ - AT SELECTION-SCREEN은 screen 프로그램의 PAI와 같다.
 
-Fund1 - UNIT 15 : Program Calls and Memory Management
+<br/>
 
-▪ 프로그램 호출 방법 2가지 ( WF2 p.562 )
-   두 종류
-   1. Insert program : program1에서 pr2 호출하면 pr1 과 pr2가 동시에 흐름
-   2. Start New Program : pr1에서 pr2 호출하면 pr1 멈추고 pr2를 실행, 다시 pr1로 돌아가지 않음
+### 프로그램 호출 방법 2가지 
+   
+1. Insert program : program1에서 pr2 호출하면 pr1 과 pr2가 동시에 흐름
+2. Start New Program : pr1에서 pr2 호출하면 pr1 멈추고 pr2를 실행, 다시 pr1로 돌아가지 않음
 
-   1. 프로그램 이름으로 호출
-   1-1. SUBMIT <(report)program name> ( Start new program ) 
-   1-2. SUBMIT <program name> ( Insert program ) 
-       AND RETURN. 
-   2. 프로그램 t-code로 호출
-   2-1. LEAVE TO TRANSACTION <t-code> ( Start new program ) 
+<br/>
+
+1. 프로그램 이름으로 호출
+
+   1-1. SUBMIT <(report)program name> ( Start new program )
+    
+   1-2. SUBMIT <program name> ( Insert program ) AND RETURN.
+    
+2. 프로그램 t-code로 호출
+
+   2-1. LEAVE TO TRANSACTION <t-code> ( Start new program )
+    
    2-2. CALL TRANSACTION <t-code> ( Insert program ) 
 
-▪ Memory Management ( WF2 p.584 )
+<br/>
+
+### Memory Management 
+
    - External Session : SAP GUI 로그인하면 뜨는 창 (new gui window)
-     구성 -> ABAP memory와 여러개의 Internal Session
+     - 구성 -> ABAP memory와 여러개의 Internal Session
+     
    - Internal Session : 여기서 프로그램이 실행
-     구성 -> MPG(Main Program Group)과 APG(Additional Program Group)
-     Main에는 Main Program과 Global data object
-     Additional에는 Function group과 global class, Global data object, static attributes
+     - 구성 -> MPG(Main Program Group)과 APG(Additional Program Group)
+     - Main에는 Main Program과 Global data object
+     - Additional에는 Function group과 global class, Global data object, static attributes
  
-   - Program Groups : 구성 -> 여러 개의 External Session과 SAP memory
+   - Program Groups
+     - 구성 -> 여러 개의 External Session과 SAP memory
     
-   - WF2 p.597
-     ABAP Memory는 External Section마다 존재, Internal Section간 데이터 주고받을 때 사용
-     SAP Memory는 다른 External Section과도 소통 가능
-    
-   - Access SAP Memory WF2 p.599
-     SET PARAMETER ID / GET PARAMETER ID
+   - Access SAP Memory 
+     - SET PARAMETER ID / GET PARAMETER ID
 
-Fund1 - UNIT 16 : ABAP Open SQL
+<br/>
 
-▪ Classical Open SQL 과 New Open SQL
-   <Classical open sql>
+
+### Classical Open SQL 과 New Open SQL
+   
+   
+- Classical open sql
      - fixed value ‘A’ as a X
      - column과 colmun 연산 X
      - CASE X
@@ -802,7 +884,9 @@ Fund1 - UNIT 16 : ABAP Open SQL
      - UNION X
      - Subquery는 where절만 사용 가능, select, from X
 
-   <New open sql>
+<br/>
+
+- New open sql
      - SELECT column1, column2 구분자 콤마사용
      - 변수 앞에 @사용
      - CASE O
@@ -811,15 +895,29 @@ Fund1 - UNIT 16 : ABAP Open SQL
      - UNION, UNION ALL O
      - Performance가 classical에 비해 좋다.
 
-▪ sql 정렬 ( WF2 p.619 )
+<br/>
+
+### sql 정렬 
+
+```
    SELECT connid fldate seatsocc FROM sflight
    INTO TABLE gt_flightocc WHERE seatsocc > 200
    ORDER BY connid DESCENDING seatsocc ASCENDING.
+```
 
-▪ sql 중복 제거
+<br/>
+
+### sql 중복 제거
+
+```
    SELECT DISTINCT carrid connid FROM sflight INTO TABLE gt_flight WHERE seatsocc > 200.
+```
 
-▪ sql Aggregate function
+<br/>
+
+### sql Aggregate function
+
+```
    SELECT MIN(col) MAX(col) SUM(col) AVG(col) COUNT(*) 
    FROM ~
    ex.
@@ -828,191 +926,240 @@ Fund1 - UNIT 16 : ABAP Open SQL
    중복제거 응용
    SELECT COUNT ( * ) COUNT ( DISTINCT connid ) SUM ( DISTINCT seatsocc )    
    FROM sflight INTO gs_flightocc.
+```
 
-▪ sql group ( WF2 p.632 )
+<br/>
+
+### sql group 
+
+```
    SELECT carrid connid SUM ( seatsocc ) FROM sflight INTO TABLE gt_flightocc
    WHERE fldate > ‘20090101’
    GROUP BY carrid connid HAVING SUM ( seatsocc ) < 500.
 
+
    carrid connid 중심으로 묶어줌.
    group by 뒤 having절로 조건 표시
+```
 
-WF2 p.629부터 sql 정리 다시
+<br/>
 
-Fund2 - UNIT 1 : Introduction to the ABAP Dictionary
-
-▪ Database Interface : Open SQL을 native SQL로 변환시키는 역할인데 이 때 ABAP Dictionary에서
+-  Database Interface : Open SQL을 native SQL로 변환시키는 역할인데 이 때 ABAP Dictionary에서
       	  	      참조해서 변환시킨다.
 
-Fund2 - UNIT 2 : Data Types in the ABAP Dictionary
 
-▪ ABAP Dictionary 기능 (WF3 p.11)
+<br/>
+
+### ABAP Dictionary 기능 
+
    - Database Object 기능에 해당 ( Database table, View )
    - Datatype에 대한 Definition ( Data type, Type Group, Domain )
    - Service 부분 ( Search Help, Lock Object ) 
 
-▪ Domain과 Data Element (WF3 p.14)
-   - Domain : Element Field에 대한 Technical Attribute(길이, 타입) 정의
-              Domain은 Data Element 가 사용한다. (Certi)
-              SE11에서 생성가능. 
-              case-sensitive는 이 domain을 사용하는 field는 대소문자를 구별하겠다는 의미.
-              Value Range 탭에서 Fixed Value 입력 가능 ( 필드에 입력할 수 있는 값 지정 )
-   - Data Element : Domain + Semantic(의미) Properties를 포함
-     사용 : Internal Table의 Line Type(열이 하나인 테이블)  
-           ex. DATA: gt_flight TYPE sflight-carrid.
+<br/>
+
+### Domain과 Data Element 
+
+   - Domain 
+      - Element Field에 대한 Technical Attribute(길이, 타입) 정의
+      - Domain은 Data Element 가 사용한다. (Certi)
+      - SE11에서 생성가능. 
+      - case-sensitive는 이 domain을 사용하는 field는 대소문자를 구별하겠다는 의미.
+      - Value Range 탭에서 Fixed Value 입력 가능 ( 필드에 입력할 수 있는 값 지정 )
+      
+   - Data Element 
+     - Domain + Semantic(의미) Properties를 포함
+     - 사용 : Internal Table의 Line Type(열이 하나인 테이블)  
+     
+```
+     DATA: gt_flight TYPE sflight-carrid.
            DB table의 fields,
            structure의 components.
+```
 
-▪ Internal Table 변수 선언 7가지 방법
+<br/>
+
+### Internal Table 변수 선언 7가지 방법
 
 
-▪ Create Table ( WF3 p.32 )
+-  Create Table
+ 
    - Internal Table의 Line Structure 의 타입으로 쓸 수 있는 것
-     1) Data Element  / TYPE TABLE OF s_carr_id
-       
-        
+   
+     1) Data Element  / TYPE TABLE OF s_carr_id     
      2) View의 Fields  / TYPE dv_flights
      3) transparent table  / TYPE scarr
      4) Structure의 Components / TYPE TABLE OF BC400_S_FLIGHT
 
-     SE11에서 Table Type 이라고 되있는 것 ex. BC400_T_FLIGHT 는 바로 TYPE ##
-              Transparent Table은 TYPE TABLE OF ## ex. SCARR
+   - SE11에서 Table Type 이라고 되있는 것 ex. BC400_T_FLIGHT 는 바로 TYPE 
+   - Transparent Table은 TYPE TABLE OF  ex. SCARR
+   - SE11에서 Table Type 만들 때 ZT##가 아니라 ZY## 이렇게 naming 한다.
 
-     SE11에서 Table Type 만들 때 ZT##가 아니라 ZY## 이렇게 naming 한다.
+<br/>
 
-▪ Structure 변수 선언 6가지
-
+### Structure 변수 선언 6가지
 
 - Structure의 Components로 쓸 수 있는 것
+
   1) Data Element / Simple Structure
   2) View의 Fields / DATA: GT_FLIGHT TYPE TABLE OF DV_FLIGHTS,                        GS_FLIGHT LIKE LINE OF GT_FLIGHT.
 
-                    DATA: wa1 TYPE DV_FLIGHTS.
+```
+ DATA: wa1 TYPE DV_FLIGHTS.
+```
 
   3) DB Table의 Fields / DATA: GT_FLIGHT TYPE TABLE OF SFLIGHT,                        GS_FLIGHT LIKE LINE OF GT_FLIGHT.
-           
-   			DATA: wa1 TYPE SPFLI.
+ 
+```           
+ DATA: wa1 TYPE SPFLI.
+```
 
   4) Internal Table의 Line Structure
 
-▪ Create Structure 종류 3가지 ( WP3 p.23 )
-   1. Simple : Component 모두가 data element로만 되어있는 Structure
-              Access) GS_FLIGHT-CARRID
+<br/>
+
+### Create Structure 종류 3가지 
+
+   1. Simple : Component 모두가 data element로만 되어있는 Structure 
+      - GS_FLIGHT-CARRID
+      
    2. Nested : Component type에 structure type이 올 수 있다.
-              Access) GS_FLIGHT-FROM-AIRPFROM
-                     GS_FLIGHT-FROM-CITYFROM
-          => Nested보다 .Include 더 많이 사용함, Access) GS_FLIGHT-AIRPFROM
-     .Include => Standard에서 공통적인 필드만들 때 사용, 하나 만들어놓고 다같이 공유, 
-                 수정사항있으면 한번에 고칠 수 있는 장점 ( WF3 p.59 )
+      - GS_FLIGHT-FROM-AIRPFROM
+      - GS_FLIGHT-FROM-CITYFROM
+      - => Nested보다 .Include 더 많이 사용함, Access) GS_FLIGHT-AIRPFROM
+      - Include => Standard에서 공통적인 필드만들 때 사용, 하나 만들어놓고 다같이 공유, 수정사항있으면 한번에 고칠 수 있는 장점 
+      
    3. Deep : Component type에 table type이 올 수 있음.
-             data가 Header와 Detail로 나눠지는 경우 많이 사용
-             ex. FI전표, SALES, PP Purchase Order에 따른 Items
-             핸들링하기 위해서 Work Area가 필요하고 출력시 LOOP문 사용
+      - data가 Header와 Detail로 나눠지는 경우 많이 사용
+      - ex. FI전표, SALES, PP Purchase Order에 따른 Items
+      - 핸들링하기 위해서 Work Area가 필요하고 출력시 LOOP문 사용
+
+<br/>
 
 
-   table, structure 든 생성할 때 amount field들 currency, quantity 들은
-   Currency Field 탭에 가서 Reference table (ex. zcargo_clc19)와 Reference Field (Currency) 입력해야함.
+### Type Group 
 
-▪ Type Group ( WP3 p.44 )
-   실무에서 자주 사용하는 상수값을 Type Group으로 만든다.
-   ex. Type Group : ABAP
-      => ABAP_true ( ‘X’ ) , ABAP_false ( ‘ ’ ), ABAP_undefined ( ‘_’ )
+   - 실무에서 자주 사용하는 상수값을 Type Group으로 만든다.
+   - ex. Type Group : ABAP
+   -    => ```ABAP_true ( ‘X’ ) , ABAP_false ( ‘ ’ ), ABAP_undefined ( ‘_’ )```
 
+```
     CASE abap_true.
        WHEN CREATE.   -> 이런식으로 사용 가능
+```
 
-▪ ABAP Dictionary 의 Transparent Table는 Database server에 table을 생성하기 위한 정의서, 설명서.
-   그래서 ABAP Program에서 Data Type 으로 사용가능
-   Transparent Table의 주목적은 Database Server의 Table 생성이다.
-   Activate 하면 database 서버에 물리적인 table 생성 
+<br/>
 
-Fund2 - UNIT 3 : Database Tables
+### ABAP Dictionary 의 Transparent Table는 Database server에 table을 생성하기 위한 정의서, 설명서.
+   
+   - ABAP Program에서 Data Type 으로 사용가능
+   - Transparent Table의 주목적은 Database Server의 Table 생성이다.
+   - Activate 하면 database 서버에 물리적인 table 생성 
 
-▪ DB Table = Transparent Table => Structrue Type으로 사용가능 ( WF3 p.77 )
-   Transparent Table의 주목적 : DB에 테이블을 생성하기 위함(Activate)
-   ABAP Dictionary의 3개 table type => Transparent Table, Cluster Table, Pool Tables
 
-Fund2 - UNIT 4 : Performance During Table Access
+<br/>
 
-▪ Data Access Performance 증가 3가지 ( WF3 p.97 ) ( WF4 p.485 )
+### DB Table = Transparent Table => Structrue Type으로 사용가능 
+
+   - Transparent Table의 주목적 : DB에 테이블을 생성하기 위함(Activate)
+   - ABAP Dictionary의 3개 table type => Transparent Table, Cluster Table, Pool Tables
+
+<br/>
+
+
+### Data Access Performance 증가 3가지 
+
    1. Key field
+   
    2. Secondary Index => SE11 > create indexes / 딱 필요한 field만 index 설정
-                         보통 short description에 뭘로 key를 가지는지 적음 mandt+cargo_desc
+   
+      - 보통 short description에 뭘로 key를 가지는지 적음 mandt+cargo_desc
+                         
    3. Table Buffer => CBO에선 Application Server별로 Buffer가 존재하기 때문에 잘 사용하지 않는다.
-                     Application Server와 Database Server가 Synchronization이 안될 수 있다.
-                     Master Table 같이 수정 잘 안일어나는 테이블에 Table Buffer 사용이 좋음.
-      1) Pull Buffering
-      2) Generic Buffering : generic key = 1 ~ key field수-1
-      3) Single-record Buffering
+      - Application Server와 Database Server가 Synchronization이 안될 수 있다.
+      - Master Table 같이 수정 잘 안일어나는 테이블에 Table Buffer 사용이 좋음.
+      -  Pull Buffering
+      -  Generic Buffering : generic key = 1 ~ key field수-1
+      -  Single-record Buffering
 
    마스터테이블은 수정이 잘 안일어나니깐 마스터테이블 같은 곳에 Buffer를 많이 사용한다.
 
-Fund2 - UNIT 5 : Input Checks
 
-▪ Domain에서 Fixed Value 입력가능
+<br/>
+
+### Domain에서 Fixed Value 입력가능
+
    - fixed value 이외의 값이 들어오면 input check
-     PARAMETERS: ### Type ### Value Check  =>  F4 유효값만 display
+     -  PARAMETERS: ### Type ### Value Check  =>  F4 유효값만 display
 
-▪ Foreign key를 이용한 input check ( WF3 p.126 )
+<br/>
+
+### Foreign key를 이용한 input check 
+
    - foreign key 설정 주 목적 : table간 연결에 있어서 data의 일관성을 주기 위해
    - se11 -> utilities -> table contents -> create entries
-     field에서 열쇠모양(foreign key) 선택 -> value table 설정했으면 물어본다.
-     -> yes : 자동적으로 필드 입력 -> Enter   ( 다시 해보기 )
+      - field에서 열쇠모양(foreign key) 선택 -> value table 설정했으면 물어본다.
+      - -> yes : 자동적으로 필드 입력 -> Enter
 
-▪ Text Table : text관리할 때 code table에 text만 넣어서 하나의 table로 관리할 수 있다.
-   ( WF3 p.147 )
-
+<br/>
 
 
-Fund2 - UNIT 6 : Dictionary Object Dependencies
+- Text Table : text관리할 때 code table에 text만 넣어서 하나의 table로 관리할 수 있다.
+ 
+<br/>  
 
-▪ data element, domain -> Utilities -> where-used-list에서 어디서 사용되고 있는지 확인가능
 
-Fund2 - UNIT 7 : Table Changes
+-  data element, domain -> Utilities -> where-used-list에서 어디서 사용되고 있는지 확인가능
 
-▪ Standard를 바꾸는 법 2가지 ( WF3 p.194 )
+<br/>
+
+### Standard를 바꾸는 법 2가지 
+
    1. Enhancement
-     Standard Table에 구멍 뚫어서 필드 추가하고 싶을 때 APPEND STRUCTURE 사용 (ZZ, YY)
+     - Standard Table에 구멍 뚫어서 필드 추가하고 싶을 때 APPEND STRUCTURE 사용 (ZZ, YY)
+      
    2. Modification
-     Standard를 완전히 바꾸는 것.          
+     - Standard를 완전히 바꾸는 것.          
    
-   Include는 standard에서 공통적인 필드만들 때 사용
+   
+- Include는 standard에서 공통적인 필드만들 때 사용
 
-▪ Program 개발? 순서
-   Standard -> Enhancement -> CBO -> Modification
+<br/>
 
-Fund2 - UNIT 8 : Views and Maintanance Views
 
-▪ Table 합치기 ( WF3 p.210 ) ( WF4 p.492 ) ( WF2 p.651 )
+### Table 합치기 
+
    1. View 생성
      - 해당 Data가 여러 프로그램에서 사용될 때는 View 생성 (Reusable)
-     1) database view : program에서 사용, 하나 이상의 테이블로 뷰 생성, INNER JOIN만 사용
-     2) projection view : program에서 사용, 하나의 테이블로만 뷰 생성
-                    하나의 테이블에 있는 특정 필드의 data를 보여주지 않고자 할 때 ex. HR 급여t
-     3) maintenance view : program에서 사용X, 생성 수정 유지보수할 때 사용, LEFT OUTER JOIN
-                           개발자는 SE11, SE16과 같은 Workbench Tool을 이용해서 data를 
-                           생성, 수정, 삭제할 수 있지만 일반 User들은 Maintenance View와 
-                           Maintenance Dialog를 통해 생성, 수정, 삭제한다.
-        	  	   Foreign Key 필수 / 생성 ( WF3 p.231 )
-      			   two step -> overview + detail
-     4) help view : Program에서 사용X, Search Help에서 사용, F4키 눌렀을 때 따는 화면에서 사용,
-                   LEFT OUTER JOIN
-
-     SE11 -> View 생성 ZV### 생성 
-     -> Table/Join Condition : 가져올 Table
-     -> View Field : Table Fields 에서 원하는 Table 가져오기, 중복 유의해서 선택
-     -> Selection Conditions : 조건입력
+     
+       - database view : program에서 사용, 하나 이상의 테이블로 뷰 생성, INNER JOIN만 사용
+       
+       - projection view : program에서 사용, 하나의 테이블로만 뷰 생성, 하나의 테이블에 있는 특정 필드의 data를 보여주지 않고자 할 때 ex. HR 급여t
+       
+       - maintenance view : program에서 사용X, 생성 수정 유지보수할 때 사용, LEFT OUTER JOIN
+               - 개발자는 SE11, SE16과 같은 Workbench Tool을 이용해서 data를 생성, 수정, 삭제할 수 있지만 일반 User들은 Maintenance View와 Maintenance Dialog를 통해 생성, 수정, 삭제한다.
+        	   - Foreign Key 필수 / 생성
+      		   - two step -> overview + detail
+      		   
+       - help view : Program에서 사용X, Search Help에서 사용, F4키 눌렀을 때 따는 화면에서 사용, LEFT OUTER JOIN
+               -  SE11 -> View 생성 ZV### 생성
+               - -> Table/Join Condition : 가져올 Table
+               - -> View Field : Table Fields 에서 원하는 Table 가져오기, 중복 유의해서 선택
+               - -> Selection Conditions : 조건입력
     
-     Dynamic한 field 생성 
-     view field에서 * 로 모든 필드를 받아온다. 
-     - / table name / field name 으로 중복된 값 빼준다. ex. - / SCARR / mandt
+       -  Dynamic한 field 생성 
+          - view field에서 * 로 모든 필드를 받아온다. 
+          - / table name / field name 으로 중복된 값 빼준다. ex. - / SCARR / mandt
 
-     View 생성할 때는 View Field에 MANDT가 꼭 와야한다. (없으면 모든 클라이언트의 데이터를 가져옴)  
-
-     View도 data type으로 사용가능. (Structure type) ex. wa_flights TYPE sv_flights.   
+      - View 생성할 때는 View Field에 MANDT가 꼭 와야한다. (없으면 모든 클라이언트의 데이터를 가져옴)  
+      - View도 data type으로 사용가능. (Structure type) ex. wa_flights TYPE sv_flights.   
+  
+  <br/>
   
    2. Join 구문 확인
      - data 읽어오는 거 한번만 사용할 거면 join사용	
+       
+```
        Inner Join	
        SELECT <fieldlist> INTO <target>
           FROM <dbtab1> [AS <alias1>]
@@ -1022,35 +1169,44 @@ Fund2 - UNIT 8 : Views and Maintanance Views
           AND ...
           WHERE ...
        ENDSELECT.
+```
 
-Fund2 - UNIT 9 : Search Helps
 
-▪ input check에서 F4누르면 나오는 화면을 Possible Entry (Possible Value) 라고 함.
-▪ Search Help = Input Help = After Help
-▪ SE11에서 craete -> Selection Method에는 Table이나 View가 올 수 있다. ( WF3 p.252 )
-   만드는 거 다시ㅣㅣㅣㅣ 모르겠음.
-▪ Search Help로 Attach 할 수 있는 곳
-   1. Structure의 필드 2. Table의 필드 3. Data Element 4. Screen Painter 직접연결 (비추천)
+<br/>
 
-Fund2 - UNIT 10 : Selection Screen
+- input check에서 F4누르면 나오는 화면을 Possible Entry (Possible Value) 라고 함.
+- Search Help = Input Help = After Help
+- SE11에서 craete -> Selection Method에는 Table이나 View가 올 수 있다. 
+  
+<br/>
 
-▪ Selection Screen 생성 2가지 ( WF3 p.292 )
+### Search Help로 Attach 할 수 있는 곳
+
+   1. Structure의 필드 
+   2. Table의 필드 
+   3. Data Element 
+   4. Screen Painter 직접연결 (비추천)
+
+
+<br/>
+
+### Selection Screen 생성 2가지 
+
    1. Single Selections : 입력값 한가지 받을 때
-      PARAMETERS: pa_con TYPE spfli-connid.
+      - ```PARAMETERS: pa_con TYPE spfli-connid.```
       
       - PARAMETERS에 사용할 수 있는 구문
-        변수이름은 최대 8자리까지 가능
-        TYPE <data type> LIKE <variable> DECIMALS <n> 
-        MEMORY ID <parmeter id> : SAP memory에 올리고 싶을 때. <pid에 임의 id 가능>
-        OBLIGATORY : 필수 입력 필드로 만듬(Mandantory Field)
-        DEFAULT <value> : 초기값
-        LOWER CASE : 대소문자 구분   /    VALUE CHECK : Fixed Value Check (Domain)      
-        AS CHECKBOX : 체크박스 생성, 다f중 체크 가능
-        RADIOBUTTON GROUP <grp> : 라디오버튼 생성, grp 중 하나만 체크 가능.
-                      		       DEFAULT값 안주면 첫 번째 라디오버튼이 클릭되있음.
-        MODIFY ID <mod> : Runtime시에 변경할 수 있는데 하나의 그룹으로 묶어서 변경하고싶을 때
-                             전에 친 거 나갔다와도 저장되있음.
+         - 변수이름은 최대 8자리까지 가능
+         - ```TYPE <data type> LIKE <variable> DECIMALS <n>``` 
+         - MEMORY ID (parmeter id) : SAP memory에 올리고 싶을 때. pid에 임의 id 가능
+         - OBLIGATORY : 필수 입력 필드로 만듬(Mandantory Field)
+         - ```DEFAULT <value>``` : 초기값
+         - LOWER CASE : 대소문자 구분   /    VALUE CHECK : Fixed Value Check (Domain)      
+         - AS CHECKBOX : 체크박스 생성, 다f중 체크 가능
+         - RADIOBUTTON GROUP <grp> : 라디오버튼 생성, grp 중 하나만 체크 가능. DEFAULT값 안주면 첫 번째 라디오버튼이 클릭되있음.
+         - ```MODIFY ID <mod>``` : Runtime시에 변경할 수 있는데 하나의 그룹으로 묶어서 변경하고싶을 때, 전에 친 거 나갔다와도 저장되있음.
 
+```
         CHECKBOX => IF문으로 조건 생성
         CONSTANTS gc_mark VALUE 'X'.
         IF pa_name EQ gc_mark <statements> ENDIF.
@@ -1063,8 +1219,13 @@ Fund2 - UNIT 10 : Selection Screen
            WHEN pa_lim2 <statements>.
            WHEN pa_lim3 <statements>.
         ENDCASE.
+```
 
-   2. Complex Selections : 입력값 범위로 받을 때  ( WF2 p.524 )
+<br/>
+
+   2. Complex Selections : 입력값 범위로 받을 때  
+   
+```
       DATA gs_spfli TYPE spfli.
       SELECT-OPTIONS :
       so_car FOR gs_spfli-carrid. => data typeX 선언되어져 있는 변수의 특정 필드이름
@@ -1077,33 +1238,34 @@ Fund2 - UNIT 10 : Selection Screen
 
       SELECT-OPTIONS 선언하면 so_car 같은 이름의 변수가 두 개 생성됨(header, Itab)
       SELECT-OPTIONS는 Internal Table이다.	
+```
 
-      selection condition 
-      sign : I (Include), E (Exclude)
-      option : EQ, BT ... 10개
-      low : 첫 번째 field에 입력되어지는 값
-      high : 두 번째 field에 입력되어지는 값
-      
-      값을 넣을 때 sign, option, low 이렇게 다 들어가야지 입력이 된다. 하나 빼먹으면 안되드라.
 
-      ex. 초기값 설정
-      * 400 ~ 402 포함 초기값
-      INITIALIZATION.         SO_CON-SIGN = 'I'.  “ so_con header line에 들어가는 내용        SO_CON-OPTION = 'BT'.        SO_CON-LOW = 400.        SO_CON-HIGH = 402.        APPEND SO_CON.   “ so_con[] internal table에 들어감.
+   - selection condition 
+       - sign : I (Include), E (Exclude)
+       - option : EQ, BT ... 10개
+       - low : 첫 번째 field에 입력되어지는 값
+       - high : 두 번째 field에 입력되어지는 값
+       - 값을 넣을 때 sign, option, low 이렇게 다 들어가야지 입력이 된다.
 
-      - SELECT-OPTIONS에 사용할 수 있는 구문
-        변수이름은 최대 8자리까지 가능
-        SELECT-OPTIONS <seltab> FOR <f>
-        DEFAULT <value> : low 초기값 설정
-        DEFAULT <value1> TO <value2> : low, high 초기값 설정
-        MEMORY ID <pid> : SAP Memory에 올리고 싶을 때, pid: parameter id, 임의값 가능
-        LOWER CASE : 대소문자 구분
-        OBLIGATORY : 필수 필드로 만듬
-        NO-EXTENSION : Hidden Multiple-Selection Button
-        NO INTERVALS : Hidden to button
-        MODIF ID <mod> : Runtime 시 변경할 시 하나의 그룹으로 묶어서 변경하고자할 때
+   - SELECT-OPTIONS에 사용할 수 있는 구문
+       - 변수이름은 최대 8자리까지 가능
+       - ```SELECT-OPTIONS <seltab> FOR <f>```
+       - ```DEFAULT <value> : low 초기값 설정```
+       - ```DEFAULT <value1> TO <value2> : low, high 초기값 설정```
+       - ```MEMORY ID <pid> : SAP Memory에 올리고 싶을 때, pid: parameter id, 임의값 가능```
+       - LOWER CASE : 대소문자 구분
+       - OBLIGATORY : 필수 필드로 만듬
+       - NO-EXTENSION : Hidden Multiple-Selection Button
+       - NO INTERVALS : Hidden to button
+       - ```MODIF ID <mod>``` : Runtime 시 변경할 시 하나의 그룹으로 묶어서 변경하고자할 때
 
-        - Block 생성
-          SELECTION-SCREEN BEGIN OF BLOCK <name> WITH FRAME TITLE <text>.
+<br/>
+
+   - Block 생성
+
+```
+      SELECTION-SCREEN BEGIN OF BLOCK <name> WITH FRAME TITLE <text>.
  	  SELECTION-END OF BLOCK <name>.
 
           SELECTION-SCREEN BEGIN OF LINE.
@@ -1114,16 +1276,24 @@ Fund2 - UNIT 10 : Selection Screen
            pos_high(report 라인 끝에서 시작) 도 가능
             <text> For ~~ 는 이 텍스트와 field는 연관되어있다.를 의미. text 클릭해도 check box 클릭
            ex. SELECTION-SCREEN COMMENT 1 (20) TEXT-T01 FOR FIELD PA_COL.
+```
 
-        - Multiple Selection Screen => Tabstrips   ( WF3 p.310 )
-          Tapstrips : Selection Screen에 필드가 많을 때 간결하게 배치하고자할 때
-          1. 서브스크린 생성  2. 탭 생성
+   - Multiple Selection Screen => Tabstrips
+      
+        - Tapstrips : Selection Screen에 필드가 많을 때 간결하게 배치하고자할 때
 
-          1. SELECTION-SCREEN BEGIN OF SCREEN 101 AS SUBSCREEN.
+ 서브스크린 생성  
+  
+```
+           SELECTION-SCREEN BEGIN OF SCREEN 101 AS SUBSCREEN.
 		SELECT-OPTIONS : so_car ~~~~~
     	    SELECTION-SCREEN END OF SCREEN 101.
+```
 
-    	  2. SELECTION-SCREEN BEGIN OF TABBED BLOCK <name> FOR 5 LINES.
+  탭 생성
+  
+```
+    	  SELECTION-SCREEN BEGIN OF TABBED BLOCK <name> FOR 5 LINES.
 		SELECTION-SCREEN TAB (10) tab1 USER-COMMAND comm1 DEFAULT SCREEN 101.
 		SELECTION-SCREEN TAB (10) tab2 USER-COMMAND comm2 DEFAULT SCREEN 102. 
  		SELECTION-SCREEN TAB (10) tab3 USER-COMMAND comm3 DEFAULT SCREEN 103.
@@ -1131,15 +1301,16 @@ Fund2 - UNIT 10 : Selection Screen
              (10) : tab title에 대한 길이
     	     user-command : tab click 위치
              5 lines : 5라인이 넘어가면 세로 스크롤이 생긴다.
- 
+
             INITIALIZATION   ->  tab title 설정
  	    tab1 = ‘Connection’.  
 	    tab2 = ‘Flight’.
     	    tab3 = ‘Booking‘.
 	    tab_block-activetab = ‘COMM2’.   ” Default값으로 다른 탭 페이지 뜨게할 때
             tab_block-dynnr = 102 
+```
 
-Fund2 - UNIT 11 : Introduction to Screen Programming
+
 
 ▪ Screen Program
    Screen Painter : SE51 => 보통 SE80에서 CREATE SCREEN을 주로 씀.
