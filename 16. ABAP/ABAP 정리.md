@@ -1,196 +1,160 @@
-교재 순서 workbench Fundemental 1~4(2) -> Report -> Database update -> workbench concept 1~3
-교재 목록 Fund1 Fund2 Rep Data Con1 Con2
-교재 표시 WF1 WF2 WF3 WF4 R DU WC1 WC2 WC3
+## ABAP ( Advanced Business Application Programming )
 
-한번 더 확인, 질문
-▪ WF3 p.60 transparent technical setting.
-▪ 디버거 사용이 아직 익숙하지 않음.
-▪ range 변수 ( p.??? )	
-   select-option 실행할때 입력받는 화면에 나타나는 변수고
-   range로 선언하면 그냥 프로그램안에서 변수처럼 사용한다는 차이가 있다.
-   둘다 범위값을 나타낸다는 똑같은 기능을 함.
+<br/>
 
-   둘다 같은 기능을 하는데 차이점은 range변수는 ABAP editor에서 rs_can-sign = 'I' 와 같이 설정해야됨.
-   DATA: RT_CAN TYPE RANGE OF SBOOK-CANCELLED, " range 변수, 필드4개짜리 Itab 생성          RS_CAN LIKE LINE OF RT_CAN  “ 이렇게 변수설정하는 거 다름   
-  
-   WHERE IN ( ) 다음에는 4개의 필드를 가진 Itab이 와야되는데
-   그런 Itab을 만드는 방법이 2가지 있다.
-   1. Select-option /  WHERE carrid IN so_car 
-   2. Range 변수 /  WHERE cancelled IN rt_can -> 이렇게 해주면 selection screen에는 안떠도 범위지정
-   
-BACKGROUND
-▪ ABAP ( Advanced Business Application Programming )
+### HANA 장점
 
-▪HANA 장점. CDS뷰 사용가능. eclipse 연동 쉬움. ECC는 row기반인데 HANA는 row, column store
-  필드별로 따로 따로 저장해서 연결해주는 거임. 불필요한 공간을 없애줘서 효율, 속도빠름.
-  데이터베이스 단에서 웬만한건 다 처리하겠다.
+ - CDS뷰 사용가능.
+ - eclipse 연동 쉬움.
+ - ECC는 row기반이지만 HANA는 row, column store
+ - 필드별로 따로 따로 저장해서 연결해준다. 불필요한 공간을 없애줘서 효율, 속도빠름.
+ - 데이터베이스 단에서 웬만한건 다 처리하겠다는 방향.
  
-▪ ABAP 프로그램 종류
-   1. Executable Program (Type 1) = Report Program = List Program
-      조회 목적으로 사용. 조회조건을 입력하는 Selection Screen이 존재.
-      프로그램 실행 시 Selection Screen 존재 시 ‘1000’ 스크린 자동호출.
-      ‘REPORT + 프로그램명’ 구문을 시작으로 프로그램 작성.
-      프로그램 Flow는 EVENT BLOCK Processing이라 하여 각 Event Block 순서대로 진행.
-      Screen 프로세서가 이벤트 블록 단위로 실행되는 방식.
-      사용자가 Selection Screen으로 조회 및 변경을 하면 ABAP 런타임 환경에서 Selection Screen 
-      프로세서가 프로그램의 상단에 선언된 프로그램 타입을 파악한다. 그리고 이 정보를 통해 
-      어떤 순서로 프로세싱 과정을 진행할지 결정하고 수행한다.
+<br/>
+ 
+### ABAP 프로그램 종류
 
-   2. Module Pool Program (Type M) = Screen Program = Online Program
-      생성/수정/삭제/조회 의 목적으로 사용. Transaction 처리
-      T-Code 생성 후 실행가능.
-      ‘PROGRAM + 프로그램명’ 구문을 시작으로 프로그램을 작성.
-      프로그램 Flow는 T-Code에 입력된 첫 스크린을 시작으로 다수의 스크린들이 순차적으로 호출되며 진행
-      스크린 단위로 수행되는 프로그램. 
-      NAMING은 SAPM으로 시작 SAPMZ### SAPMY###
+1. Executable Program (Type 1) = Report Program = List Program   
+      - 조회 목적으로 사용. 조회조건을 입력하는 Selection Screen이 존재.
+      - 프로그램 실행 시 Selection Screen 존재 시 ‘1000’ 스크린 자동호출.
+      - ‘REPORT + 프로그램명’ 구문을 시작으로 프로그램 작성.
+      - 프로그램 Flow는 EVENT BLOCK Processing이라 하여 각 Event Block 순서대로 진행.
+      - Screen 프로세서가 이벤트 블록 단위로 실행되는 방식.
+      - 사용자가 Selection Screen으로 조회 및 변경을 하면 ABAP 런타임 환경에서 Selection Screen 
+      - 프로세서가 프로그램의 상단에 선언된 프로그램 타입을 파악한다. 그리고 이 정보를 통해 어떤 순서로 프로세싱 과정을 진행할지 결정하고 수행한다.
 
-   3. Function Group (Type F)
-      NAMING은 SAPL으로 시작 SAPLZ~
+2.  Module Pool Program (Type M) = Screen Program = Online Program
+   
+      - 생성/수정/삭제/조회 의 목적으로 사용. Transaction 처리
+      - T-Code 생성 후 실행가능.
+      - ‘PROGRAM + 프로그램명’ 구문을 시작으로 프로그램을 작성.
+      - 프로그램 Flow는 T-Code에 입력된 첫 스크린을 시작으로 다수의 스크린들이 순차적으로 호출되며 진행
+      - 스크린 단위로 수행되는 프로그램. 
+      - NAMING은 SAPM으로 시작 SAPMZ### SAPMY###
 
-   4. Class Library : Interface Pool (Type J), Class Pool (Type K)
+3.  Function Group (Type F)
+   
+      - NAMING은 SAPL으로 시작 SAPLZ~
 
-   5. Include Program (Type I)
-      module pool에서 자주 사용하는 프로그램
+4. Class Library : Interface Pool (Type J), Class Pool (Type K)
+
+5. Include Program (Type I)
+      
+      - module pool에서 자주 사용하는 프로그램
+
+<br/>
 
    1, 2 => 독립적으로 실행.
+   
    3 ,4 ,5 => report나 screen에서 reusable unit으로 사용.
+   
    1, 2, 3 => Screen을 가짐.
+   
    ABAP Program Type은 프로그램 안의 프로세싱 블록과 오브젝트, 그리고 ABAP 런타임 환경에서
    어떻게 실행될지를 결정.
 
-▪ Screen 1000
-   screen 1000 = Selection Screen (PARAMETERS, SELECT-OPTIONS)
-   screen 100, 200 보통 normal default 단위이고 sub screen 사이사이 10단위로 들어가기도 함.
+<br/>
 
-▪ 변수 Naming Rule
+- Screen 1000
 
-Data type
-구분
-접두어
-사용예
-program
-Field
-G or L
-V or D
-GV_CARRID or
-GD_CARRID
-DATA: GV_CARRID TYPE S_CARR_ID.
-구조체
-S
-GS_SFLIGHT
-DATA: GS_SFLIGHT TYPE SFLIGHT.
-상수
-C
-GC_RATE
-CONSTANTS GC_RATE TYPE I VALUE '3.14'.
-Internal Table
-T
-GT_SFLIGHT
-DATA: GT_FLIGHT TYPE TABLE OF SFLIGHT.
-Class
-O
-GO_ALVGRID
-DATA GO_ALVGRID TYPE REF TO CL_SALV_TABLE.
-Range
-R
-GR_CARRID
-RANGES GR_CARRID FOR SFLIGHT-CARRID.
-데이터 참조 변수
-F
-GF_OBJ
-DATA: GF_OBJ TYPE REF TO OBJECT.
+  - screen 1000 = Selection Screen (PARAMETERS, SELECT-OPTIONS)
+  - screen 100, 200 보통 normal default 단위이고 sub screen 사이사이 10단위로 들어가기도 함.
 
-    * 교재 R p.117 참조변수 네이밍에서는 go_## (global obeject) lo_## (local object)
-                                         gr_## (global reference) lr_## (local reference) 로 갈쳐줌.
+<br/><br/>
 
-▪ Key Field 설정 이유 : 중복된 데이터를 확인하기 위해
-   Database 사용 이유 : 필요한 Data를 중복하지 않고(주목적) 잘 관리하기 위해 
+- Key Field 설정 이유 : 중복된 데이터를 확인하기 위해
 
-▪ ABAP Dictionary와 Database는 별개로 생각해야한다.
+  - Database 사용 이유 : 필요한 Data를 중복하지 않고(주목적) 잘 관리하기 위해 
 
-▪ tcode 생성
-   se80 se93
+- ABAP Dictionary와 Database는 별개로 생각해야한다.
 
-▪ Processing Blocks in ABAP Programs
+-  tcode 생성
+  -  se80 se93
 
-▪ Event Blocks For Selection Screens
+- Processing Blocks in ABAP Programs
 
-▪ Event Blocks For Excutable Programs (Reports)
+- Event Blocks For Selection Screens
+
+- Event Blocks For Excutable Programs (Reports)
    
-▪ CL_DEMO_OUTPUT 클래스를 이용한 팝업 에디트 띄우기
+- CL_DEMO_OUTPUT 클래스를 이용한 팝업 에디트 띄우기
+
+
+<br/><br/>
+
+- sy-datum+?(?)
+   - ex. sy-datum = 20210611
+   - sy-datum+0(4) = 2021
+   - sy-datum+4(2) = 06
+   - sy-datum+6(2) = 11
+
+<br/>
+
+-  System fields ( WF1 p.263 )
+   - 확인하는 방법 : se11 (abap dictionary)에서 syst 조회
+
+<br/>
+
+- SY-DATUM
+  - 일자 및 시간, 시스템날짜 출력
+- SY-UZEIT
+  - 시스템 시간 출력
+- SY-DBCNT
+  - Processed Database Table Rows
+  - SELECT구문으로 데이터베이스에서 읽어온 라인 수
+  - (테이블에서 데이터를 SELECT하고 난 후 SELECT된 건 수)
+- SY-TABIX
+  - Index of Internal Tables
+  - 인터널 테이블의 현재 라인번호
+  - (인터널 테이블의 LOOP문 안에서 인터널테이블의 인덱스)
+- SY-INDEX
+  - Loop Index
+- SY-SUBRC
+  - Return Value of ABAP Statements
+  - ABAP문장 수행 후 Return code, 정상 : 0 return
+- SY-LANGU
+  - Language Key of Current Text Environment, 언어 코드
+- SY-TFILL
+  - 내부테이블의 총 레코드 수, 현재라인수, 
+- SY-PANGO
+  - 리스트의 현재 페이지 번호
+- SY-CPAGE
+  - 현재화면상의 페이지 번호
+- SY-LINCT
+  - 한 페이지마다 라인의 수 리포트문의 LINE-COUNT에서 지정한 라인 수 (한 페이지의 총 라인 수)
+- SY-LINNO
+  - 현재 커서가 위치한 라인번호
+- SY-SROWS
+  - 현재 페이지의 라인 수
+- SY-SCOLS
+  - 현재 페이지의 칼럼 수
+- SY-DYNNR
+  - Current Screen Number, 현재 화면번호
+- SY-CPLOG
+  - 호출한 프로그램명
+- SY-SYSID
+  - SAP R/3 시스템 이름
+- SY-UNAME
+  - SAP 시스템, 사용자 로그온 이름
+- SY-DATLO
+  - Local Date for Current User
+- SY-TIMLO
+  - Local Time of Current User
+- SY-ZONLO
+  - Time Zone of Current User
+- SY-TCODE
+  - Current Transaction Code
 
 
 
 
-▪ sy-datum+?(?)
-   ex. sy-datum = 20210611
-   sy-datum+0(4) = 2021
-   sy-datum+4(2) = 06
-   sy-datum+6(2) = 11
-
-▪System fields ( WF1 p.263 )
-  - 확인하는 방법 : se11 (abap dictionary)에서 syst 조회
-
-SY-DATUM
-일자 및 시간, 시스템날짜 출력
-SY-UZEIT
-시스템 시간 출력
-SY-DBCNT
-Processed Database Table Rows
-SELECT구문으로 데이터베이스에서 읽어온 라인 수
-(테이블에서 데이터를 SELECT하고 난 후 SELECT된 건 수)
-SY-TABIX
-Index of Internal Tables
-인터널 테이블의 현재 라인번호
-(인터널 테이블의 LOOP문 안에서 인터널테이블의 인덱스)
-SY-INDEX
-Loop Index
-SY-SUBRC
-Return Value of ABAP Statements
-ABAP문장 수행 후 Return code, 정상 : 0 return
-SY-LANGU
-Language Key of Current Text Environment, 언어 코드
-SY-TFILL
-내부테이블의 총 레코드 수, 현재라인수, 
-SY-PANGO
-리스트의 현재 페이지 번호
-SY-CPAGE
-현재화면상의 페이지 번호
-SY-LINCT
-한 페이지마다 라인의 수 리포트문의 LINE-COUNT에서 지정한 라인 수 (한 페이지의 총 라인 수)
-SY-LINNO
-현재 커서가 위치한 라인번호
-SY-SROWS
-현재 페이지의 라인 수
-SY-SCOLS
-현재 페이지의 칼럼 수
-SY-DYNNR
-Current Screen Number, 현재 화면번호
-SY-CPLOG
-호출한 프로그램명
-SY-SYSID
-SAP R/3 시스템 이름
-SY-UNAME
-SAP 시스템, 사용자 로그온 이름
-SY-DATLO
-Local Date for Current User
-SY-TIMLO
-Local Time of Current User
-SY-ZONLO
-Time Zone of Current User
-SY-TCODE
-Current Transaction Code
+<br/><br/>
 
 
 
+###  SAP Systems
 
-
-
-
-
-Fund1 - UNIT 1 : SAP Systems
-
-▪ SAP NetWeaver : 통합관리 프레임워크 ( WF1 p.4 )
+-  SAP NetWeaver : 통합관리 프레임워크 
    - SAP NetWeaver의 주요기능 8가지   
      1. User Productivity
      2. Business Intelligence
@@ -201,85 +165,101 @@ Fund1 - UNIT 1 : SAP Systems
      7. Security and Identity Management
      8. Application Lifecycle Management (ALM)
 
-▪ ERP 시스템을 ECC ( SAP ERP Central Component )라고도 한다.  ( WF1 p.8 )
-   ECC쓰려면 ABAP 서버 깔아야되고, Enterprise Portal 쓰려면 java 서버를 깔아야된다.
+<br/>
 
-Fund1 - UNIT 2 : SAP Portfolio Overview
-Fund1 - UNIT 3 : Navigation Basics
-Fund1 - UNIT 4 : SAP User Interfaces
-Fund1 - UNIT 5 : System Core
+-  ERP 시스템을 ECC ( SAP ERP Central Component )라고도 한다.  
+   - ECC쓰려면 ABAP 서버 깔아야되고, Enterprise Portal 쓰려면 java 서버를 깔아야된다.
 
-▪ SAP 3tier
-   Presentation Server / 	Application Server / Database Server 
+<br/>
 
-▪ User Reequest
-   유저가 어떠한 서비스를 요청하느냐에 따라서 abap dispatcher가 work process를 할당한다.
-   서버, 디스패처(유저의 Request를 queue에다 저장하고 그 요청사항을 가져와서 워크프로세스 할당)
-   워크프로세서( 5개 Dialog D Background B Lock E Update V Spool S )
-   tcode : SE50 ( 워크프로세스가 어떻게 할당되어져 있는지 확인 가능 )
+- SAP 3tier
+   - Presentation Server / 	Application Server / Database Server 
 
-   user와 work process는 1대1연결이 아니다. 요청된 것들만 work process에서 처리된다.
+<br/>
 
-▪ ABAP dispatcher의 역할
-   1. 자원관리  2. 워크프로세스에 request 분배  3. presentation과 database layer 연결
-   4. 통신활동 조직  5. 유저의 리퀘스트를 큐에 저장하고 큐에 저장되어있는 것을 처리
+-  User Reequest
+   - 유저가 어떠한 서비스를 요청하느냐에 따라서 abap dispatcher가 work process를 할당한다.
+   - 서버, 디스패처(유저의 Request를 queue에다 저장하고 그 요청사항을 가져와서 워크프로세스 할당)
+   - 워크프로세서( 5개 Dialog D Background B Lock E Update V Spool S )
+   - tcode : SE50 ( 워크프로세스가 어떻게 할당되어져 있는지 확인 가능 )
+   - user와 work process는 1대1연결이 아니다. 요청된 것들만 work process에서 처리된다.
 
-▪ DB interface
-   데이터 읽어오는 구문을 처리하는 역할
-   application level의 open sql을 받아서 native sql로 변환시켜줌.
+<br/>
 
-▪ Gateway Process
-   여러 개의 서버로 구성되어 있을 때 application 서버들을 연결할 때 gateway 사용
-   system - system 연결할 때 사용
+-  ABAP dispatcher의 역할
+   1. 자원관리  
+   2. 워크프로세스에 request 분배  
+   3. presentation과 database layer 연결
+   4. 통신활동 조직 
+   5. 유저의 리퀘스트를 큐에 저장하고 큐에 저장되어있는 것을 처리
 
-  
-Fund1 - UNIT 6 : Communication and Integration Technologies
+<br/>
 
-▪ RFC ( Remote Function Call-Based )
-   다양한 인터페이스 기술 중에 RFC를 주로 사용
-   시스템 사이에서 연관된 프로그래밍들을 간략화하는 커뮤니케이션 SAP 통신규약.
-   다른 장비에서 function module을 부르는 프로세스. 같은 장비에서 다른 프로그램을 부를 때도 사용.
-   tcode : SM59
+-  DB interface
+   - 데이터 읽어오는 구문을 처리하는 역할
+   - application level의 open sql을 받아서 native sql로 변환시켜줌.
 
-▪ BAPI ( Business Application Programming )
-   여러 가지 비즈니스가 존재하는데 BOR ( Business Object Repository ) 밑에
-   BO ( Business Object ) 의 메소드에 BAPI가 있다.
-   이 메소드가 RFC로 되어있다 (function module로 되어있다.)
-   tcode : BAPI
+<br/>
 
-▪ ALE ( Application Link Enabling )
-   분산환경 시스템에서 애플리케이션을 통합할 수 있는게 ALE. 
-   같은 회사 뿐만아니라 다른 회사 시스템과도 인터페이스가 가능.
-   분산된 애플리케이션을 운영지원하는 것.
+-  Gateway Process
+   - 여러 개의 서버로 구성되어 있을 때 application 서버들을 연결할 때 gateway 사용
+   - system
+      - system 연결할 때 사용
 
-▪ Web Service Standards
+<br/>
+
+- RFC ( Remote Function Call-Based )
+  -  다양한 인터페이스 기술 중에 RFC를 주로 사용
+  -  시스템 사이에서 연관된 프로그래밍들을 간략화하는 커뮤니케이션 SAP 통신규약.
+  -  다른 장비에서 function module을 부르는 프로세스. 같은 장비에서 다른 프로그램을 부를 때도 사용.
+  -  tcode : SM59
+
+<br/>
+
+-  BAPI ( Business Application Programming )
+   - 여러 가지 비즈니스가 존재하는데 BOR ( Business Object Repository ) 밑에
+   - BO ( Business Object ) 의 메소드에 BAPI가 있다.
+   - 이 메소드가 RFC로 되어있다 (function module로 되어있다.)
+   - tcode : BAPI
+
+<br/>
+
+- ALE ( Application Link Enabling )
+   - 분산환경 시스템에서 애플리케이션을 통합할 수 있는게 ALE. 
+   - 같은 회사 뿐만아니라 다른 회사 시스템과도 인터페이스가 가능.
+   - 분산된 애플리케이션을 운영지원하는 것.
+
+<br/>
+
+-  Web Service Standards
    1. Extensible Markup Language (XML)
    2. Simple Object Access Protocol (SOAP)
    3. Web Services Description Language (WSDL)
    4. Universal Description, Discovery, and Integration (UDDI)
 
-Fund1 - UNIT 7 : Flow of an ABAP Program
+<br/>
+
+- ABAP Repository
+   - ABAP Program에서 생성된 모든 object가 저장되있는 곳
+   - 생성된 프로그램 모두 Repository에 저장. 여기 저장된 모든 것들을 Object라고 한다.
+   - 프로그램이나 function module이나 전부다.
+   - repository infosystem , tcode : SE84
+
+<br/>
 
 
-Fund1 - UNIT 8 : ABAP Workbench
+- Object Navigator
+   - SE80 : Obeject Navigator
+   - SE51 : Screen Painter
+   - SE41 : Menu Painter
+   - SE38 : ABAP Editor
+   - SE11 : ABAP Dictionary
+   - SE37 : Function Builder
+   - SE24 : Class Builder
 
-▪ ABAP Repository
-   ABAP Program에서 생성된 모든 object가 저장되있는 곳
-   생성된 프로그램 모두 Repository에 저장. 여기 저장된 모든 것들을 Object라고 한다.
-   프로그램이나 function module이나 전부다.
+<br/>
 
-repository infosystem , tcode : SE84 
-
-▪ Object Navigator
-   SE80 : Obeject Navigator
-   SE51 : Screen Painter
-   SE41 : Menu Painter
-   SE38 : ABAP Editor
-   SE11 : ABAP Dictionary
-   SE37 : Function Builder
-   SE24 : Class Builder
-
-▪ ABAP Programming Language Features
+-  ABAP Programming Language Features
    - it is typed.
    - it enables multi-language application
    - it enables SQL access
@@ -287,30 +267,39 @@ repository infosystem , tcode : SE84
    - It is platform-independent
    - It is upward-compatible 
 
-Fund1 - UNIT 9 : Basic ABAP Language Elements
+<br/><br/>
 
-▪ 변수선언 3가지 방법
+###  변수선언 3가지 방법
+
    1. ABAP Standard data type을 이용해서 변수 선언
    2. Local data type을 선언해서 변수 선언
    3. ABAP dictionary에 생성되어 있는 data element를 이용해서도 변수 선언가능
 
-▪ data type 사용 3가지
+<br/>
+
+###  data type 사용 3가지
    1. Screen Input Output filed 정의할 때 사용 (parameters 키워드) 
    2. data object 정의할 때 (variable, function
    3. interface parameter 정의할 때 (subroutine, method)
 
-▪ data type 종류 2가지 ( WF1 p.245 )
+<br/>
+
+### data type 종류 2가지 ( WF1 p.245 )
    1. Complete : 길이 정해져있는 타입, D, T, I, F, String, XString, DECFLOAT16, DECFLOAT34
       Integer 기본길이 4, F는 8, 
    2. Incomplete : 길이 정해져있지 않은 타입, C, N, X, P
 
-▪ data type Local / Global
+<br/>
+
+### data type Local / Global
    1. Local Data Type : 기술적 속성만 가지고 있음.
       TYPES tv_c_type TYPE c LENGTH 8.
    2. Global Data Type : 기술적 속성 + 무엇을 의미하는지 포함
       ex. s_carr_id : 항공사 코드, s_conn_id : 비행기 편명
 
-▪ data object를 data type으로 선언하는 법
+<br/>
+
+### data object를 data type으로 선언하는 법
    1. gv_percentage TYPE p LENGTH 3 DEMICALS 2 (incomplete, 999.99)
    2. gv_number TYPE I VALUE 17
    3. gv_number2 LIKE gv_number(변수이름)
@@ -318,68 +307,60 @@ Fund1 - UNIT 9 : Basic ABAP Language Elements
    5. CONSTANTS gc_myconst TYPE <type_name> VALUE literal or IS INITIAL.
    6. ok_code like(type) sy-ucomm. -> 시스템 필드로할 때는 둘다 가능
 
-▪ Literal ( WF1 p.251 )
-   Numeric Literals 
-   Positive Integer : 123, Negative Integer : -123
-   Text Literals
-   String : ‘Hello’, Decimal Number : ‘123.45’, Floating Point Number : ‘13.45E01’
-   * 소수점 들어갈 때는 ‘ ’ single quote 사용
+<br/>
 
-▪ 문자열 길이 확인 키워드
-   gv_length = strlen( gv_string ).
+### Literal 
+
+   - Numeric Literals 
+   - Positive Integer : 123, Negative Integer : -123
+   - Text Literals
+   - String : ‘Hello’, Decimal Number : ‘123.45’, Floating Point Number : ‘13.45E01’
+      * 소수점 들어갈 때는 ‘ ’ single quote 사용
+
+<br/>
+
+### 문자열 길이 확인 키워드
+
+   - gv_length = strlen( gv_string ).
+
+<br/>
+
+### Value Assignment
+
+   - MOVE gc_qf TO gv_carrid1.   =    gv_carrid1 = gc_qf.	
+   - ADD 1 TO gv_count.   =   gv_count = gv_count + 1.
 
 
+<br/>
 
-▪ Value Assignment
-   MOVE gc_qf TO gv_carrid1.   =    gv_carrid1 = gc_qf.	
-   ADD 1 TO gv_count.   =   gv_count = gv_count + 1.
-
-▪ 연산자 ( WF1 p.258 )
+### 연산자 
    - 산술연산자
-      / (Division, 결과 소수점 포함)
-      DIV ( Integral division without remainder. 결과 소수점X 정수만)
-      ** (Exponentiation, a**b)
-      MOD (Remainder after integral division) 
+      - / (Division, 결과 소수점 포함)
+      - DIV ( Integral division without remainder. 결과 소수점X 정수만)
+      - ** (Exponentiation, a**b)
+      - MOD (Remainder after integral division)
+       
    - 비교연산자
-     1. = EQ 2. > GT 3. < LT 4. >= GE 5. <= LE 6. <> NE
+      -  = EQ 2. > GT 3. < LT 4. >= GE 5. <= LE 6. <> NE
+      
    - 관계연산자
-     1. CO - Contains Only / 'abc' a,b,c (1글자 단위) 만 포함이면 true입니다.
-     2. CN - Contains Not Only /  1번과 반대입니다.
-     3. CA - Contains Any / 'abc' a,b,c 중 하나라도 포함이면 true입니다.
-     4. NA - Contains Not Any / 3번과 반대입니다.
-     5. CS - Contains String 'abc' / 'abc' (문자열 전체) 를 포함하면 true입니다.
-     6. NS - Contains No String / 5번과 반대입니다.
-     7. CP - Covers Pattern / 패턴을 찾을때, "*" (문자열) 이나 "+" (1글자) 가능합니다.
-     8. NP - No Pattern / 7번과 반대입니다.
+      -  CO - Contains Only / 'abc' a,b,c (1글자 단위) 만 포함이면 true입니다.
+      -  CN - Contains Not Only /  1번과 반대입니다.
+      -  CA - Contains Any / 'abc' a,b,c 중 하나라도 포함이면 true입니다.
+      -  NA - Contains Not Any / 3번과 반대입니다.
+      -  CS - Contains String 'abc' / 'abc' (문자열 전체) 를 포함하면 true입니다.
+      -  NS - Contains No String / 5번과 반대입니다.
+      -  CP - Covers Pattern / 패턴을 찾을때, "*" (문자열) 이나 "+" (1글자) 가능합니다.
+      -  NP - No Pattern / 7번과 반대입니다.
 
-▪ Numberic Data Type 함수
+<br/>
 
-함 수
-설 명
-사용 예
-ABS
-절대값을 리턴 함
-ABS(-100)은 100을 리턴함
-SIGN
-부호에 대한 결과를 리턴
--1, 0, +1 리턴
-CEIL
-해당 값보다 작지 않은 가장 큰 정수 리턴
-CEIL(1.5), CEIL(1.9)는 모두 2을 리턴
-FLOOR
-CEIL의 반대
-FLOOR(1.5), FLOOR(1.9)는 모두 1을 리턴
-TRUNC
-소수점을 버림
-TRUNC(1.5)는 1을 리턴
-FRAC
-소수점 이하만 남김
-FRAC(1.5)는 0.5을 리턴
-
-
-▪조건문 ( WF1 p.260 )
-  1. IF
-     IF <condition> AND <conditoin>.   변수 is initial / 변수 is not initial 도 가능  
+### 조건문
+ 
+  -  IF
+  
+  ```
+      IF <condition> AND <conditoin>.   변수 is initial / 변수 is not initial 도 가능  
         <statements>.
      ELSEIF <condition> OR <condition>.
         <statements>.
@@ -392,8 +373,13 @@ FRAC(1.5)는 0.5을 리턴
      ELSE.
         <statements>.
      ENDIF.
+```
 
-  2. CASE
+<br/>
+
+  -  CASE
+  
+  ```
      CASE <variable>.
         WHEN <element>.
            <statements>.
@@ -402,114 +388,168 @@ FRAC(1.5)는 0.5을 리턴
         WHEN OTHERS.
            <statements>.
      ENDCASE.
+```
 
+<br/>
 
-▪반복문 ( WF1 p.262 )
-  1. DO.
+### 반복문
+
+ 
+  -  DO.
+  
+```
       statements.
       IF <abort_condition>. EXIT. ENDIF.
     ENDDO.
     - loop counter : sy-index
     기본적으로 무한 loop
-  2. DO n TIMES
+```
+
+<br/>
+
+  -  DO n TIMES
+  
+  ```
       statements.
     ENDDO.
     - loop counter : sy-index
-  3. WHILE <condition>.
+```
+
+  - WHILE <condition>.
+  
+  ```
       statements.
      ENDWHILE.
     - loop counter : sy-index
-  4. SELECT INTO (CORRESPONDING FIELDS OF) <work area> FROM <dbtable>
+```
+
+  - SELECT INTO (CORRESPONDING FIELDS OF) <work area> FROM <dbtable>
+  
+  ```
        statements.
      ENDSELECT.
     - database table rows : sy-dbcnt
-  5. LOOP AT <internal table> INTO <structure v>  제일 많이 사용
+```
+
+  - LOOP AT <internal table> INTO <structure v>  제일 많이 사용
+  
+  ```
        statements.
     ENDLOOP.
     - row index for internal table : sy-tabix
     internal table의 내용을 한 건씩, 즉 한 레코드씩 읽어서 work area에 move한 다음
     endloop까지 선언된 내용을 처리.
+```
 
+<br/><br/>
 
-▪ Dialog Messages type 6가지 ( WF1 p.270 )
+### Dialog Messages type 6가지 
+
+```
    MESSAGE tnnn(message_class) [ with v1 [v2] [v3] [v4] ].    - & 최대 4개까지 사용가능(동적할당)
    ex. MESSAGE i007(BC410).
    ex. MESSAGE 'Error Message' TYPE 'E'.   
    ex. MESSAGE S000 WITH '정상 생성 되었습니다.' DISPLAY LIKE 'S’
       -> SE91 > S000은 ZMESSAGE19 에 생성 후 사용, BC410도 있음.
+```
 
-   I : Info Message (popup box) 
-   S : Set Message (Success Message) (status bar)
-   W : Warning (빨강) (status bar) 
-   E : Error (노랑) (status bar)
-   A : Termination (popup box)
-   X : Short Dump
+   - I : Info Message (popup box) 
+   - S : Set Message (Success Message) (status bar)
+   - W : Warning (빨강) (status bar) 
+   - E : Error (노랑) (status bar)
+   - A : Termination (popup box)
+   - X : Short Dump
   
-   - 다국어 지원 사용법
-     1. Text Elements -> Text Symbols -> Sym, Txt 입력 후 Activate
-     2. Goto -> translation -> 언어 선택 -> 밑에칸에 언어넣고 저장하면 끝!
+<br/>
 
-▪ Text Elements
+ ### 다국어 지원 사용법
+ 
+   1. Text Elements -> Text Symbols -> Sym, Txt 입력 후 Activate
+   2. Goto -> translation -> 언어 선택 -> 밑에칸에 언어넣고 저장하면 끝!
+
+<br/>
+
+ ### Text Elements
+ 
    - Text Symbols 
-     T01 text1 , T02 text2  /  사용 : TEXT-T01
+     - T01 text1 , T02 text2  /  사용 : TEXT-T01
+     
    - Selection Texts
-     Selection Screen 상에 있는 Parameter들의 이름을 원하는 대로 변경
+     - Selection Screen 상에 있는 Parameter들의 이름을 원하는 대로 변경
+     
    - List Headings
-     결과값 맨 위에 어떤 정보인지 입력가능, 4줄까지 입력가능, 첫 줄에 쓰면 한 줄만 나옴.
+     - 결과값 맨 위에 어떤 정보인지 입력가능, 4줄까지 입력가능, 첫 줄에 쓰면 한 줄만 나옴.
 
-Fund1 - UNIT 10 : Modulazation Techniques in ABAP
+<br/><br/>
 
-▪ Modulazation
+### Modulazation
+
    1. Subroutine
-     모듈화, 재사용, 구조화가 주 목적.
-     재사용 목적이 아니더라도 전체적인 흐름을 쉽게 파악할 수 있도록 모듈화하는 것이 바람직함.	
-     주로 프로그램 내부에서 사용. 재사용성 목적이 다른 거 보다 작음.
+     - 모듈화, 재사용, 구조화가 주 목적.
+     - 재사용 목적이 아니더라도 전체적인 흐름을 쉽게 파악할 수 있도록 모듈화하는 것이 바람직함.	
+     - 주로 프로그램 내부에서 사용. 재사용성 목적이 다른 거 보다 작음.
+     
+     ```
      <main program>
      PERFORM calc_percentage  (subroutine 호출)
               USING pa_int1 pa_int2
               CHANGING gv_result.
+     ```
 
 
+```
 <subroutine>
 FORM calc_percentage USING pv_act TYPE I
                              pv_max TYPE I
                  CHANGING  cv_result TYPE tv_result.
 ENDFORM.
+```
+
+<br/>
 
     
-     subroutine에서 parameter 사용 (순서, 개수 맞아야함)
-     Interface Parameter (Actual Parameter – Formal Parameter)
-     PERFORM(main)의 USING CHANGING => Actual Parameter
-     FORM(sub)의 USING CHANGING => Formal Parameter
-     USING => Input Parameter
-     CHANGING => Output Parameter
+### subroutine에서 parameter 사용 (순서, 개수 맞아야함)
 
-     - pass type 3가지
-       1) Call by value => Subroutine에서 Using Value 구문
-          Formal Parameter값이 변경되더라도 Actual Parameter값이 변경되지 않는다.
-       2) Call by value and result => Subroutine에서 Changing Value 구문
- 	  Subroutine이 정상적으로 종료될 경우 Actual Parameter값이 변경된다.
-       3) Call by reference => changing만
-          Formal Parameter값이 변경되면 Actual Parameter값이 변경된다.
+   -  Interface Parameter (Actual Parameter – Formal Parameter)
+   -  PERFORM(main)의 USING CHANGING => Actual Parameter
+   -  FORM(sub)의 USING CHANGING => Formal Parameter
+   -  USING => Input Parameter
+   -  CHANGING => Output Parameter
 
-      - 호출방법 4가지
+<br/>
+
+### pass type 3가지
+
+   -  Call by value => Subroutine에서 Using Value 구문
+      - Formal Parameter값이 변경되더라도 Actual Parameter값이 변경되지 않는다.
+        
+   - Call by value and result => Subroutine에서 Changing Value 구문
+ 	  - Subroutine이 정상적으로 종료될 경우 Actual Parameter값이 변경된다.
+    
+   - Call by reference => changing만
+      - Formal Parameter값이 변경되면 Actual Parameter값이 변경된다.
+
+   - 호출방법 4가지
         1) Internal Call : 같은 프로그램에서 Call
         2) External Call : 다른 프로그램에서 Call, subroutine은 public 속성을 가지고 있음.
         3) Dynamic Call : Runtime에 서브루틴을 바꾸어 call할 때
         4) List Call : List를 이용한 Call, 파라미터를 전달할 수 없다.
  
-   2. Function Module
-      여러 프로그램에서 다 실행 가능.
-      Subroutine과 목적이 유사(모듈화 및 재사용).
-      Function Group안에 포함.
-      단일 테스트 가능, 에러발생 시 예외처리 가능.
-      SE80(Object navigator), SE37(function builder) 수정가능
-      Naming Rule : (Main) 'SAPL'+Function group명 / (Include) 'L'+Function group명+ ‘TOP'/'UXX'
-      FUNCTION MODULE은 STANDARD로 많이 정의되어있음. 찾아서 쓰면됨.    
+<br/>
+ 
+### Function Module
 
-      Import, Export, Changing, Table 탭에서 Function Module의 Interface를 정의하고 
-      Source Code에서 코딩  
+  - 여러 프로그램에서 다 실행 가능.
+  - Subroutine과 목적이 유사(모듈화 및 재사용).
+  - Function Group안에 포함.
+  - 단일 테스트 가능, 에러발생 시 예외처리 가능.
+  - SE80(Object navigator), SE37(function builder) 수정가능
+  - Naming Rule : (Main) 'SAPL'+Function group명 / (Include) 'L'+Function group명+ ‘TOP'/'UXX'
+  - FUNCTION MODULE은 STANDARD로 많이 정의되어있음. 찾아서 쓰면됨.    
+  - Import, Export, Changing, Table 탭에서 Function Module의 Interface를 정의하고 
+  - Source Code에서 코딩  
   
+```
       CALL FUNCTION ‘BC400_MOS_POWER’
       EXPORTING
        iv_base = pa_int1
@@ -524,41 +564,50 @@ ENDFORM.
        iv_act => I = import
        ev_percentage => e = export
        v = variable, s : structure, t : table
+```
 
-       - RFC (Remote Function Call)
-         물리적 또는 논리적으로 다른 시스템의 상대 프로그램(function)을 호출하고 실행 할 수 있는
-         Function Module을 말한다.
-         Legacy system과 인터페이스 하기 위해 사용
-         Remote function을 사용하기 위해서는 먼저 Target 시스템의 Destination을 등록하고 Remote 
-         Logon 할 수 있도록 Network Interface 환경을 설정해야 한다. 또한 호출되어지는 function 
-         Module은 Remote function supported Type으로 등록해야 상대 시스템에서 호출할 수 있다.
+<br/>
 
-   3. CLASS Method  
-     SE24 (Class Builder) 찾을 수 있음.
-     1) Instance Method : Class로 Obect 생성하고 Reference Variable이 참조하게 된다.
-                          생성한 Object 여러 개 가능
-        CALL METHOD XXXX -> get_percentage
-        class에 object마다 method존재
-     2) Static Method : Class 이름=>Method 이름 바로 사용 가능  (공용느낌)
-                       클래스 하나만 존재
-        CALL METHOD zcl_clc19_compute => get_percentage
-        class에 1개만 존재
+### RFC (Remote Function Call)
+
+ - 물리적 또는 논리적으로 다른 시스템의 상대 프로그램(function)을 호출하고 실행 할 수 있는 Function Module을 말한다.
+ - Legacy system과 인터페이스 하기 위해 사용
+ - Remote function을 사용하기 위해서는 먼저 Target 시스템의 Destination을 등록하고 Remote 
+ - Logon 할 수 있도록 Network Interface 환경을 설정해야 한다. 또한 호출되어지는 function 
+ - Module은 Remote function supported Type으로 등록해야 상대 시스템에서 호출할 수 있다.
+
+<br/>
+
+### CLASS Method
+  
+  - SE24 (Class Builder) 찾을 수 있음.
+     1) Instance Method 
+        - Class로 Obect 생성하고 Reference Variable이 참조하게 된다.
+        - 생성한 Object 여러 개 가능
+        - CALL METHOD XXXX -> get_percentage
+        - class에 object마다 method존재
+        
+     2) Static Method
+        - Class 이름=>Method 이름 바로 사용 가능  (공용느낌)
+        - 클래스 하나만 존재
+        - CALL METHOD zcl_clc19_compute => get_percentage
+        - class에 1개만 존재
+        
      ex. 급여계산 method는 object별 (사원1, 사원2, 사원3...) => instance method
         사원정보는 static method
     
-     METHODS : 선언
-     METHOD : 구현
-     Class : Public Protect(상속을 통해서 연결) Private
 
-* Function Module은 Object 여러 개 생성 못하지만 Class는 Object를 많이 만들어낼 수 있다. 
-* Function은 공용인데 Class는 Private 목적이다.
+  -  Function Module은 Object 여러 개 생성 못하지만 Class는 Object를 많이 만들어낼 수 있다. 
+  -  Function은 공용인데 Class는 Private 목적이다.
  
-▪ BAPIs (Business Application Programming Interfaces)
-   유저에게 편의성 제공, 이전에 BDC였는데 스크린 기반이라 느렸다.
-   그래서 Function 개념으로 1대1 매칭.
-   Function Module인데 조금 더 큰 작업
+ <br/>
+ 
+### BAPIs (Business Application Programming Interfaces)
+   - 유저에게 편의성 제공, 이전에 BDC였는데 스크린 기반이라 느렸다.
+   - 그래서 Function 개념으로 1대1 매칭.
+   - Function Module인데 조금 더 큰 작업
 
-Fund1 - UNIT 11 : Complex Data Objects
+<br/>
 
 ▪ Definition Local Type, type 만들기 ( WF2 p.394 )
    TYPES: BEGIN OF <local types 이름, ts_name>,
