@@ -1310,137 +1310,189 @@ SELECT SINGLE <column field name or * > FROM <table> INTO <structure v>
             tab_block-dynnr = 102 
 ```
 
+<br/>
 
+### Screen Program
 
-▪ Screen Program
    Screen Painter : SE51 => 보통 SE80에서 CREATE SCREEN을 주로 씀.
-   - 프로그램 구조
-     MZDEMOTOP : Global Declataions. 
-     MZDEMO-E01 : ABAP Events 처리  E01 ~ E99
-     MZDEMO_F01 : Form routines (subroutine) 여러 스크린에서 공통적으로 사용되어지는 로직
-     MZDEMO_<Module>I01 : PAI module 
-     MZDEMO_<Module>O01 : PBO module 
+   
+ - 프로그램 구조
+   
+     - MZDEMOTOP : Global Declataions.
+      
+     - MZDEMO-E01 : ABAP Events 처리  E01 ~ E99
      
-     Include를 꼭 사용해야하는 것은 아니다. Main에다가 다 할 수 있지만 나눠서 관리하기 위함이다.
+     - MZDEMO_F01 : Form routines (subroutine) 여러 스크린에서 공통적으로 사용되어지는 로직
+     
+     - MZDEMO_<Module>I01 : PAI module
+      
+     - MZDEMO_<Module>O01 : PBO module 
+     
+ - Include를 꼭 사용해야하는 것은 아니다. Main에다가 다 할 수 있지만 나눠서 관리하기 위함이다.
      report program에서도 사용된다.
 
-   - PBO (Process Before Output) : screen 100 오기 전에 실행, 
+ - PBO (Process Before Output) : screen 100 오기 전에 실행, 
                            report program의 abap event인 AT SELECTION-SCREEN OUTPUT과 비슷
-   - PAI (Process After Input) : screen에서 event(action) 발생하면 실행
-   - Screen : Screen Element를 담을 수 있는 Container
-   - Normal Screen은 100번 단위 생성, Subscreen과 modal dialog들은 10번 단위로 생성
-   - Screen 1000 => Layout => Screen Painter 에 Screen Element 넣는 법 2가지
-     1. Element들 생성 (끌어오기)
-     2. ABAP Dictionary Structure에서 가져오기 
+ - PAI (Process After Input) : screen에서 event(action) 발생하면 실행
+    
+    - Screen : Screen Element를 담을 수 있는 Container
+   
+    - Normal Screen은 100번 단위 생성, Subscreen과 modal dialog들은 10번 단위로 생성
+   
+    - Screen 1000 => Layout => Screen Painter 에 Screen Element 넣는 법 2가지
+      1. Element들 생성 (끌어오기)
+      2. ABAP Dictionary Structure에서 가져오기 
        Dictionary/Program fields window (F6) => ex. SDYN_CONN 입력 -> 필드 선택
        Painter에서 Field 더블클릭 -> attribute 창 -> mandantory(required), SAP memory (SET, GET)...
 
-   - Identical Names
-     Screen에다가 Screen Element 생성하고 각각 Element에 존재하는 이름을 ABAP Program에도 
-     똑같은 이름으로 선언해서 연결한다.
-     ex. Dyn-field 인 SDYN_CONN (screen structure connection)
-     TOP 에 TABLES : SDYN_CONN ( = DATA: sdyn_conn TYPE sdyn_conn. ) 선언
-     ABAP Program에서 data가져올 때 사용할 Work Area 선언
-     PBO에서 MOVE-CORRESPONDING으로 Work-Area와 Dyn-Field 값 계속 할당
+  - Identical Names
+  
+     - Screen에다가 Screen Element 생성하고 각각 Element에 존재하는 이름을 ABAP Program에도 똑같은 이름으로 선언해서 연결한다.
+     
+     - ex. Dyn-field 인 SDYN_CONN (screen structure connection)
+     
+     - TOP 에 TABLES : SDYN_CONN ( = DATA: sdyn_conn TYPE sdyn_conn. ) 선언
+     
+     - ABAP Program에서 data가져올 때 사용할 Work Area 선언
+     
+     - PBO에서 MOVE-CORRESPONDING으로 Work-Area와 Dyn-Field 값 계속 할당
 
-   - PBO PAI screen 100 동작방법 ( WF4 p.359 )
-     1) PBO 100  (내용X)
-     2) 100 PAI PBO 100(event)
-     3) PAI PBO 100(event)
-     4) PAI PBO 100(event) ...
+   - PBO PAI screen 100 동작방법 
+   
+     - PBO 100  (내용X)
+     
+     - 100 PAI PBO 100(event)
+     
+     - PAI PBO 100(event)
+     
+     - PAI PBO 100(event) 
      
    - Screen Go Back
-     leave to screen 0
+     
+     - leave to screen 0
 
    - Dynamic Screen Modification 만들기 + 그룹화  ( clear_okcode 앞에 넣기 )
-     1. Layout -> painter에서 pushbutton 생성 -> attribute의 Fct Code에 'BTN'
-        Output Field 전부 그룹화 첫 번째 Field 에 'CHG'
-     2. Element List -> type이 ok 인 친구 ok_code로 name 지정
-     3. TOP include에서 ok_code TYPE sy-ucomm. ( function code 컨트롤하기 위해 생성 )     
-        sy-ucomm : 명령버튼의 function code
-       gv_mode TYPE char1 VALUE 'D'. 선언
-     4. PAI
-       MODULE USER-COMMAND 에 CASE IF 문으로 WHEN 'BTN' IF gv_mode = 'D' ... ELSE 'C' ...
-       PBO
+    
+     - Layout -> painter에서 pushbutton 생성 -> attribute의 Fct Code에 'BTN'
+     
+       - Output Field 전부 그룹화 첫 번째 Field 에 'CHG'
+       
+     -  Element List -> type이 ok 인 친구 ok_code로 name 지정
+     - TOP include에서 ok_code TYPE sy-ucomm. ( function code 컨트롤하기 위해 생성 )     
+        
+        - sy-ucomm : 명령버튼의 function code
+       
+        - gv_mode TYPE char1 VALUE 'D'. 선언
+        
+     - PAI
+     
+       - MODULE USER-COMMAND 에 CASE IF 문으로 WHEN 'BTN' IF gv_mode = 'D' ... ELSE 'C' ...
+       
+     - PBO
+
+  ``` 
        MODULE MODIFY_SCREEN 에 IF gv_mode = ‘C' 
        LOOP AT SCREEN.
         IF SCREEN-GROUP1 = 'CHG'. 
 	   SCREEN-INPUT = 1. “ input, output, active 등등 1/0 으로 true/false
            MODIFY SCREEN. " 변경값을 Screen이라는 System Table에 반영 
-
-       Report Program에서는 Selection Options 의 Modify로 그룹화할 수 있다.
-       그 다음 AT SELECTION-SCREEN OUTPUT에서 LOOP문으로 변경가능.
+  ```
+  
+   - Report Program에서는 Selection Options 의 Modify로 그룹화할 수 있다.
+     
+   - 그 다음 AT SELECTION-SCREEN OUTPUT에서 LOOP문으로 변경가능.
 
    - Screen 은 Header까 있는 Internal Table과 유사하지만 Itab은 아니다.
-    PBO가 실행되기 전에 Element List에 있는 정보들이 Screen이라는 System Table에 카피되어진다.
-    Runtime 시 변경하고자할 때는 PBO에서 처리해야한다.
+   
+   - PBO가 실행되기 전에 Element List에 있는 정보들이 Screen이라는 System Table에 카피되어진다. Runtime 시 변경하고자할 때는 PBO에서 처리해야한다.
 
    - 스크린 순서 디자인
+   
      1. Static -> Attribute -> Next Screen
      2. Dynamic -> PAI -> LEAVE TO SCREEN, CALL SCREEN
     
-     Leave To Screen : 넘어가면 끝. 다시 돌아오지 못함.
-     Call Screen : 현재 체인이 중단되고 다음 스크린을 부른다. 그 스크린에서 Go back 하면 
-                중단된 체인으로 다시 돌아올 수 있다. 다시 돌아오면 Call Screen 밑에 있는 코드실행
-     Set Screen : 혼자 쓰면 Call과 같지만 보통 Set Screen 300. Leave Screen. 같이 쓴다.
+   - Leave To Screen : 넘어가면 끝. 다시 돌아오지 못함.
+     
+   - Call Screen : 현재 체인이 중단되고 다음 스크린을 부른다. 그 스크린에서 Go back 하면 중단된 체인으로 다시 돌아올 수 있다. 다시 돌아오면 Call Screen 밑에 있는 코드실행
+     
+   - Set Screen : 혼자 쓰면 Call과 같지만 보통 Set Screen 300. Leave Screen. 같이 쓴다.
        
    - Dialog Box 띄우기 -> 팝업창
-     Screen 150 생성 -> Dynpro Type에서 Modal Dialog Box 선택 
+   
+   -  Screen 150 생성 -> Dynpro Type에서 Modal Dialog Box 선택 
+```     
      호출 CALL SCREEN 150 
            STARTING AT lc ur
            ENDING AT rc lr.
+```
 
-Fund2 - UNIT 12 : The Program Interface
+<br/>
 
-   - User Interface 
-     PBO 의 MODULE STATUS_0100
-     SET PF-STATUS 'S100'
-      -> Function Key, Application Toolbar, Menu Bar 설정가능
+### User Interface 
+
+<br/>    
+    
+- SET PF-STATUS 'S100'
+    
+    - Function Key, Application Toolbar, Menu Bar 설정가능
          - Status type 3종류
            1) Normal Screen
      	   2) Dialog Box : 팝업이라 메뉴바가 없다. ( dialog box에서 작업할 때 사용 )
-  	   3) Context Menu : 우클릭하면 나오는 팝업메뉴
+  	       3) Context Menu : 우클릭하면 나오는 팝업메뉴
          * Subscreen은 Subscreen Area에서 사용되기 때문에 Status는 없다.
 
-      -> 이렇게 Function Code 지정해주면 (PAI) USER_COMMAND_0100에서 
-         CASE문으로 ok_code 설정해줘야함.
+    - 이렇게 Function Code 지정해주면 (PAI) USER_COMMAND_0100에서 CASE문으로 ok_code 설정해줘야함.
 
-     SET TITLEBAR 'T100'   ( WITH TEXT-T01 )
-      -> Title 입력가능, 동적구성 & 9개 까지 가능. 써주고 All Title에서 Activate 해야함.
+    - SET TITLEBAR 'T100'   ( WITH TEXT-T01 )
+      
+       - Title 입력가능, 동적구성 & 9개 까지 가능. 써주고 All Title에서 Activate 해야함.
 
-Fund2 - UNIT 13 : Simple Screen Elements
+<br/>
 
    - Status Icon 만드는 법 
+    
      1. Screen Painter에서 아이콘 생성  
      2. Top Include에서 변수생성 TYPE icons-text
      3. PBO 모듈 생성 MODULE set_icon
-       ICON-CREATE function module 사용
-       name : ‘아이콘 이름’  result : status icon name
+         - ICON-CREATE function module 사용
+         - name : ‘아이콘 이름’  result : status icon name
+ 
+ 
+ <br/>
  
    - Input/Output Fields 생성 2가지 방법
-     1. Screen Painter에서 만들고 Top Include에서 변수선언
-     2. Top Include에서 변수 선언하고 Screen Paiter의 Dict.Program Field (F6)에서 변수이름 가져오기
+       1. Screen Painter에서 만들고 Top Include에서 변수선언
+       2. Top Include에서 변수 선언하고 Screen Paiter의 Dict.Program Field (F6)에서 변수이름 가져오기
 
-        Structure 변수도 선언하고 가져올 수 있지만 text는 안뜬다.
+        -   Structure 변수도 선언하고 가져올 수 있지만 text는 안뜬다.
+
+<br/>
 
    - Dropdown Box
-     보통 data가 20건 내외일 때 사용.
+   
+      -  보통 data가 20건 내외일 때 사용.
 
    - Radio Buttons 실행
-    1. Radio Buttons 만들고 name들 같은 Group으로 묶어주고 FctCode ( TOGGLE )도 설정해준다.  
-    2. PAI에서 user_command_100에서 (status에서도 사용 가능, 라디오 버튼에 따른 제목변경)
+      1. Radio Buttons 만들고 name들 같은 Group으로 묶어주고 FctCode ( TOGGLE )도 설정해준다.  
+      2. PAI에서 user_command_100에서 (status에서도 사용 가능, 라디오 버튼에 따른 제목변경)
+      
+      
+      ```
        CASE ok_code
           WHEN 'TOGGLE'.
    	     CASE 'X'.
   		WHEN display.  <statement>.
   		WHEN change.  <statement>.
   		WHEN create.  <statement>.
+      ```
 
+<br/>
 
-Fund2 - UNIT 14 : Screen Error Handling
-
-   - Input Check ( WF4 p.463 )
-     Screen PAI에서 FIELD 라는 키워드를 사용
+   - Input Check 
+   
+      - Screen PAI에서 FIELD 라는 키워드를 사용
+      
+    ```
      CHAIN.
 	FIELD <Field Name>, <fn2>, <fn3>.
  	  MODULE check_input ON CHAIN-INPUT  ( REQUEST )
@@ -1451,61 +1503,85 @@ Fund2 - UNIT 14 : Screen Error Handling
          <statements>
          MESSAGE E ...   ( WF4 p.458 , 6가지 dialog messages )
          ENDMODULE.    
+    ```
+    
+  - Input Check 에 걸리면 display 화면에서 check 걸린 input field만 활성화되고 나머지는 비활성화
 
-     Input Check 에 걸리면 display 화면에서 check 걸린 input field만 활성화되고 나머지는 비활성화
-
-     동작원리  ex. moduel check a / check b / check cd / check cb
-     Screen -> (action) -> PAI -> FIELD CHECK -> field와 chain안의 field문 통과 후 
-     -> check cb에서 걸렷을 경우 -> A, D는 output필드로 바뀌고 C, B만 바꿀 수 있게 input필드로
-     남겨짐 (Ready for input again) -> 입력 후 다시 Field check b부터 logic 시작된다.
-   - Automatic Input Check
-     1. Mandantory field check
-     2. Field format check
-     3. Fixed value check
-     4. Foreign key check
+<br/>
 
    - Automatic Check 없이 Screen 빠져나오는 법
+
      1. Status 100에서 Exit와 Cancel의 fuction type을 ‘E'로 변경
+
      2. PAI 에 MODULE exit AT EXIT-COMMAND. 생성
+
+     ```
         CASE ok_code.
   	  WHEN 'CANCEL'.
 	     CLEAR ok_code.
              LEAVE TO SCREEN 0.
           WHEN 'EXIT'.
              LEAVE PROGRAM.
+      ```
+     
+<br/>
 
-▪ 초기값 설정 방법
-   Report Program
-    1. Parameter이나 Selection Options에 Default 값으로 설정
-    2. INITIALIZATION abap event를 통한 설정
-    3. MEMORY ID <pid>
-   Screen Program
-    1. SAP Memory를 사용. Get Parameter Id,  Set Parameter id
-    2. 시작과 동시에 모든 필드에 데이터 초기값으로 넣기
-      INCLUDE에 E01 프로그램 생성
-      LOAD-OF-PROGRAM. 이벤트 생성
-      GET PARAMETER ID: <pid> FIELD <field-name>
-      SELECT SINGLE * 로 SFLIGHT에 있는 값 가져오기
+### 초기값 설정 방법
+
+   - Report Program
+       
+       1. Parameter이나 Selection Options에 Default 값으로 설정
+       2. INITIALIZATION abap event를 통한 설정
+       3. MEMORY ID <pid>
+   
+   
+   - Screen Program
+   
+       1. SAP Memory를 사용. Get Parameter Id,  Set Parameter id
+       2. 시작과 동시에 모든 필드에 데이터 초기값으로 넣기
+           - INCLUDE에 E01 프로그램 생성
+           - LOAD-OF-PROGRAM. 이벤트 생성
+           - GET PARAMETER ID: <pid> FIELD <field-name>
+           - SELECT SINGLE * 로 SFLIGHT에 있는 값 가져오기
  
-Fund2 - UNIT 15 : Subscreens
+ <br/>
+ 
 
-▪ 서브스크린 생성방법 (같은 프로그램 내 서브스크린)   ( WF4 p.487 )
+### 서브스크린 생성방법 (같은 프로그램 내 서브스크린)  
+
    1. Screen에 Subscreen Area 생성
-     Screen 100 -> Screen Painter -> Subscreen Area -> name 지정 'SUB'
+     
+      - Screen 100 -> Screen Painter -> Subscreen Area -> name 지정 'SUB'
+      
    2. Screens에서 Subscreen 생성 ( type을 subscreen으로 ) 
-     Layout에서 화면 구성 ( 필드 추가 )
+    
+      - Layout에서 화면 구성 ( 필드 추가 )
+      
    3. Screen 110 -> PBO MODULE get_spfli 추가
+      
+      ```
       SELECT SINGLE * FROM SPFLI INTO CORRESPONDING FIELDS OF SDYN_CONN
         WHERE <condition>
-   4. Screen 100 -> PBO -> CALL SUBSCREEN SUB
-                              INCLUDING sy-cprog '0110'     * sy-cprog : 호출한 프로그램명
-                    PAI -> CALL SUBSCREEN SUB.
-   ( 동작 구조 ) 100 PBO > 110 PBO > 100 Screen > (action) > 100 PAI > 110 PAI >  100 Screen
+      ```
+      
+   4. Screen 100 -> PBO -> CALL SUBSCREEN SUB INCLUDING sy-cprog '0110'
+        
+        -  sy-cprog : 호출한 프로그램명
+      
+      PAI -> CALL SUBSCREEN SUB.
+      
+   - ( 동작 구조 ) 100 PBO > 110 PBO > 100 Screen > (action) > 100 PAI > 110 PAI >  100 Screen
 
-▪ 서브스크린 생성방법 (다른 프로그램의 서브스크린)   ( WF4 p.494 )
-   Function Group의 Function Module을 이용한다. 
-   ( 동작 구조 )  
-    
+<br/>
+
+### 서브스크린 생성방법 (다른 프로그램의 서브스크린)   
+
+   - Function Group의 Function Module을 이용한다. 
+   
+   
+   - ( 동작 구조 )  
+
+```
 Screen 100
 Sub Area 생성
 Function Group에
@@ -1524,49 +1600,67 @@ Function Module 2
 exporting es_##
 screen100에서 user가 직접 pa_##를 쳐서 action 하면 FM2 값으로 가서 똑같이 subscreen에
 display하고 CALL SUBSCREEN으로 Sub Area에 담는다.
+```
 
+<br/>
 
-▪ 서브스크린 번호에 따라 조건 주고 싶을 때
+### 서브스크린 번호에 따라 조건 주고 싶을 때
+
    1. TOP INCLUDE에 subscreen 번호를 할당할 변수 선언 
-      DYNNR TYPE SY-DYNNR             * sy-dynnr : Screen Number
+     
+        - ```DYNNR TYPE SY-DYNNR```
+        
+        * sy-dynnr : Screen Number
+        
    2. PBO -> MODULE SET_DYNNR 생성F
-      CASE 'X'.  WHEN <ok_code> dynner = 110. ~~~~ 120 130
+   
+      - ```CASE 'X'.  WHEN <ok_code> dynner = 110. ~~~~ 120 130```
 
-   여러 서브스크린을 넣었을 때 110 120 130 각각에 필드를 다 넣어주었을 때
-   각각 스크린의 PBO에서 get_data를 해줘야한다.
+   - 여러 서브스크린을 넣었을 때 110 120 130 각각에 필드를 다 넣어주었을 때, 각각 스크린의 PBO에서 get_data를 해줘야한다.
 
-Fund2 - UNIT 16 : Tabstrip Controls
 
-▪ Create Tabstrip
+<br/>
+
+
+### Create Tabstrip
+
    1. Tabstrip Area
-      Screen 100 -> Layout Editor -> TabStrip 생성, name : tab_strip
+   
+       - Screen 100 -> Layout Editor -> TabStrip 생성, name : tab_strip
 
    2. Tab Title
-     Attribute에서 tab 개수 설정, tab name, text, FctCode, FctType 설정
-     TAB1 Dep. TAB1 P ( ) / TAB2 Arr. TAB2 P ( ) / TAB3 Info TAB3 P ( ) 
+   
+       - Attribute에서 tab 개수 설정, tab name, text, FctCode, FctType 설정
+     
+       - TAB1 Dep. TAB1 P ( ) / TAB2 Arr. TAB2 P ( ) / TAB3 Info TAB3 P ( ) 
 
    3. Subscreen Areas
-   3-1. Local Scrolling ( P )
-     각 Tab마다 Area생성 name 지정.  SUB1 SUB2 SUB3
+   
+       3-1. Local Scrolling ( P )
+   
+          - 각 Tab마다 Area생성 name 지정.  SUB1 SUB2 SUB3
+       
    4. TOP INCLUDE 에 변수선언
-     CONTROLS: tab_strip TYPE tabstrip.
-   5. PBO -> CALL SUBSCREEN SUB1
-                INCLUDING sy-cprog '0110'   .... sub2 sub3
-     PAI -> CALL SUBSCREEN SUB1.  ... sub2 sub3. 
+   
+        - CONTROLS: tab_strip TYPE tabstrip.
+        
+   5. PBO -> ```CALL SUBSCREEN SUB1
+                INCLUDING sy-cprog '0110'   .... sub2 sub3```
+                
+       - PAI -> CALL SUBSCREEN SUB1.  ... sub2 sub3. 
 
-   3-2. PAI Scrolling ( none )
-     Tab1 에만 Area 생성 name 지정. SUB4 ,  Tab2, 3의 Ref. Field 에 SUB4
+
+        
    4. TOP INCLUDE 에 변수선언
-     CONTROLS: tab_strip TYPE tabstrip.
-   5. PAI -> module user-command에서
-         WHEN 'TAB1' OR 'TAB2' OR 'TAB3'.   => Function Code 이름들임              TAB_STRIP-ACTIVETAB = OK_CODE.
-     PBO -> module set_dynnr에서
-       CASE TAB_STRIP-ACTIVETAB.          WHEN 'TAB1'.  => Function Code 이름들              DYNNR = 110.   ... 120 130
-       WHEN OTHERS. " 할당되어진 값이 아무것도 없으면 1로             DYNNR = 110.             TAB_STRIP-ACTIVETAB = 'TAB1'.
-     PAI ->  CALL SUBSCREEN SUB4                 INCLUDING SY-CPROG DYNNR.
-      PBO -> CALL SUBSCREEN SUB4.  
-Rep - UNIT 1 : Introduction to ABAP Reports
-Rep - UNIT 2 : Selection Screens
+ 
+        - CONTROLS: tab_strip TYPE tabstrip.
+        
+   5. PAI -> module user-command에서 WHEN 'TAB1' OR 'TAB2' OR 'TAB3'.   => Function Code 이름들임              TAB_STRIP-ACTIVETAB = OK_CODE.
+   
+    
+    
+<br/>
+
 ▪ Report 프로그램에서 Screen 만들기
    - screen 100 생성하고 layout에 subscreen area 만들고 
      PROCESS BEFORE OUTPUT.        CALL SUBSCREEN SUB          INCLUDING SY-CPROG '1100'.     PROCESS AFTER INPUT.        CALL SUBSCREEN SUB.
