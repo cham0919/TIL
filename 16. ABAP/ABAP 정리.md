@@ -2204,7 +2204,7 @@ Con1 - UNIT 11 : Dynamic Programming
    IF <fs_tab> IS ASSIGNED.   -> IS NOT ASSIGNED, IS BOUND, IS NOT BOUND
 
 ▪ 클래스에서 object 생성하는 법 2가지
-   1. CREATE OBJECT
+   1. CREATE OBJECT 
    2. NEW # (   ) 
 
 ▪ Create Data
