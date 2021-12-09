@@ -1661,45 +1661,65 @@ display하고 CALL SUBSCREEN으로 Sub Area에 담는다.
     
 <br/>
 
-▪ Report 프로그램에서 Screen 만들기
+### Report 프로그램에서 Screen 만들기
+
    - screen 100 생성하고 layout에 subscreen area 만들고 
-     PROCESS BEFORE OUTPUT.        CALL SUBSCREEN SUB          INCLUDING SY-CPROG '1100'.     PROCESS AFTER INPUT.        CALL SUBSCREEN SUB.
-   - E01에 END-OF-SELECTION. 에 CALL SCREEN 100.
+     
+   - ```PROCESS BEFORE OUTPUT.        CALL SUBSCREEN SUB          INCLUDING SY-CPROG '1100'.     PROCESS AFTER INPUT.        CALL SUBSCREEN SUB.```
+   
+   - E01에 ```END-OF-SELECTION. 에 CALL SCREEN 100.```
 
-   - TOP에서 스크린들 생성 후 프로그램에서 우측클릭 Additional Function -> Rebuild object list
-     하면 스크린 자동생성됨.
+   - TOP에서 스크린들 생성 후 프로그램에서 우측클릭 Additional Function -> Rebuild object list 하면 스크린 자동생성됨.
 
-▪ Input Check
+<br/>
+
+### Input Check
+
+```
    AT SELECTION-SCREEN ON ( <field> <seltab> radiobutton group <grp> block <block> )
    AT SELECTION-SCREEN ON so_dept
       IF so_dept <> 0.
         MESSAGE '안돼요.‘ TYPE 'E'.
+```
 
-   Screen에서는 Chain, Field로 하고 실제 체크는 MODULE에서 했다.
+   - Screen에서는 Chain, Field로 하고 실제 체크는 MODULE에서 했다.
 
-▪ Push Button 넣기 ( R p.69 )
+
+<br/>
+
+
+### Push Button 넣기 
+
    TOP INCLUDE에
+   
    1. TABLES: sscrfields.  " 이게 선언되어져 있어야됨.
-   2. SELECTION-SCREEN PUSHBUTTON /pos_low(20) pushbtn USER-COMMAND BTN. 
+   
+   2. ```SELECTION-SCREEN PUSHBUTTON /pos_low(20) pushbtn USER-COMMAND BTN.``` 
    E01에서 INITIALIZATION. " 1000번 스크린에서 display / AT SELECTION-SCREEN에서 처리 (PAI)
+   
    3. pushbtn = 'change/display'.
 
    4. AT SELECTION-SCREEN OUTPUT에서 초기값 설정
-      IF GV_MODE = '0'.         LOOP AT SCREEN.           IF SCREEN-NAME CS 'SO_FDT'.              SCREEN-INPUT = 0.              MODIFY SCREEN.           ENDIF.         ENDLOOP.       ENDIF.
-   5. AT SELECTION-SCREEN에서 PUSH 버튼 처리
-     CASE SSCRFIELDS-UCOMM.    	WHEN 'BTN'.      	   IF gv_mode = '1'.             gv_mode = '0'.           ELSE.             gv_mode = '1'.           ENDIF.      ENDCASE.
    
-   DATA: GV_MODE TYPE N VALUE '1'.  변수선언
+       - ``` IF GV_MODE = '0'.         LOOP AT SCREEN.           IF SCREEN-NAME CS 'SO_FDT'.              SCREEN-INPUT = 0.              MODIFY SCREEN.           ENDIF.         ENDLOOP.       ENDIF. ```
+   
+   5. AT SELECTION-SCREEN에서 PUSH 버튼 처리
+   
+      - ```CASE SSCRFIELDS-UCOMM.    	WHEN 'BTN'.      	   IF gv_mode = '1'.             gv_mode = '0'.           ELSE.             gv_mode = '1'.           ENDIF.      ENDCASE.```
+   
+      - ```DATA: GV_MODE TYPE N VALUE '1'.  변수선언```
 
-   Runtime 시 변경할 때는 AT SELECTION-SCREEN OUTPUT (PBO) 에서 처리.
-   SELECTION-SCREEN SKIP (숫자). 숫자만큼 띄움
+   - Runtime 시 변경할 때는 AT SELECTION-SCREEN OUTPUT (PBO) 에서 처리.
+   
+   - SELECTION-SCREEN SKIP (숫자). 숫자만큼 띄움
 
-▪ event하고 screen keyword 정리
-https://dhan-description.tistory.com/116
 
-Rep - UNIT 3 : SAP List Viewer (ALV) Creation ★★★
-▪ ALV 생성  
-   1. Area 생성  ( R p.107 )
+<br/>
+
+### ALV 생성
+  
+   - Area 생성 
+   
      1) SFLIGHT 타입 Itab, structure 변수생성
      2) Select-Options : so_car, so_con 생성
      3) START-OF-SELECTION에 Select문으로 SFLIGHT 데이터를 gt_flights로 가져오기
@@ -1709,64 +1729,113 @@ Rep - UNIT 3 : SAP List Viewer (ALV) Creation ★★★
                                            Title 설정
      7) Element list에서 OK_CODE 설정, 메인 프로그램에서 sy-ucomm 타입 변수 설정
      8) PAI MODULE USER_COMMAND_0100에서 CASE문으로 Function키에 대한 조건설정
-   2. Container 생성 ( R p.115 )
+   
+   
+   <br/>
+   
+   
+   - Container 생성 
+   
      1) 변수생성 
         DATA: GO_CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER
      2) PBO -> MODULE CREATE_AND_TRANSFER 생성, 
         Object 생성 -> (Pattern) Call Object, Instance : go_container, Class : cl_gui_custom_container
          IF go_container is initial.
            EXPORTING CONTAINER_NAME = 'MY_CONTROL_AREA' " container를 area에 담기
-   3. ALV Grid Control 생성
+           
+           
+           
+<br/>
+           
+   - ALV Grid Control 생성
+   
      1) 변수생성
-        DATA: GO_ALV_GRID TYPE REF TO CL_GUI_ALV_GRID.
+     
+          - ```DATA: GO_ALV_GRID TYPE REF TO CL_GUI_ALV_GRID.```
+          
      2) PBO MODULE CREATE_AND_TRANSFER에 Object 생성, container와 연결
+     
+        ```
         (Pattern) Call Object, Instance : go_alv_grid, Class : cl_gui_alv_grid
         IF go_container is initial 안에
-        EXPORTING I_PARENT = go_container " alv_grid를 container에 담기 
+        EXPORTING I_PARENT = go_container " alv_grid를 container에 담기
+        ```
+         
      3) MODULE CREATE_AND_TRANSFER 에 display하기위한 메소드 사용
+        
+        ```
         IF go_container is initial 안에
         (Pattern) Call Method, Instance : go_alv_grid, Class : cl_gui_alv_grid, 
                  Method : set_table_for_first_display
         EXPORTING I_STRUCTURE_NAME : 'SFLIGHT' " 이걸로 alv grid의 필드가 정해짐
         CHANGING IT_OUTTAB = gt_flights " actual 값으로 alv grid에 display할 data를 담고있는 Itab
+        ```
+        
      4) 만약 display한 내용을 다른 action 이후에도 남겨놓을려면 
+        
+        ```
         IF go_container is initial 의 마지막 ELSE문에 go_alv_grid->refresh_table_display 메소드 사용
-        ( R p.132 ) -> 이거 쓰면 안쓰면 똑같은 내용만 뜸.
-
-( R p.125 )
-PERFORM FREE_CONTROL_RESOURCES
-객체를 새로 지우고 쓰는거 
-다른 성질이 DATA를 띄우고 싶을 때 객체 지우고 다시 띄우고 싶을 때 사용한ㄷ.
+        ```
 
 
-Rep - UNIT 4 : ALV Design
+<br/>
 
-▪ Layout Variant : ALV display된 화면 저장/불러오기 ( R p.144 )
-   1. 저장하기
+### PERFORM FREE_CONTROL_RESOURCES
+
+  - 객체를 새로 지우고 쓰는거
+   
+  - 다른 성질이 DATA를 띄우고 싶을 때 객체 지우고 다시 띄우고 싶을 때 사용한다.
+
+<br/>
+
+
+### Layout Variant : ALV display된 화면 저장/불러오기 
+
+   - 저장하기
+
       1) 변수선언 gs_variant TYPE disvariant.
+
       2) display 메소드 위에 gs_variant-report = sy-cprog "현재 프로그램 이름 할당
-      3) display 메소드 안에 IS_VARIANT  = gs_variant.
-                            I_SAVE = 'A'   " U, X, A 가능
-        is_variant 넣으면 결과화면에 Choose layout, Change layout 생기고
-        I_save 넣으면 결과화면에 Save layout, Manage layout 생김
-   2. 불러오기
+
+      3) display 메소드 안에 IS_VARIANT  = gs_variant. I_SAVE = 'A'   " U, X, A 가능
+        
+          - is_variant 넣으면 결과화면에 Choose layout, Change layout 생기고
+          
+          - I_save 넣으면 결과화면에 Save layout, Manage layout 생김
+   
+   
+   
+   - 불러오기
+    
       1) PARAMETERS: pa_lv TYPE disvariant-variant.
+    
       2) display 메소드 위에 gs_variant-variant = pa_lv
-         " pa_lv가 variant 필드에 들어가고 gs_변수가 is_값에 들어가면서 초기화면 실행
+      
+           - " pa_lv가 variant 필드에 들어가고 gs_변수가 is_값에 들어가면서 초기화면 실행
+           
       3) 원하는 결과 save layout 하고 parameter값에 layout이름 넣어주면 됨.
 
 
 
+<br/>
 
+### Layout 꾸미기 
 
-▪ Layout 꾸미기 ( R p.153 )
    1. 변수선언 DATA: gs_layout TYPE lvc_s_layo. " 60여개의 필드들로 layout변경가능
+   
    2. display 메소드에 is_layout = gs_layout
-   3. display 메소드 위에 필드값 입력, 깔끔하게 서브루틴 사용해도됨 PERFORM set_layout
-      gs_layout-zebra = 'X'.
+   
+   3. display 메소드 위에 필드값 입력, 깔끔하게 서브루틴 사용해도됨 PERFORM set_layout. gs_layout-zebra = 'X'.
 
-▪ Exception Columns 신호등 ( R p.156 )
-   1. 변수선언 
+
+<br/>
+
+### Exception Columns 신호등 
+
+-  변수선언 
+ 
+```
+ 
       TYPES: BEGIN OF gty_book.
 	      INCLUDE TYPE sbook.	
       TYPES: LIGHT TYPE char1,
@@ -1774,48 +1843,106 @@ Rep - UNIT 4 : ALV Design
       => sbook의 모든 필드와 light 필드를 가진 local type 생성
       DATA: gt_data TYPE TABLE OF gty_book,
             gs_data LIKE LINE OF gt_data.
-    2. loop문 돌면서 light필드에 값 채우기
+```
+
+<br/>
+
+
+- loop문 돌면서 light필드에 값 채우기
+
+```
       CALL FUNCTION 'DATE_GET_MONTH_LASTDAY'         EXPORTING            I_DATE = SY-DATUM " 오늘날짜         IMPORTING            E_DATE = GV_EDATE. " 오늘날짜기준 마지막일자
 
        LOOP AT GT_DATA INTO GS_DATA. " gt에있는내용을 gs한줄씩 보겠다.         IF GS_DATA-FLDATE < SY-DATUM.            GS_DATA-LIGHT = 1.         ELSEIF GS_DATA-FLDATE >= SY-DATUM                AND GS_DATA-FLDATE <= GV_EDATE.                   GS_DATA-LIGHT = 2.         ELSEIF GS_DATA-FLDATE > GV_EDATE.             GS_DATA-LIGHT = 3.         ENDIF.        MODIFY GT_DATA FROM GS_DATA. " gs한줄로부터 gt에수정한다.      ENDLOOP.
-     3. display 메소드 위에 gs_layout-excp_fname = 'LIGHT'. 추가
+
+```
+
+<br/>
+
+- display 메소드 위에 gs_layout-excp_fname = 'LIGHT'. 추가
+
+<br/>
  
-▪ Sort ( R p.157 )
-   1. 변수선언
+### Sort 
+
+
+- 변수선언
+
+```
       DATA : gt_sort TYPE lvc_t_sort,
              gs_sort TYPE lvc_s_sort.
-   2. display 메소드 위에, 서브루틴 써도되고 바로 써도되고 PERFORM set_sort
+```
+
+<br/>
+
+- display 메소드 위에, 서브루틴 써도되고 바로 써도되고 PERFORM set_sort
+
+```
       gs_sort-fieldname = 'CUSTOMID'.  " Default : Ascending
       APPEND gs_sort TO gt_sort.  
       
       gs_sort-fieldname = 'ORDER_DATE'.
       gs_sort-down = 'X'.   " Descending
       APPEND gs_sort TO gt_sort.
-   3. display 메소드 안에
-      CHANGING it_sort = gt_sort.
+```
 
-▪ Record에 색 표시 ( R p.158 )
-   1. 필드가 하나더 필요함, 원래 만들어놓은 begin of ~~~ end of 에 넣는다.
+<br/>
+
+- display 메소드 안에
+
+
+```
+      CHANGING it_sort = gt_sort.
+```
+
+<br/>
+
+### Record에 색 표시 
+
+
+   - 필드가 하나더 필요함, 원래 만들어놓은 begin of ~~~ end of 에 넣는다.
+     
+     ```
       TYPES : COLOR TYPE CHAR4,  
       “ 4칸짜리 문자로 이루어지는데 첫 번째는 무조건 C, 두 번째는 색이름 (0~7 or 색 상수값),
        세 번째는 진하게(1), 그냥(0), 네 번째는 글자배경 색반전(1), 그냥(0) / 11은 잘 안돼
-   2. LOOP문 안에  
+     ```
+     
+     
+   - LOOP문 안에  
+    
+    ```
      IF gs_data-smoker = 'X'.
        gs_data-color = 'C' && COL_NEGATIVE && '10'.
      ENDIF.
      * CONCATENATE 'C' COL_NEGATIVE '10' INTO GS_DATA-COLOR
-   3. display 메소드 위에 layout     
+     ```
+     
+     
+   - display 메소드 위에 layout     
+   
+   ```
       gs_layout-info_fname = 'COLOR'.
+   ```
 
-▪ Cell에 색 표시 ( R p.160 )
+<br/>
+
+### Cell에 색 표시 
+
+```
    1. ITab 필드 추가 IT_COL TYPE LVC_T_SCOL, 	  " deep structure
    2. Work Area 추가 DATA: gs_col TYPE lvc_s_scol  “ nested structure
    3. LOOP문 안에
       IF GS_DATA-INVOICE = 'X'.   -> O X 값은 is not initial 로 활용 가능         GS_COL-FNAME = 'INVOICE'.   "색주고 싶은 필드명         GS_COL-COLOR-COL = 3.         GS_COL-COLOR-INT = 1.         GS_COL-COLOR-INV = 0.         APPEND GS_COL TO GS_DATA-IT_COL.  “ 수정한 structure를 itab에 적용       ENDIF.
    4. display 메소드 위에 layout
       GS_LAYOUT-CTAB_FNAME = 'IT_COL'.
+```
 
-▪ Standard function 숨기기 ( R p.163 )
+<br/>
+
+### Standard function 숨기기 
+
+```
    1. 변수선언
       DATA: GT_TOOLBAR TYPE UI_FUNCTIONS.
    2. display 메소드 위에 서브루틴 하나 만들기 PERFORM set_toolbar
@@ -1823,11 +1950,14 @@ Rep - UNIT 4 : ALV Design
      SE24 class builder에서 cl_gui_alv_grid > attribute에서 상수값들 확인 가능 mc_fc, mc_mb
    3. diplay method 안에서  
      EXPORTING IT_TOOLBAR_EXCLUDING = GT_TOOLBAR
-   
+```
 
+<br/>
 
-▪ Field Catalog ( R p.179 )
+### Field Catalog 
+
    1. Field Catalog 사용방법 3가지
+   
      1) 자동구성 
         display 메소드에 I_STRUCTURE_NAME에 dictionary에 있는 테이블 넣어서 사용
      2) 수동구성        display 메소드 CHANGING에 IT_FIELDCATALOG를 이용해서 필드를 하나씩 생성
@@ -1835,12 +1965,21 @@ Rep - UNIT 4 : ALV Design
      3) 둘다 같이 사용
         I_STRUCTURE_NAME하고 IT_FIELDCATALOG 이거 같이 사용
         Dictionary에서 가져와서 field 쓰고 추가해서 쓸 때
+    
+    
+   <br/>
+   
    2. Field Catalog 설정방법 3가지
+   
      1) Fieldname, ref_field, ref_table 포함 사용
      2) 1)에 더해서 추가적인 속성값을 사용하는 방법
      3) 참조테이블, 참조 필드 없이 이름과 다른 속성값만 설정하는 방법 
    
-   만약 ALV grid에 새로운 필드를 추가하고 싶다.
+ 
+   
+   - 만약 ALV grid에 새로운 필드를 추가하고 싶다.
+   
+```
    1. 필드추가
       1) PHONE TYPE SCUSTOM-TELEPHONE,        2) CANCEL_ICON TYPE ICON-ID
    2. Itab 생성
@@ -1860,98 +1999,189 @@ Rep - UNIT 4 : ALV Design
      CHANGING   IT_FIELDCATALOG = GT_FCAT
 
    그 외에도 Field Catalog의 다양한 필드들을 통해서 layout을 수정할 수 있다.
-
    MODIFY ~~ TRANSPORTING 필드명 쓰면 퍼포먼스는 더 좋아진다.
    안쓰면 전부 업데이트
    쓰면 쓴 필드만 업데이트
+```
 
-Rep - UNIT 5 : ALV Events and Methods
 
-▪ 이벤트 처리 ( R p.206 )
-  1. local class 생성, 정의 -> 변수 선언 밑에    이건 static method
+<br/>
+
+
+### 이벤트 처리 
+
+
+- local class 생성, 정의 -> 변수 선언 밑에    이건 static method
+
+```
+  
      CLASS LCL_EVENT_HANDLER DEFINITION.        PUBLIC SECTION.          CLASS-METHODS: ON_DOUBLE_CLICK FOR EVENT DOUBLE_CLICK          OF CL_GUI_ALV_GRID          IMPORTING ES_ROW_NO E_COLUMN.     ENDCLASS.
     " cl_gui_alv_grid 이 클래스에서 double click 이벤트를 발생시키면 on_double 메소드에서 처리하겠다.
-  2. method 구현
+```
+
+<br/>
+
+- method 구현
+
+```
     CLASS LCL_EVENT_HANDLER IMPLEMENTATION.      METHOD ON_DOUBLE_CLICK.         MESSAGE I016(BC405_408) WITH ES_ROW_NO-ROW_ID E_COLUMN-FIELDNAME.      ENDMETHOD.    ENDCLASS.
-  3. method 등록
+```
+
+<br/>
+
+- method 등록
+
+```
     display 메소드 위에
     SET HANDLER LCL_EVENT_HANDLER=>ON_DOUBLE_CLICK FOR GO_ALV_GRID.
     클래스이름=>메소드이름 : static은 해당 클래스에 하나만 존재하기 때문에
   * 이 참조변수(오브젝트) (go_alv) 에서 이벤트 (double click) 이 일어나면 이 클래스 (lcl_evnet_handler)의    이 메소드 (on_double_click) 에서 처리하겠다.
-  
+```
+
+<br/>
+
   - instance method
+
     1. class-methods -> methods
-     CLASS LCL_EVENT_HANDLER DEFINITION.        PUBLIC SECTION.          METHODS: ON_DOUBLE_CLICK FOR EVENT DOUBLE_CLICK          OF CL_GUI_ALV_GRID          IMPORTING ES_ROW_NO E_COLUMN.     ENDCLASS.
+    
+    ``` CLASS LCL_EVENT_HANDLER DEFINITION.        PUBLIC SECTION.          METHODS: ON_DOUBLE_CLICK FOR EVENT DOUBLE_CLICK          OF CL_GUI_ALV_GRID          IMPORTING ES_ROW_NO E_COLUMN.     ENDCLASS.```
+    
     2. class 선언 밑에 
-      DATA: GO_HANDLER TYPE REF TO LCL_EVENT_HANDLER.
+    
+    ```  DATA: GO_HANDLER TYPE REF TO LCL_EVENT_HANDLER.```
+    
     3. display 메소드 위에 
+    
+    ```
       오브젝트 생성 CREATE OBJECT GO_HANDLER.
       이제 오브젝트 안에 메소드가 있는 것
       SET HANDLER GO_HANDLER->ON_SPOT_CLICK FOR GO_ALV.
       참조변수->메소드
+    ```
+    
+<br/>
 
   - 응용
-    더블클릭 시 팝업띄우기
-    1. screen dialog 타입 만들고 layout 구성, PBO 에 movecorresponding으로 정보 가져와주고
-    2. local class 구현부에서 
-      READ TABLE GT_DATA INTO GS_DATA INDEX ES_ROW_NO-ROW_ID.        CALL SCREEN 110          STARTING AT 5 3.
-    3. 더 응용하자면 팝업창에 status로 save, cancel 만들고 input창에 정보 입력하게 해서
-      PAI에서 모듈만들어서 저장하게끔.
+      - 더블클릭 시 팝업띄우기
+      
+          -  screen dialog 타입 만들고 layout 구성, PBO 에 movecorresponding으로 정보 가져와주고
+          -  local class 구현부에서 
+          - READ TABLE GT_DATA INTO GS_DATA INDEX ES_ROW_NO-ROW_ID.        CALL SCREEN 110          STARTING AT 5 3.
+          
+  - 더 응용하자면 팝업창에 status로 save, cancel 만들고 input창에 정보 입력하게 해서 PAI에서 모듈만들어서 저장하게끔.
 
-▪ Static vs Instance method
-   static은 객체 생성없이 메소드 사용. 메소드가 클래스에 하나만 존재
-   instance는 각각 생성한 객체마다 메소드 사용 가능
+<br/>
+
+### Static vs Instance method
+
+  -  static은 객체 생성없이 메소드 사용. 메소드가 클래스에 하나만 존재
    
-   grid에서 instance를 쓰는 경우는 컨테이너를 두 개로 나누었을 때 활용가능
+  -  instance는 각각 생성한 객체마다 메소드 사용 가능
+   
+  - grid에서 instance를 쓰는 경우는 컨테이너를 두 개로 나누었을 때 활용가능
 
-▪ 정리 
-   생성순서 : 클래스 -> 참조변수 -> 객체
-   참조변수와 객체는 이름이 같다. 한 객체에 여러 참조변수가 포인트할 수 있다.
+<br/>
 
-▪Custom Toolbar ( R p.217 )
-  1. local class 정의에 추가. 툴바 정의
-     CLASS LCL_EVENT_HANDLER DEFINITION.       PUBLIC SECTION.         CLASS-METHODS:           ON_TOOLBAR FOR EVENT TOOLBAR             OF CL_GUI_ALV_GRID             IMPORTING E_OBJECT.     ENDCLASS.
+### 정리
+ 
+  - 생성순서 : 클래스 -> 참조변수 -> 객체
+  
+  - 참조변수와 객체는 이름이 같다. 한 객체에 여러 참조변수가 포인트할 수 있다.
 
-  2. 툴바 구현
-     CLASS LCL_EVENT_HANDLER IMPLEMENTATION.
+<br/>
+
+### Custom Toolbar 
+
+  - local class 정의에 추가. 툴바 정의
+   
+   ```  CLASS LCL_EVENT_HANDLER DEFINITION.       PUBLIC SECTION.         CLASS-METHODS:           ON_TOOLBAR FOR EVENT TOOLBAR             OF CL_GUI_ALV_GRID             IMPORTING E_OBJECT.     ENDCLASS.```
+   
+<br/>
+
+  - 툴바 구현
+  
+```
+   CLASS LCL_EVENT_HANDLER IMPLEMENTATION.
            METHOD ON_TOOLBAR.         DATA: LS_BUTTON TYPE STB_BUTTON.         LS_BUTTON-BUTN_TYPE = 3.         APPEND LS_BUTTON TO E_OBJECT->MT_TOOLBAR.         CLEAR: LS_BUTTON.         LS_BUTTON-FUNCTION = 'FC1'.         LS_BUTTON-BUTN_TYPE = 0.         LS_BUTTON-ICON =  ICON_CREATE.         ls_button-TEXT = 'Button'.         ls_button-quickinfo = 'ALV Toolbar Button'.         APPEND LS_BUTTON TO E_OBJECT->MT_TOOLBAR.       ENDMETHOD.
      ENDCLASS.
 
          E_OBJECT->MT_TOOLBAR.
-        여기서 e_object는 toolbar 이벤트의 파라미터로 있는데 cl_alv_event_toolbar_set 클래스를 
+
+여기서 e_object는 toolbar 이벤트의 파라미터로 있는데 cl_alv_event_toolbar_set 클래스를 
         참조하고 있는 참조변수이다. 이 클래스는 인스턴스 속성을 가지고 있어서 객체를 자동적으로 
         만든다. 그래서 e_object가 cl_alv_event_toolbar_set 클래스의 객체가 가지고 있는
         attribute인 mt_toolbar라는 테이블을 가르키는 것.
+```
 
-  3. 툴바 등록, diplay 메소드 위에
+        
+<br/>
+
+  - 툴바 등록, diplay 메소드 위에
+  
+```  
     SET HANDLER LCL_EVENT_HANDLER=>ON_TOOLBAR FOR GO_ALV.
-   
-▪ Custom Toolbar 버튼 활성화
-   1. 정의
-      CLASS LCL_EVENT_HANDLER DEFINITION.       PUBLIC SECTION.         CLASS-METHODS:           ON_USER_COMMAND FOR EVENT USER_COMMAND             OF CL_GUI_ALV_GRID             IMPORTING E_UCOMM.      ENDCLASS.
+```
 
-    2. 구현
+<br/>
+
+### Custom Toolbar 버튼 활성화
+
+  -  정의
+     
+     ``` CLASS LCL_EVENT_HANDLER DEFINITION.       PUBLIC SECTION.         CLASS-METHODS:           ON_USER_COMMAND FOR EVENT USER_COMMAND             OF CL_GUI_ALV_GRID             IMPORTING E_UCOMM.      ENDCLASS.```
+
+
+  - 구현
+  
+  ```
         METHOD ON_USER_COMMAND.         DATA: LV_BIZCNT TYPE I,               LV_TOTCNT TYPE I,               LV_MSGTXT TYPE STRING.         DATA: LT_TMP LIKE GT_DATA. " lv_bizcnt itab         CASE E_UCOMM.           WHEN 'FC1'.             LV_TOTCNT = LINES( GT_DATA ).  
              " ( itab ) -> 해당 인터널테이블이 가지고 있는 레코드 개수를 리턴해준다. 해당변수로             LT_TMP = GT_DATA.             DELETE LT_TMP WHERE CUSTTYPE <> 'B'. " B가아닌건다삭제             lv_bizcnt = lines( lt_tmp ).             LV_MSGTXT = 'Total Record : ' && LV_TOTCNT &&                           ' Business Customer : ' && LV_BIZCNT.             MESSAGE LV_MSGTXT TYPE 'I'.           WHEN OTHERS.         ENDCASE.       ENDMETHOD.
-    3. 등록
-    SET HANDLER LCL_EVENT_HANDLER=>ON_USER_COMMAND FOR GO_ALV.
+  ```
 
-▪ 필드에 버튼넣기
-   1. 변수로 Itab 추가, work area 추가     TYPES:   LIGHT       TYPE CHAR1, 		          ...              BTN         TYPE LVC_T_STYL, " 버튼생성 itab 선언              BTN_TXT     TYPE CHAR15,       END OF GTY_BOOK.
+  - 등록
+  
+  ```
+    SET HANDLER LCL_EVENT_HANDLER=>ON_USER_COMMAND FOR GO_ALV.
+  ```
+
+<br/>
+
+### 필드에 버튼넣기
+
+   - 변수로 Itab 추가, work area 추가
+    
+    
+```    
+    TYPES:   LIGHT       TYPE CHAR1, 		          ...              BTN         TYPE LVC_T_STYL, " 버튼생성 itab 선언              BTN_TXT     TYPE CHAR15,       END OF GTY_BOOK.
 
      DATA: GS_BTN TYPE LVC_S_STYL. " itab 컨트롤하기 위한 work area.
+```
+ 
+    
 
-    2. invoice가 x인것만 체크한다고 했을 때 
+ - invoice가 x인것만 체크한다고 했을 때
+
+
+```
+     
        start-of-selection에서 
        IF GS_DATA-INVOICE = 'X'.		...
          APPEND GS_COL TO GS_DATA-IT_COL.         GS_BTN-FIELDNAME = 'BTN_TXT'.         GS_BTN-STYLE = CL_GUI_ALV_GRID=>MC_STYLE_BUTTON.         APPEND GS_BTN TO GS_DATA-BTN.         GS_DATA-BTN_TXT = 'Invoice'.
+```
 
-    3. layout과 field catalog 변경
+- layout과 field catalog 변경
+
+```
        GS_LAYOUT-STYLEFNAME = 'BTN'.
 
        CLEAR: LS_FCAT.       LS_FCAT-FIELDNAME = 'BTN_TXT'.       LS_FCAT-COLTEXT = 'Buttons'.       ls_fcat-col_pos = 1. "첫번째필드에       APPEND LS_FCAT TO GT_FCAT.
+```
 
-▪ ALV 클래스에 있는 메소드 사용하기 ( R p.232 )
+<br/>
+
+### ALV 클래스에 있는 메소드 사용하기 
+
+```
    ex. get_selected_rows.
        implementation 부분 method on_user_command에
        DATA: LT_ROW TYPE LVC_T_ROID, " get selected rows itab             LS_ROW TYPE LVC_S_ROID. " itab work area
@@ -1959,8 +2189,10 @@ Rep - UNIT 5 : ALV Events and Methods
        pattern : instance : go_alv, class : cl_gui_alv_grid, method : get_selected_rows
        CALL METHOD GO_ALV->GET_SELECTED_ROWS       IMPORTING          ET_ROW_NO = LT_ROW.
 
+```
 
-Rep - UNIT 6 : Data Retrieval With Local Databases
+<br/>
+
 
 ▪ LDB ( Logical DataBase )
    - t-code : se36   
