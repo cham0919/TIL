@@ -2194,259 +2194,289 @@ display하고 CALL SUBSCREEN으로 Sub Area에 담는다.
 <br/>
 
 
-▪ LDB ( Logical DataBase )
-   - t-code : se36   
+### LDB ( Logical DataBase )
+
+   - t-code : se36
+      
    - 사용목적(활용) :
-     1) 여러 유사 프로그램에서 공통된 SELECTION-SCREEN을 사용하고자 할 때
-        (반복되는 프로그램에서 selection screen을 코딩할 필요없음)
-     2) 아래의 이미지 처럼 SELECTION SCREEN에 Dynamic Selection을 구현할 때
+   
+      -  여러 유사 프로그램에서 공통된 SELECTION-SCREEN을 사용하고자 할 때 (반복되는 프로그램에서 selection screen을 코딩할 필요없음)
+      
+      -  아래의 이미지 처럼 SELECTION SCREEN에 Dynamic Selection을 구현할 때
 
-    - 구성 3요소
-      1) Structure(구조) : 여기서 Node의 상하관계는 Selection을 구성했을때 순서 및 의존관계를 
-                         가지고 설정한다.
-      2) Selections(선택사항) : 계층적 구조에 의해 포함된 Node중 Selection-Screen에서 사용할 Node를 
-                             선택한다.
-      3) Database Program : Put Event를 가지며, ABAP에 의해서 Get으로 호출시 구동된다. 
-                            (실질적인 Data Select부분을 코딩한다)
+<br/>
 
-    - 탈출 3방법 : [Start-of-selection]화면에서 탈출할 수 있는 코드는 아래와 같다
-      1) CHECK	: 주어진 조건을 만족하지 못하면 바로위의 GET으로 돌아간다.
-      2) EXIT : 일반적인 Loop 탈출명령과 동일하다, 현재의 이벤트를 바로 탈출한다.
-      3) STOP : Exit와 동일하며 탈출시 [End-of-selection]을 호출한다.
+   - 구성 3요소
+    
+      - Structure(구조) : 여기서 Node의 상하관계는 Selection을 구성했을때 순서 및 의존관계를 가지고 설정한다.
+      
+      - Selections(선택사항) : 계층적 구조에 의해 포함된 Node중 Selection-Screen에서 사용할 Node를 선택한다.
+      
+      - Database Program : Put Event를 가지며, ABAP에 의해서 Get으로 호출시 구동된다. (실질적인 Data Select부분을 코딩한다)
 
-      NODES: SPFLI, SFLIGHT, SBOOK.   
-      NODE는 ldb에서 테이블을 사용할 때 선언하는 것.
-      NODE : LDB에서는 dbtab 각 1개를 1개의 노드라 한다.
-      GET SPFLI.
-      GET은 ldb에서 select 구문과 유사한 역할을 수행한다.
 
-Rep - UNIT 7 : Data Retrieval without Logical Databases
+<br/>
 
-▪ LDB 없이 데이터 가져오기. open sql  
-   여러 테이블에서 데이터를 internal table로 가져오는 방법 중 하나.
+   - 탈출 3방법 : [Start-of-selection]화면에서 탈출할 수 있는 코드는 아래와 같다
+   
+      - CHECK	: 주어진 조건을 만족하지 못하면 바로위의 GET으로 돌아간다.
+      
+      - EXIT : 일반적인 Loop 탈출명령과 동일하다, 현재의 이벤트를 바로 탈출한다.
+      
+      - STOP : Exit와 동일하며 탈출시 [End-of-selection]을 호출한다.
+
+<br/>
+
+### LDB 없이 데이터 가져오기. open sql
+  
+   - 여러 테이블에서 데이터를 internal table로 가져오는 방법 중 하나.
+   
    - FOR ALL ENTRIES
-     주의할 점
-     1. itab에 데이터가 한 건도 없을 경우 모든 데이터를 읽어온다. 그래서 itab에 데이터가 있는지
-       없는지 먼저 확인해야함.
-     2. Where절에 조건거는 필드로 sort하고 중복된 데이터를 제거해야한다.
-       sort안되있으면 중복제거 안됨.
-       SORT gt_spfli.   DELETE ADJACENT DUPLICATES FROM gt_spfli.     
+     
+      - 주의할 점
+      
+          -  itab에 데이터가 한 건도 없을 경우 모든 데이터를 읽어온다. 그래서 itab에 데이터가 있는지 없는지 먼저 확인해야함.
+          
+          -  Where절에 조건거는 필드로 sort하고 중복된 데이터를 제거해야한다. sort안되있으면 중복제거 안됨.
+              ```SORT gt_spfli.   DELETE ADJACENT DUPLICATES FROM gt_spfli.```     
 
-     FOR ALL ENTRIES 구문은 인터널 테이블의 서브 쿼리와 유사한 기능을 수행합니다. 
-     FOR ALL ENTRIES 구문을 사용할 때 WHERE 구문의 조건은 itab에 존재하는 필드만 가능합니다.
+   - FOR ALL ENTRIES 구문은 인터널 테이블의 서브 쿼리와 유사한 기능을 수행합니다.
+    
+   -  FOR ALL ENTRIES 구문을 사용할 때 WHERE 구문의 조건은 itab에 존재하는 필드만 가능합니다.
 
+
+```
      SELECT * FROM sflight
      INTO CORRESPONDING FIELDS OF TABLE gt_sflight
      FOR ALL ENTRIES IN  gt_spfli
      WHERE carrid  = gt_spfli-carrid AND connid = gt_spfli-connid.
+```
 
-​
+<br/>
 
-Rep - UNIT 8 : The Call of Other Programs from ABAP Reports (안한대)
-Rep - UNIT 9 : Background Processing
-Rep - UNIT 10 : ALV Object Model
 
-Data - UNIT 1 : Database Updates with ABAP Open SQL
+### Logical Unit of Work (LUW)  
 
-▪ Transparent Table Data Control ( DU p.5 )
-   1. Insert Single Data
-   1-1. INSERT INTO ZSCARR_CLC19<dbtab> VALUE GS_SCARR<work area>.
-   1-2. INSERT ZSCARR_CLC19<dbtab> FROM GS_SCARR<work area>.
-   2. Insert Multiple Data
-       INSERT ZSCARR_CLC19<dbtab> FROM TABLE GT_SCARR<itab>[ACCEPTING DUPLICATE KEYS].
-       accepting은 보통 insert구문에서 key의 중복으로 table에 넣을 때 덤프떨어지는데 이걸 쓰면 
-       덤프X.
-   3. Update Single Data
-   3-1. UPDATE ZSCARR_CLC19<dbtab> FROM GS_SCARR<work area>.
-   3-2. UPDATE ZSCARR_CLC19<dbtab> SET CURRCODE = 'USD'    <field>=<내용>                                   URL = 'http://www.jaepyo.so.com'          WHERE CARRID = 'DL'. " key field, <full qualified key>
-   4. Update Multiple Data
-   4-1. UPDATE ZSCARR_CLC19<dbtab> FROM TABLE GT_SCARR<itab>.
-   4-2. UPDATE ZSCARR_CLC19 SET CURRCODE = 'USD'          WHERE CARRID BETWEEN 'AA' AND 'DL'.
-   5. Modify
-   5-1. MODIFY ZSCARR_CLC19<dbtab> FROM GS_SCARR<work area>.
-   5-2. MODIFY ZSCARR_CLC19<dbtab> FROM TABLE GT_SCARR<itab>.
-   6. Delete Single Data 
-   6-1. DELETE ZSCARR_CLC19<dbtab> FROM GS_SCARR<work area>.
-   6-2. DELETE FROM ZSCARR_CLC19<dbtab> WHERE CARRID = 'Z1'. " key field 전부
-   7. Delete Multiple Data 
-   7-1. DELETE ZSCARR_CLC19 FROM TABLE GT_SCARR<itab>.
-   7-2. DELETE FROM ZSCARR_CLC19<dbtab> WHERE currcode = 'USD'.
+   - 데이터는 번들로 처리한다.
+   
+   - All or Nothing principle
+   
+   - 유저의 request는 work process에서 처리되는데 시스템의 자원에 한계가 있기 때문에 1대1로 매칭되지 않는다. 화면이 display될 때 database에 자동 commit 된다.
+   
 
-Data - UNIT 2 : Database Change Bundling
+<br/>
 
-▪ Logical Unit of Work (LUW)  ( DU p.36 )
-   데이터는 번들로 처리한다.
-   All or Nothing principle
-   유저의 request는 work process에서 처리되는데 시스템의 자원에 한계가 있기 때문에 1대1로 매칭
-   되지 않는다. 화면이 display될 때 database에 자동 commit 된다.
 
-Data - UNIT 3 : SAP Locking
+### T-code : SM12 통해서 코딩 중간에 발생한 Lock의 상태를 확인하도록 한다.
 
-▪ T-code : SM12 통해서 코딩 중간에 발생한 Lock의 상태를 확인하도록 한다.
+- 서로 다른 프로그램에서 같은 테이블을 사용할 때 특정 프로그램이 수정하고 있으면 다른 프로그램이 수정못하게, 접근못하게끔 하는 동작이 필요함. ( 데이터 일관성 )
 
-▪ 서로 다른 프로그램에서 같은 테이블을 사용할 때 특정 프로그램이 수정하고 있으면 다른 프로그램이 
-   수정못하게, 접근못하게끔 하는 동작이 필요함. ( 데이터 일관성 )
-   첫 DB Commit부터 마지막 DB Commit까지 Lock 설정
+- 첫 DB Commit부터 마지막 DB Commit까지 Lock 설정
 
-▪ Lock Object 생성
+<br/>
+
+
+### Lock Object 생성
+
    1. SE11 Lock Object에서 create, EZ_SPFLI_CLC19
    2. Primary Table에 ZSPFLI_CLC19 입력
    3. Active하면 Enqueue, Dequeue Function Module 2개 생성.
-      menu bar -> goto -> lock modules에서 모듈확인 가능
+        - menu bar -> goto -> lock modules에서 모듈확인 가능
 
-▪ Lock들은 Container에 저장되있다가 FLUSH_ENQUEUE function module을 만나면 한번에 
-   Lock Table에 저장
+<br/>
 
-▪ Lock mode
+-  Lock들은 Container에 저장되있다가 FLUSH_ENQUEUE function module을 만나면 한번에 Lock Table에 저장
+
+<br/>
+
+### Lock mode
+
    1. Exclusive lock (E) : 오직 한명의 사용자에 대해서만 접근 가능
-   2. Shared Lock (S) : 여러 명의 사용자의 데이터를 읽을 수 있으나, 특정 사용자에 의해서 변경이
-                       시작되면 모두 잠긴다.
+   2. Shared Lock (S) : 여러 명의 사용자의 데이터를 읽을 수 있으나, 특정 사용자에 의해서 변경이 시작되면 모두 잠긴다.
    3. Exclusive Lock (X) : 작업 Transaction 내에서 단 한번만 Lock을 요청할 수 있다.
 
-Data - UNIT 4 : Organization of Database Updates
-▪졸음
-Data - UNIT 5 : LUWs Across Multiple Programs
-▪졸음
-Data - UNIT 6 : Number Assignment
-Data - UNIT 7 : Database Change Logging
-Data - UNIT 8 : Object Services
-Data - UNIT 9 : Cluster Tables
-Data - UNIT 10 : Program-Controlled Program Calls
+<br/>
 
-Con1 - UNIT 1 : Introduction to Object-Oriented Programming
-▪ Main Program에서 Function Module 호출하면 Function Group이 통째로 호출됨.
-▪ Procedural 프로그램과 Object-oriented 프로그램의 차이 정리
-▪ 클래스, 오브젝트, 메서드 정리
-▪ UML 다이어그램 ( unified modeling language )
-   통합 모델링 언어를 사용하여 시스템 상호작용, 업무흐름, 시스템 구조, 컴포넌스 관계 등을 그린 도면
-   사용 이유 : 프로그래밍을 단순화시켜 표현하여 의사소통하기 좋고 또 대규모 프로젝트 구조의 로드맵을 
-   만들거나 개발을 위한 시스템 구축에 기본을 마련한다.
-▪ OOP의 특징
+
+### Introduction to Object-Oriented Programming
+
+- Main Program에서 Function Module 호출하면 Function Group이 통째로 호출됨.
+
+- Procedural 프로그램과 Object-oriented 프로그램의 차이 정리
+
+- 클래스, 오브젝트, 메서드 정리
+
+-  UML 다이어그램 ( unified modeling language )
+
+   - 통합 모델링 언어를 사용하여 시스템 상호작용, 업무흐름, 시스템 구조, 컴포넌스 관계 등을 그린 도면
+   
+   - 사용 이유 : 프로그래밍을 단순화시켜 표현하여 의사소통하기 좋고 또 대규모 프로젝트 구조의 로드맵을 만들거나 개발을 위한 시스템 구축에 기본을 마련한다.
+   
+<br/>
+
+### OOP의 특징
+
    - 상속, 다형성, 추상화, 이벤트 컨트롤
    - 클래스는 오브젝트에 대한 설명서, 틀
    - 클래스에서의 data는 attribute, behavior는 method라고 함.
 
-Con1 - UNIT 2 : Fundamental Object-Oriented Syntax 
+<br/>
 
-▪ Local Class 만들기 ( WC p.39 ) 
-▪ Constructor ( WC p.83 )   -> 어디서 활용해서 쓸 수 있지?-> 실무에서 잘 안씀.
-   - Call method로 호출할 수 없는 특별한 메서드
-   - instance constructor 
-     해당 클래스에서 하나만 존재, 클래스에서 오브젝트 생성될 때 자동 호출 (호출방법 1가지)
-     public section에만 선언, importing과 exception만 가능
-     call method로 호출 불가
 
-     METHODS constructor IMPORITING ~~ 	
-     예외적으로 호출해줘야되는 경우 : 상속관계에서 서브클래스에 constructor 가 있고 슈퍼클래스의 
-     constructor가 있을 때 서브클래스에서 constructor를 호출해줘야함.
+### Local Class 만들기 
+ 
+  -  Constructor
+  
+      - Call method로 호출할 수 없는 특별한 메서드
+      - instance constructor 
+      - 해당 클래스에서 하나만 존재, 클래스에서 오브젝트 생성될 때 자동 호출 (호출방법 1가지)
+      - public section에만 선언, importing과 exception만 가능
+      - call method로 호출 불가
+ 	
+      - 예외적으로 호출해줘야되는 경우 : 상속관계에서 서브클래스에 constructor 가 있고 슈퍼클래스의 constructor가 있을 때 서브클래스에서 constructor를 호출해줘야함.
+
+<br/>
 
    - Static Constructor
-     프로그램에 의해 클래스에 처음 접근할 때 자동적으로 호출, 한번만 호출되어짐.
-     어떠한 파라미터도 가질 수 없음, public section에만 가능, call method로 호출 불가
-     4가지 경우에 의해 자동 호출
-     1. 해당 클래스에서 오브젝트 생성될 때
-     2. Static Attribute에 Access할 때
-     3. Static Method를 호출할 때
-     4. 이벤트의 핸들러 Method 등록할 때
+   
+     - 프로그램에 의해 클래스에 처음 접근할 때 자동적으로 호출, 한번만 호출되어짐.
+     - 어떠한 파라미터도 가질 수 없음, public section에만 가능, call method로 호출 불가
+     - 4가지 경우에 의해 자동 호출
+        1. 해당 클래스에서 오브젝트 생성될 때
+        2. Static Attribute에 Access할 때
+        3. Static Method를 호출할 때
+        4. 이벤트의 핸들러 Method 등록할 때
 
-     Class-Methods class-constructor ~ 
+     - 스태틱이랑 인스턴스랑 같이 만나면 스태틱이 우선 실행.
 
-     스태틱이랑 인스턴스랑 같이 만나면 스태틱이 우선 실행.
+<br/>
 
-▪ Self-Reference ( WC p.96 )
-   me->
-   해당 메소드의 component와 변수이름이 같은 게 있을 때 attribute이름에 me->이름 접근한다.     
-
-Con1 - UNIT 3 : Inheritance and Casting
-
-▪ 상속 : 서브 클래스는 수퍼클래스의 데이터와 메서드를 얻을 수 있다. ( 재사용성 )
-▪ ABAP Object에서는 Super Class(부모), Sub Class(자식)
-▪ 서브클래스에서 상속받은 메소드를 수정가능. REDEFINITION. -> 다형성
-▪ 상속관계에서 sub클래스에서 super클래스에 있는 constructor를 구현할 때 반드시 호출해야함.
-▪ Upcast ( WC p.135 )
-   자식클래스의 object를 부모클래스 참조변수에 할당
-   부모 = 자식
-   슈퍼 클래스 타입인 참조변수가 서브 클래스의 상속해준 component에 접근이 가능한 것.
-   할당을 해줘야함. 우리가 한 예시에서는 테이블 자체가 부모클래스를 상속하고 있기 때문에
-   오브젝트들이 들어갈 때 자동적으로 형변환이 일어난 것.
-▪ Downcast ( WC p.155 )
-   upcast되어진 부모참조변수를 자식클래스 참조변수에 할당
-   자식 ?= 부모
-   부모클래스 변수에서 자식클래스 변수에 할당하는 것. ( ?= )
-   자식 메서드에서도 부모 메서드 사용 가능
-   자손타입 -> 부모타입 ( up-casting ) : 형변환 생략가능 , 부모가 자식꺼 사용 
-   자손타입 <- 부모타입 ( down-casting ) : 형변환 생략불가, 
-▪ 다형성 ( WC p.147 )
-   인터페이스와 상속은 다형성이라는 객체지향 프로그램의 특징을 구현하는 방식이다.
-   ABAP 다형성은 메서드를 호출하면 메서드를 호출하는 개체의 유형에 따라 다른 메서드가 실행됨을
-   의미한다.
-   하나의 메서드를 가지고 display_attribute를 가지고 max seats, cargo 이런거 추가해서
-   다른 내용으로 display 하는 것.
+### Self-Reference 
+   
+   - 해당 메소드의 component와 변수이름이 같은 게 있을 때 attribute이름에 me->이름 접근한다.     
 
 
+<br/>
+
+-  상속 : 서브 클래스는 수퍼클래스의 데이터와 메서드를 얻을 수 있다. ( 재사용성 )
+
+-  ABAP Object에서는 Super Class(부모), Sub Class(자식)
+
+-  서브클래스에서 상속받은 메소드를 수정가능. REDEFINITION. -> 다형성
+
+- 상속관계에서 sub클래스에서 super클래스에 있는 constructor를 구현할 때 반드시 호출해야함.
+
+<br/>
+
+### Upcast 
+
+   - 자식클래스의 object를 부모클래스 참조변수에 할당
+   
+   - 부모 = 자식
+   
+   - 슈퍼 클래스 타입인 참조변수가 서브 클래스의 상속해준 component에 접근이 가능한 것.
+   
+   - 할당을 해줘야함. 우리가 한 예시에서는 테이블 자체가 부모클래스를 상속하고 있기 때문에 오브젝트들이 들어갈 때 자동적으로 형변환이 일어난 것.
+   
+<br/>
+
+### Downcast 
+
+   - upcast되어진 부모참조변수를 자식클래스 참조변수에 할당
+   
+   - 자식 ?= 부모
+   
+   - 부모클래스 변수에서 자식클래스 변수에 할당하는 것. ( ?= )
+   
+   - 자식 메서드에서도 부모 메서드 사용 가능
+   
+   - 자손타입 -> 부모타입 ( up-casting ) : 형변환 생략가능 , 부모가 자식꺼 사용
+    
+   - 자손타입 <- 부모타입 ( down-casting ) : 형변환 생략불가,
+   
+<br/>
+ 
+### 다형성 
+
+   - 인터페이스와 상속은 다형성이라는 객체지향 프로그램의 특징을 구현하는 방식이다.
+   
+   - ABAP 다형성은 메서드를 호출하면 메서드를 호출하는 개체의 유형에 따라 다른 메서드가 실행됨을 의미한다.
+   
+   - 하나의 메서드를 가지고 display_attribute를 가지고 max seats, cargo 이런거 추가해서 다른 내용으로 display 하는 것.
+
+<br/>
 
 
-Con1 - UNIT 4 : interfaces and Casting
-▪ 인터페이스 ( WC p.174 )
-   여러 클래스들의 성격이 다 달라서 super class로 뽑아낼 수 없을 때 사용
+### 인터페이스 
 
-   공통적인 component가 존재할 때 인터페이스를 가지고 컴포넌트를 정의하고
-   정의된 컴포넌트를 클래스들이 상속받아서 각각 클래스에 맞게 구현해서 사용
+   - 여러 클래스들의 성격이 다 달라서 super class로 뽑아낼 수 없을 때 사용
 
-   정의만 있고 구현은 없다. (사용하는 클래스에서 구현)
-   정의할 때는 INTERFACE, 구현할 때는 INTERFACES
-   클래스에서 여러 개의 인터페이스 상속이 가능하다
-   인터페이스에 있는 모든 component는 public이다.
-   프로토콜이라고도 함.
-   추상메서드의 모음(정의만)
+   - 공통적인 component가 존재할 때 인터페이스를 가지고 컴포넌트를 정의하고 정의된 컴포넌트를 클래스들이 상속받아서 각각 클래스에 맞게 구현해서 사용
+
+   - 정의만 있고 구현은 없다. (사용하는 클래스에서 구현)
+   
+   - 정의할 때는 INTERFACE, 구현할 때는 INTERFACES
+   
+   - 클래스에서 여러 개의 인터페이스 상속이 가능하다
+   
+   - 인터페이스에 있는 모든 component는 public이다.
+   
+   - 프로토콜이라고도 함.
+   
+   
+<br/>
+
+### 추상메서드의 모음(정의만)
   
-   클래스 definition에서 private에 속성을 만들어놔도 인터페이스를 만들어서   
-   implementation에서 메서드를 만들면 private에 있는 값도 가져올 수 있다.
-   은닉하고있던걸 보여주니깐 때에 따라서는 위험할 수 있다. (보안)
+  -  클래스 definition에서 private에 속성을 만들어놔도 인터페이스를 만들어서 implementation에서 메서드를 만들면 private에 있는 값도 가져올 수 있다.
+  
+  -  은닉하고있던걸 보여주니깐 때에 따라서는 위험할 수 있다. (보안)
    
+<br/>
+
+### Global Class -> 실무에서 많이 사용함.
+
+-  tcode : SE24 ( class builder )
+   - se80 -> package -> create -> class library -> class
    
-Con1 - UNIT 5 : Object-Oriented Events	
-Con1 - UNIT 6 : Object-Oriented Repository Objects
+<br/>
 
-▪ Global Class -> 실무에서 많이 사용함.
-▪ tcode : SE24 ( class builder )
-  se80 -> package -> create -> class library -> class
+### Generic Data Type
 
-Con1 - UNIT 7 : ABAP Object-Oriented Examples
-Con1 - UNIT 8 : Class-Based Exceptions
+  - 제네릭은 클래스나 메소드에서 사용할 내부 데이터 타입을 컴파일 시에 미리 지정하는 방법
 
-▪ 내용적으로만 알고 있으면 된다.
+<br/>
 
-Con1 - UNIT 9 : Object-Oriented Design Patterns
 
-▪ CASE TYPE OF ... WHEN TYPE ... INTO ( WC2 P.406 )
+### Field Symbol 
 
-Con1 - UNIT 10 : Program Calls and Memory Management
-Con1 - UNIT 11 : Dynamic Programming
-▪ Generic Data Type
-   제네릭은 클래스나 메소드에서 사용할 내부 데이터 타입을 컴파일 시에 미리 지정하는 방법
+   - ABAP 프로그램 내에서 data object에 동적인 접근이 가능하게한다.
+   - C언어의 포인터 개념과 유사, 주소값
+   - FIELDS-SYMBOLS : <fs_tab> TYPE ANY TABLE.
+   - 필드심볼 이름은 꺽쇠안에 넣어야함.
 
-▪ Field Symbol ( WC2 p.483 )
-   ABAP 프로그램 내에서 data object에 동적인 접근이 가능하게한다.
-   C언어의 포인터 개념과 유사, 주소값
-   FIELDS-SYMBOLS : <fs_tab> TYPE ANY TABLE.
-   필드심볼 이름은 꺽쇠안에 넣어야함.
-
+```
    ASSIGN gt_scarr TO <fs_tab> " 필드심볼로 테이블 포인트
    IF <fs_tab> IS ASSIGNED.   -> IS NOT ASSIGNED, IS BOUND, IS NOT BOUND
+```
 
-▪ 클래스에서 object 생성하는 법 2가지
+<br/>
+
+### 클래스에서 object 생성하는 법 2가지
+
    1. CREATE OBJECT 
    2. NEW # (   ) 
 
-▪ Create Data
-   불특정한 data object 생성할 경우 사용
+<br/>
 
-part2는 SAP에서 제공해주는 Standard 솔루션을 수정하는 내용
-standard 수정하는 방법 2가지 : Enhancement(끼워넣기), Modification(original 수정)
-Con2 - UNIT 1 : Adjustment of SAP Standard Software
+### Create Data
 
-▪ Standard 수정하는 법 ( WC3 p.3 )
+  -  불특정한 data object 생성할 경우 사용
+
+<br/>
+
+### Standard 수정하는 법 
+
    1. Personalization : 
    2. Modification : Standard 수정
    3. Enhancement : Standard에 Customer가 원하는 로직을 끼워넣는 것
@@ -2455,78 +2485,66 @@ Con2 - UNIT 1 : Adjustment of SAP Standard Software
       3) menu enhancements (menu bar에 menu를 추가한다던지)
       4) screen enhancements (screen에다가 원하는 필드를 추가한다던지)
 
-▪ Table Enhancement ( WC3 p.9 ) ( WC3 p.23 )
-   1. standard 테이블에 APPEND STRUCTURE을 이용해서 필드 추가 (ZZ##, YY##)
-     모든 테이블에 가능
-     하나의 append structure는 하나의 table에만 사용 가능
-     하나의 table에는 여러개의 append structure가 올 수 있음.
-   2. standard 테이블에 CI_Include 추가 (ZZ##, YY##)
-     테이블에 data element가 CI_## 로 시작하는 structure가 있을 때만 사용 가능  ( .include )
+<br/>
 
-▪ Program Enhancement
-   Program Exit이라고 한다.?
+### Table Enhancement 
+
+   1. standard 테이블에 APPEND STRUCTURE을 이용해서 필드 추가 (ZZ##, YY##)
+      - 모든 테이블에 가능
+      - 하나의 append structure는 하나의 table에만 사용 가능
+      - 하나의 table에는 여러개의 append structure가 올 수 있음.
+      
+   2. standard 테이블에 CI_Include 추가 (ZZ##, YY##)
+      -  테이블에 data element가 CI_## 로 시작하는 structure가 있을 때만 사용 가능  ( .include )
+
+<br/>
+
+### Program Enhancement
+
+   
    1. User Exit 2. Customer Exit 3. Business Transaction Event 4. Business Add-in
 
-▪ Menu Enhancements
-   cutomer function code는 function code 앞에 +를 붙어있다. 
-   PAI에 program branch로 프로그램 호출하는 부분이 있다. 
-   여기에 function module이나 method로 구현할 수 있다.
+<br/>
 
-▪ Enhancement Options ( WC3 p.17 )
+### Menu Enhancements
+
+   - cutomer function code는 function code 앞에 +를 붙어있다. 
+   - PAI에 program branch로 프로그램 호출하는 부분이 있다. 
+   - 여기에 function module이나 method로 구현할 수 있다.
+
+<br/>
+
+### Enhancement Options 
+
    1. 스탠다드 function module과 method에 interface parameter 추가가능
    2. 스탠다드 class 에 attributes와 methods 추가가능
    3. 스탠다드 method 전, 후에 method를 추가가능 (pre-method, post-method)
    4. 스탠다드 method를 대체할 수 있는 method를 사용할 수 있는 기능도 이용가능
 
-Con2 - UNIT 2 : Enhancement of Dictionary Elements 
+<br/>
 
-▪ Standard table 필드 추가는 append structure과 include로 한다 이것만 알고 있으면 됨.
-▪ tcode : COMD  
+- Standard table 필드 추가는 append structure과 include로 한다 이것만 알고 있으면 됨.
+- tcode : COMD  
 
-Con2 - UNIT 3 : Customer Exits
+<br/>
 
-▪ Customer Exit 3가지 기능, Enhancement Project를 생성해야함.
+### Customer Exit 3가지 기능, Enhancement Project를 생성해야함.
+
    1. Program Exit	
-      cmod -> enhancement 찾고 -> exit_module -> include -> add custom source code -> activate
+       - cmod -> enhancement 찾고 -> exit_module -> include -> add custom source code -> activate
    2. Menu Exit 
-      cmod -> enhancement 찾고 -> exit_module -> menu exit에서 function text 입력
-      Function exit에서 custom logic source 추가  -> activate
+       - cmod -> enhancement 찾고 -> exit_module -> menu exit에서 function text 입력
+       - Function exit에서 custom logic source 추가  -> activate
    3. Screen Exit
-      sflight19에서 append struture 필드추가 -> cmod -> enhancement 찾고 
-      -> screen exit screen 500 생성 -> layout에 필드 추가 -> function exit에서 include 
-      zxbc425g19top 생성해서 freeseats 변수 생성 -> screen 500에서 필드 추가
-      -> include 003에서 freeseats 구문 생성 -> activate
+       - sflight19에서 append struture 필드추가 -> cmod -> enhancement 찾고 
+          -  screen exit screen 500 생성 -> layout에 필드 추가 -> function exit에서 include 
+       - zxbc425g19top 생성해서 freeseats 변수 생성 -> screen 500에서 필드 추가
+          - include 003에서 freeseats 구문 생성 -> activate
 
-     SAP standard 프로그램에 subscreen area 생성하고 Call subscreen으로 어느 function group에
-     설정할지와 몇 번 스크린인지 입력하고 subscreen에서 값을 읽어가기 위해 function module을 사용
+<br/>
 
+### Context Mapping, Data binding
 
-
-Con2 - UNIT 4 : Classic Business Add-Ins
-
-▪ BAdi : SE19
-▪ Classic BAdi
-   1. Program Exit
-      sapbc425_booking_19에서 search로 cl_exithandler -> 참조변수 -> 클래스 -> where used
-      -> BAdi 찾고 -> SE19에서 바디 만들고 -> implementation 이름 설정 -> utput에서 넣고 싶은 
-      필드 변수선언, 데이터가져오기, write문으로 쓰고 -> change vline에서 vertical 라인 + 해주고 
-   2. Menu Exit
-   3. Screen Exit
-
-▪ New BAdi
-   classic 보다 퍼포먼스 좋음. 
-   1. Program Exit
-     
-Con2 - UNIT 5 : New Business Add-Ins
-Con2 - UNIT 6 : Explicit Enhancement Options
-▪ Points, Sections
-▪ new badi와 explicit는 enhancement spot에 의해 관리된다.
-
-Con2 - UNIT 7 : Implicit Enhancement
-Con2 - UNIT 8 : Modifications of the SAP Standard Application
-Con2 - UNIT 9 : Introduction of Web Dynpro
-
-▪ Context Mapping, Data binding
    1. Component Controller 생성, node, attribute 생성
    2. View Controller 에 drag ( Context Mapping )
    3. View -> layout -> rootuielementcontainer -> insert element -> cap_01/caption text 입력
@@ -2534,129 +2552,182 @@ Con2 - UNIT 9 : Introduction of Web Dynpro
    5. attribute  한번에 담기 insert element -> inp_1 / infut_field -> property : value -> binding
       -> flight nodes 선택 
 
-▪ Navigation Between Views ( Inbound and Outbound Plugs )
+<br/>
+
+### Navigation Between Views ( Inbound and Outbound Plugs )
+
    1. insert element -> btn_next/button -> outbound plugs ( to_result ) , inbound plugs ( from_result )       -> layout btn_next 의 events의 onAction 에 Action에 'next' outbound plug 'to_result'
+   
    2. views 에 result_view 하나 더 만들고 btn_first/button 생성
      -> outbound plugs ( to_main ) , inbound plugs ( from_main )
      -> layout -> events - onAction -> action 'BACK' -> actions의 BACK 더블클릭 메소드 
      -> web dynpro code wizard (ctrl+F7) -> general tab -> start navigation - outbound 'to_main'
+     
    3. navtigation link -> windows에서 main_win에서 result_view를 main_win에 drag&drop
      -> main_view의 to_result에 create navigation link를 result_view로 넣어주고
         result_view의 to_main에 create navigation link를 main_view로 넣어준다.
    
-     inbound plug 생성하면 자동적으로 event handler가 만들어진다.
+   - inbound plug 생성하면 자동적으로 event handler가 만들어진다.
 
-Con2 - UNIT 10 : Web Dynpro Controllers
-Con2 - UNIT 11 : Web Dynpro Context
 
-▪ MatrixLayout + display button 클릭시 get_data 
+
+<br/>
+
+### MatrixLayout + display button 클릭시 get_data
+ 
    1. COMPONENTCONTROLLER에서 context 추가 nodes : flights, subnode : bookings
       bookings의 attribute : carrid connid fldate price currency planetype seatsmax seatsecc
+
    2. MAIN_VIEW에서 create container form, layout은 matrixLayout 
      attribute 2개당 하나씩 layoutData에 MatrixHeadData 입력 해서 열 맞춤
+
    3. button 추가, onAction : SEARCH
-   4. COMPONENTCONTROLLER의 메소드에 get_data 추가 
+
+   4. COMPONENTCONTROLLER의 메소드에 get_data 추가
+   
+   ``` 
       Web Dynpro Code Wizard 	-> context -> flight -> Read
 
       SELECT SINGLE * c        INTO CORRESPONDING FIELDS OF LS_FLIGHTS        FROM SFLIGHT        WHERE CARRID = LS_FLIGHTS-CARRID          AND CONNID = LS_FLIGHTS-CONNID          AND FLDATE = LS_FLIGHTS-FLDATE.
 
       Web Dynpro Code Wizard 	-> context -> flight -> Set
       이 부분만 남기기      * set all declared attributes        LO_EL_FLIGHTS->SET_STATIC_ATTRIBUTES(        STATIC_ATTRIBUTES = LS_FLIGHTS ).
+   ```
 
-    5. MAIN_VIEW의 Actions에 SEARCH 메소드 
-       WD_COMP_CONTROLLER->GET_DATA( ). 추가
+   5. MAIN_VIEW의 Actions에 SEARCH 메소드 
+       
+       - WD_COMP_CONTROLLER->GET_DATA( ). 추가
 
-    6. MAIN_VIEW의 메소드 WDDINIT
-      Web Dynpro Code Wizard 	-> context -> flight -> Set
 
+   6. MAIN_VIEW의 메소드 WDDINIT
+     
+       -  Web Dynpro Code Wizard 	-> context -> flight -> Set
+```
       LS_FLIGHTS-CARRID = 'AA'.      LS_FLIGHTS-CONNID = '0017'.      LS_FLIGHTS-FLDATE = '20210114'.      * set all declared attributes 이거 위에 입력
       초기값으로 뜨게 설정
-Con2 - UNIT 12 : Web Dynpro User Interface 
-▪ FlowLayout  ( WC3 p.345 )
-   field들이 한 라인에 나오다가 창 사이즈 줄이면 field들이 자동적으로 내려감.
-   znet310_clc19_layout	
+```
+
+<br/>
+
+### FlowLayout  
+
+   - field들이 한 라인에 나오다가 창 사이즈 줄이면 field들이 자동적으로 내려감.
+   - znet310_clc19_layout
+   	
    1. componentcontroller -> node 추가 'ns_flight' -> attribute -> sflight의 carrid connid fldate price
    2. main_view에서 context mapping
    3. layout 에서 insert element ID: flowlayout / TYPE: transparent container
    4. flowlayout -> 우측클릭 -> create containerform -> context 'ns_flight'
    5. create application
 
-▪ RowLayout  
+<br/>
+
+### RowLayout
+  
    1. insert element -> id: rowlayout / type : group (head text 입력가능)
-   2. create container form -> context 'flight' -> layout of new container : rowdata 확인 
-      layoutdata를 rowheaddata로 바꾸면 줄이 내려옴
+   2. create container form -> context 'flight' -> layout of new container : rowdata 확인, layoutdata를 rowheaddata로 바꾸면 줄이 내려옴
    
-▪ MatrixLayout ( 제일 많이 사용 )
+<br/>
+
+### MatrixLayout ( 제일 많이 사용 )
+
    1. insert element -> id: matrixlayout / type : tray (접었다 폈다 할 수 있음)
-   2. create container form -> context 'flight' -> layout of new container : matrixdata 확인 
-      matrixheaddata하면 위로 올라옴.
+   2. create container form -> context 'flight' -> layout of new container : matrixdata 확인, matrixheaddata하면 위로 올라옴.
 
-   matrix는 caption의 길이에 따라 왔다갔다 하지 않고 정해진 행렬에 따라 정렬
+   - matrix는 caption의 길이에 따라 왔다갔다 하지 않고 정해진 행렬에 따라 정렬
 
-▪ GridLayout ( 제일 많이 사용 )
-   한 라인에 몇 개의 컬럼을 사용할 건지 정해줘야함.
+<br/>
+
+### GridLayout ( 제일 많이 사용 )
+
+   - 한 라인에 몇 개의 컬럼을 사용할 건지 정해줘야함.
+   
    1. insert element -> id: gridlayout / type : panel ( 이것도 접었다 폈다 가능 )
-     property : layout을 gridlayout으로 변경, colCount : 4 (한 라인에 ui element가 네 개씩 배치)
+     -  property : layout을 gridlayout으로 변경, colCount : 4 (한 라인에 ui element가 네 개씩 배치)
+     
    2. create container form -> context 'flight' -> layout of new container : matrixdata 확인 
-      matrixheaddata하면 위로 올라옴.   
+     - matrixheaddata하면 위로 올라옴.
+        
 
-   컨테이너는 Group, Transparent Contrainer를 많이 사용
+   - 컨테이너는 Group, Transparent Contrainer를 많이 사용
 
-▪ FormLayout, TitleLayout ( 행렬 구분 가능 ) 	
+<br/>
 
-▪table
-  znet310_clc19_table
+### FormLayout, TitleLayout ( 행렬 구분 가능 ) 	
+
+- table
+  - znet310_clc19_table
   1. COMPONENTCONTROLLER -> node 'ns_cond' -> spfli carrid connid
-    node 'nt_data' cardinality : 0..n -> sflight carrid connid fldate seatsmax seatsocc
+     - node 'nt_data' cardinality : 0..n -> sflight carrid connid fldate seatsmax seatsocc
   2. MAIN_VIEW -> context -> ns_cond nt_data mapping
   3. layout -> insert element -> id : cond , type : group -> property : gridlayout, colCount : 4
-    cond -> create container form -> context : ns_cond 
+     - cond -> create container form -> context : ns_cond 
   4. insert element -> id : search / type : button , action : display
   5. insert element -> id : result / type : transparent container
-    result container 안에 insert element -> id : tab_data / type : table
-    tab_data -> 우측클릭 -> create binding -> context 'nt_data' 
+     - result container 안에 insert element -> id : tab_data / type : table
+     - tab_data -> 우측클릭 -> create binding -> context 'nt_data' 
   6. COMPONENETCONTROLLER  -> methods tab page -> get_data_flight 생성 -> 메소드 구현
-     Web Dynpro Code Wizard 	-> context -> ns_cond -> Read
-     Web Dynpro Code Wizard 	-> context -> nt_data -> Set , as table operation
+      - Web Dynpro Code Wizard 	-> context -> ns_cond -> Read
+      - Web Dynpro Code Wizard 	-> context -> nt_data -> Set , as table operation
 
+```
      ** @TODO compute values     ** e.g. call a model function     *  
      이 주석 위에
      SELECT *       INTO CORRESPONDING FIELDS OF TABLE LT_NT_DATA       FROM SFLIGHT       WHERE CARRID = LS_NS_COND-CARRID         AND CONNID = LS_NS_COND-CONNID.
+```
+
    7. MAIN_VIEW -> action 'DISPLAY' method -> 
-      WD_COMP_CONTROLLER->GET_DATA_FLIGHT( ). 추가
+       - WD_COMP_CONTROLLER->GET_DATA_FLIGHT( ). 추가
    8. Create Web Dynpro Application 
      
-   tab_data 의 visibleRowCount로 스크롤 하기전의 최대 dipslay 개수
+   - tab_data 의 visibleRowCount로 스크롤 하기전의 최대 dipslay 개수
 
-   web dynpro에서의 Nodes : 변수이름 / Elements : 변수에 저장되어진 data, record
-   0..n 1..n 은 internal table 로 생각
+   - web dynpro에서의 Nodes : 변수이름 / Elements : 변수에 저장되어진 data, record
+   - 0..n 1..n 은 internal table 로 생각
 
-Con2 - UNIT 13 : Controller and Context Programming
+<br/>
 
-▪ Supply Functions
-   znet310_clc19_supply
+
+### Supply Functions
+
+   - znet310_clc19_supply
    1. COMPONETCONTROLLER -> node name : nt_scarr, cardinality : 0..n
-     attribute : scarr / carrid carrname currcode
-     nt_scarr에 우측클릭 create node, name : nt_spfli, cardinality : 0..n, singleton : Yes, 
-     supply function : get_spfli 생성
-     attribute : spfli / carrid connid countryfr cityfrom coutryto cityto airpto
-   2. method tab 페이지 보면 get_spfli의 type이 supply function으로 되있음.
-      get_spfli 들어가서
+      - attribute : scarr / carrid carrname currcode
+      - nt_scarr에 우측클릭 create node, name : nt_spfli, cardinality : 0..n, singleton : Yes, 
+      - supply function : get_spfli 생성
+      - attribute : spfli / carrid connid countryfr cityfrom coutryto cityto airpto
       
+   2. method tab 페이지 보면 get_spfli의 type이 supply function으로 되있음.
+      - get_spfli 들어가서
+      
+   ```
       DATA LS_PARENT_ATTRIBUTES TYPE WD_THIS->ELEMENT_NT_SCARR.      PARENT_ELEMENT->GET_STATIC_ATTRIBUTES(        IMPORTING          STATIC_ATTRIBUTES = LS_PARENT_ATTRIBUTES ).
 
        DATA LT_NT_SPFLI TYPE WD_THIS->ELEMENTS_NT_SPFLI.
 
        SELECT *         INTO CORRESPONDING FIELDS OF TABLE LT_NT_SPFLI         FROM SPFLI         WHERE CARRID = LS_PARENT_ATTRIBUTES-CARRID.     ** bind all the elements         NODE->BIND_TABLE(         NEW_ITEMS            =  LT_NT_SPFLI         SET_INITIAL_ELEMENTS = ABAP_TRUE ).
+   ```
 
   3. WDDOINIT에서 web dynpro wizard -> context 'scarr' -> set, as table operation
 
+```
      SELECT *       INTO CORRESPONDING FIELDS OF TABLE LT_NT_SCARR       FROM SCARR.    ** @TODO compute values    ** e.g. call a model function    *
+```
+
   4. MAIN_VIEW에서 Context tab 페이지에서 mapping
+  
   5. layout에서 insert element -> id : tab_scarr / type : table
-     create binding -> context 'nt_scarr'
+      - create binding -> context 'nt_scarr'
+      
   6. root에 insert element -> id : tab_spfli / type : table
-     create binding -> context 'nt_spfli'
+      - create binding -> context 'nt_spfli'
+      
   7. create application 
 
---------
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+------------------------------------------------
+Reference
+
+- Easy ABAP 2.0 - 김성준 
