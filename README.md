@@ -225,6 +225,7 @@
 - [JWT (JSON Web Token)](./11.%20Web/JWT%20(JSON%20Web%20Token).md)
 - [OAuth](./11.%20Web/OAuth.md)
 - [REST API](./11.%20Web/REST%20API.md)
+- [Rest, Restful, Restful api](./11.%20Web/Rest,%20Restful,%20Restful%20api.md)
 
 <br/>
 
