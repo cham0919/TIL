@@ -137,7 +137,7 @@ Master-Secret은 Session Key값을 생성하고, 생성된 Session-Key는 데이
 
 <br/><br/><br/><br/>
 
-
+ 
 ---
 참조:
 - [HTTPS 통신과정 쉽게 이해하기 #3(SSL Handshake, 협상)](https://aws-hyoh.tistory.com/entry/HTTPS-%ED%86%B5%EC%8B%A0%EA%B3%BC%EC%A0%95-%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-3SSL-Handshake)
